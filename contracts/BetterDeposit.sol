@@ -59,6 +59,10 @@ contract BetterDeposit is IBetterDeposit, Security {
         return userADeposit.add(userBDeposit);
     }
 
+    function getAgreementEnd() public override {
+        uint256 temp;
+    }
+
     /// EFFECTS and INTERACTIONS
     function deposit(uint256 amount) external override onlyUser whenNotPaused {
         require(amount == requiredDeposits[msg.sender], 'BetterDeposit: INCORRECT_DEPOSIT');
@@ -96,9 +100,5 @@ contract BetterDeposit is IBetterDeposit, Security {
 
     function isPastTimelock() public override returns (bool) {
         return true;
-    }
-
-    function getAgreementEnd() public override {
-        uint256 temp;
     }
 }
