@@ -1,11 +1,11 @@
 pragma solidity >=0.6.10 <0.7.0;
 
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {IBetterDeposit} from "./interfaces/IBetterDeposit.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
-import {IBetterDeposit} from "./interfaces/IBetterDeposit.sol";
+import {Security} from "./Security.sol";
 
-contract BetterDeposit is IBetterDeposit, Ownable {
+contract BetterDeposit is IBetterDeposit, Security {
     using SafeMath for uint256;
 
     IERC20 public linkedToken;
@@ -60,9 +60,8 @@ contract BetterDeposit is IBetterDeposit, Ownable {
     }
 
     /// EFFECTS and INTERACTIONS
-
-    function deposit(uint256 amount) external override onlyUser {
-        // require(amount == requiredDeposits[msg.sender], 'BetterDeposit: INCORRECT_DEPOSIT');
+    function deposit(uint256 amount) external override onlyUser whenNotPaused {
+        require(amount == requiredDeposits[msg.sender], 'BetterDeposit: INCORRECT_DEPOSIT');
         uint256 approvedAllowance = linkedToken.allowance(
             msg.sender,
             address(this)
@@ -79,7 +78,7 @@ contract BetterDeposit is IBetterDeposit, Ownable {
         emit Deposit(msg.sender, amount);
     }
 
-    function withdraw() external override onlyUser {
+    function withdraw() external override onlyUser whenNotPaused {
         require(isPastTimelock(), "BetterDeposit: TIMELOCK_NOT_EXPIRED");
         // require();
         uint256 userDeposit = getUserDeposit(msg.sender);
