@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "compile": "buidler compile",
+    "clean": "buidler clean",
     "test": "buidler test"
   },
   "devDependencies": {
