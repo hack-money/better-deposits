@@ -1,7 +1,6 @@
 import { ethers } from '@nomiclabs/buidler';
 import { BuidlerConfig, task, usePlugin } from "@nomiclabs/buidler/config";
 
-
 usePlugin("@nomiclabs/buidler-waffle");
 
 const config: BuidlerConfig = {

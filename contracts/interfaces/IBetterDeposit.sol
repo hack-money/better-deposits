@@ -3,7 +3,7 @@ pragma solidity >=0.6.10 <0.7.0;
 interface IBetterDeposit {
     function deposit(uint256 amount) external;
 
-    function approveWithdraw() external;
+    // function approveWithdraw() external;
 
     function withdraw() external;
 
