@@ -48,12 +48,12 @@ contract BetterDeposit is IBetterDeposit, Ownable {
         return requiredDeposits[user];
     }
 
-    function getUserDeposit(address user) public override returns (uint256) {
+    function getUserDeposit(address user) public view override returns (uint256) {
         require(user != address(0));
         return balances[user];
     }
 
-    function getTotalDeposit() external override returns (uint256) {
+    function getTotalDeposit() external view override returns (uint256) {
         uint256 userADeposit = getUserDeposit(userA);
         uint256 userBDeposit = getUserDeposit(userB);
         return userADeposit.add(userBDeposit);
@@ -62,13 +62,12 @@ contract BetterDeposit is IBetterDeposit, Ownable {
     /// EFFECTS and INTERACTIONS
 
     function deposit(uint256 amount) external override onlyUser {
-        require(amount > 0, "BetterDeposit: AMOUNT_EQUAL_0");
-        require(amount == requiredDeposits[msg.sender], 'BetterDeposit: INCORRECT_DEPOSIT');
+        // require(amount == requiredDeposits[msg.sender], 'BetterDeposit: INCORRECT_DEPOSIT');
         uint256 approvedAllowance = linkedToken.allowance(
             msg.sender,
             address(this)
         );
-        require(approvedAllowance >= amount);
+        require(approvedAllowance >= amount, 'BetterDeposit: INSUFFICIENT_APPROVAL');
 
         balances[msg.sender] = balances[msg.sender].add(amount);
 

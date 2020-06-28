@@ -7,9 +7,9 @@ interface IBetterDeposit {
 
     function withdraw() external;
 
-    function getTotalDeposit() external returns (uint256);
+    function getTotalDeposit() external view returns (uint256);
 
-    function getUserDeposit(address user) external returns (uint256);
+    function getUserDeposit(address user) external view returns (uint256);
 
     function getAgreementEnd() external;
 
