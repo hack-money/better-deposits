@@ -2,8 +2,8 @@ import { ethers, waffle } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
 import { Contract, Signer } from 'ethers';
 
-import ERC20Mintable from '../artifacts/ERC20Mintable.json';
-import Security from '../artifacts/Security.json';
+import ERC20Mintable from '../src/artifacts/ERC20Mintable.json';
+import Security from '../src/artifacts/Security.json';
 
 const { deployContract } = waffle;
 

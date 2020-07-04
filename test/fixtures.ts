@@ -1,14 +1,14 @@
 import { ethers, waffle } from '@nomiclabs/buidler';
 import { Signer, Wallet } from 'ethers';
 
-import ERC20Mintable from '../artifacts/ERC20Mintable.json';
-import BetterDeposit from '../artifacts/BetterDeposit.json';
+import ERC20Mintable from '../src/artifacts/ERC20Mintable.json';
+import BetterDeposit from '../src/artifacts/BetterDeposit.json';
 
 const { deployContract } = waffle;
 
 export const depositFixture = async (
   [owner, userA, userB]: Wallet[],
-  provider: any,
+  provider: any
 ) => {
   const mintAmount = 100;
   const userADeposit = 20;
@@ -40,4 +40,4 @@ export const depositFixture = async (
     userADeposit,
     userBDeposit,
   };
-}
+};
