@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: UNLICENSED
+
 pragma solidity >=0.6.10 <0.7.0;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -21,8 +23,15 @@ contract Security is Ownable, Pausable {
     }
 
     function withdrawAll(address linkedToken) external onlyOwner whenPaused {
-        uint256 allLinkedTokenFunds = IERC20(linkedToken).balanceOf(address(this));
+        uint256 allLinkedTokenFunds = IERC20(linkedToken).balanceOf(
+            address(this)
+        );
         IERC20(linkedToken).transfer(msg.sender, allLinkedTokenFunds);
-        emit WithdrawAll(address(this), msg.sender, linkedToken, allLinkedTokenFunds);
+        emit WithdrawAll(
+            address(this),
+            msg.sender,
+            linkedToken,
+            allLinkedTokenFunds
+        );
     }
 }
