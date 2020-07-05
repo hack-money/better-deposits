@@ -21,4 +21,8 @@ interface IBetterDeposit {
         external
         view
         returns (uint256);
+
+    function dispute() external;
+
+    function approveDepositRelease() external;
 }

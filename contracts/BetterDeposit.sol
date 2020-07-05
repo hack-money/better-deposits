@@ -5,18 +5,21 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
 import {IBetterDeposit} from "./interfaces/IBetterDeposit.sol";
 import {Security} from "./Security.sol";
-import {EscrowManagement} from "./EscrowManagement.sol";
+import {ReleaseManager} from "./ReleaseManager.sol";
 
-contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
+contract BetterDeposit is IBetterDeposit, ReleaseManager, Security {
     using SafeMath for uint256;
 
     IERC20 public linkedToken;
     address public userA;
     address public userB;
+    address public adjudicator;
 
     mapping(address => uint256) balances;
     mapping(address => uint256) requiredDeposits;
 
+    event Deposit(address indexed depositAddress, uint256 depositAmount);
+    event Withdraw(address indexed withdrawAddress, uint256 withdrawAmount);
     event AgreementStart(
         address indexed userA,
         address indexed userB,
@@ -24,10 +27,14 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
         uint256 userBDeposit
     );
     event AgreementFinish(address indexed userA, address indexed userB);
-    event Deposit(address indexed depositAddress, uint256 depositAmount);
-    event Withdraw(address indexed withdrawAddress, uint256 withdrawAmount);
+    event Dispute(
+        address indexed userA,
+        address indexed userB,
+        address indexed adjudicator,
+        uint256 totalDeposit
+    );
 
-    enum State {PRE_ACTIVE, ACTIVE, SETTLED, COMPLETE}
+    enum State {PRE_ACTIVE, ACTIVE, SETTLED, DISPUTE, COMPLETE}
     State public escrowState; // current agreement status of the escrow
 
     constructor(
@@ -35,13 +42,15 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
         address _userA,
         address _userB,
         uint256 _userARequiredDeposit,
-        uint256 _userBRequiredDeposit
+        uint256 _userBRequiredDeposit,
+        address _adjudicator
     ) public {
         linkedToken = IERC20(_linkedToken);
         userA = _userA;
         userB = _userB;
         requiredDeposits[_userA] = _userARequiredDeposit;
         requiredDeposits[_userB] = _userBRequiredDeposit;
+        adjudicator = _adjudicator;
 
         escrowState = State.PRE_ACTIVE;
     }
@@ -120,7 +129,11 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
      * user themselves
      *
      * @param amount - amount to be deposited
+     *
+     * Only calleable by parties involved in the agreement
      */
+    // TODO: add escape mechanism to pull funds if other party to the agreement
+    // doesn't deposit
     function deposit(uint256 amount) external override onlyUser whenNotPaused {
         require(
             escrowState == State.PRE_ACTIVE,
@@ -164,6 +177,9 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
      * @dev Mark the agreement as being settled and so enable a withdraw of funds
      * to occur. Requires the time lock to have passed and for all users to have
      * approved the deposit to be released
+     *
+     * Calleable by anyone - by definition when this will execute successfully, all
+     * parties have given their approval for the deposit to be released
      */
     function settleAgreement() external override {
         require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
@@ -182,7 +198,9 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
      * @dev Withdraw a user's locked deposit. Requires that the locked deposit period
      * is past and both parties have agreed for the deposits to be released
      *
-     * Withdraws the whole of the user's deposit to their address
+     * Withdraws the whole of the user's deposit to their address.
+     *
+     * Only calleable by parties involved in the agreement
      */
     function withdraw() external override onlyUser whenNotPaused {
         require(
@@ -211,5 +229,44 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
             escrowState = State.COMPLETE;
             emit AgreementFinish(userA, userB);
         }
+    }
+
+    /**
+     * @dev Start a dispute over the deposit. If successfully called, it will
+     * transfer the deposit held by the contract to the third party adjudicator
+     * address.
+     *
+     * Adjudicator then resolves dispute off-chain
+     *
+     * Only calleable by parties involved in agreement
+     * TODO: restrict to only be calleable when agreement term is expired
+     */
+    function dispute() external override onlyUser {
+        // TODO: only allow this to be called when agreement term has expired
+        escrowState = State.DISPUTE;
+
+        // local variable holding deposit, will decrease to 0 when
+        // user deposit balances decremented
+        uint256 totalDeposit = getTotalDeposit();
+
+        // decrement deposit balances of users
+        balances[userA] = balances[userA].sub(getUserDeposit(userA));
+        balances[userB] = balances[userB].sub(getUserDeposit(userB));
+
+        require(
+            linkedToken.transfer(adjudicator, totalDeposit),
+            "BetterDeposit: DISPUTE_TRANSFER_FAILED"
+        );
+        emit Dispute(userA, userB, adjudicator, totalDeposit);
+    }
+
+    /**
+     * @dev Allow a party to the agreement to approve the deposit to be
+     * released at the end of the agreement
+     *
+     * Only calleable by parties involved in agreement
+     */
+    function approveDepositRelease() external override onlyUser {
+        internalApproveDepositRelease();
     }
 }

@@ -12,22 +12,28 @@ const { deployContract } = waffle;
 use(solidity);
 
 describe('Initialisation', function () {
-  let betterDeposit!: Contract;
-  let erc20!: Contract;
-  let owner!: Signer;
-  let userA!: Signer;
-  let userB!: Signer;
-  let userAAddress!: string;
-  let userBAddress!: string;
+  let betterDeposit: Contract;
+  let erc20: Contract;
+  let owner: Signer;
+  let userA: Signer;
+  let userB: Signer;
+  let adjudicator: Signer;
+
+  let ownerAddress: string;
+  let userAAddress: string;
+  let userBAddress: string;
+  let adjudicatorAddress: string;
 
   const mintAmount = 100;
   const userADeposit = 20;
   const userBDeposit = 50;
 
   beforeEach(async () => {
-    [owner, userA, userB] = await ethers.getSigners();
+    [owner, userA, userB, adjudicator] = await ethers.getSigners();
+    ownerAddress = await owner.getAddress();
     userAAddress = await userA.getAddress();
     userBAddress = await userB.getAddress();
+    adjudicatorAddress = await adjudicator.getAddress();
 
     erc20 = await deployContract(owner, ERC20Mintable, []);
 
@@ -37,6 +43,7 @@ describe('Initialisation', function () {
       userBAddress,
       userADeposit,
       userBDeposit,
+      adjudicatorAddress,
     ]);
     await betterDeposit.deployed();
 
@@ -58,7 +65,6 @@ describe('Initialisation', function () {
     );
     const escrowState = await betterDeposit.escrowState();
 
-    const ownerAddress = await owner.getAddress();
     expect(retrievedOwner).to.equal(ownerAddress);
     expect(retrievedUserA).to.equal(userAAddress);
     expect(retrievedUserB).to.equal(userBAddress);

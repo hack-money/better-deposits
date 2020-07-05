@@ -17,17 +17,21 @@ describe('Withdraw', () => {
   let userA!: Signer;
   let userB!: Signer;
   let fakeUser!: Signer;
+  let adjudicator: Signer;
+
   let userAAddress!: string;
   let userBAddress!: string;
+  let adjudicatorAddress: string;
 
   const mintAmount = 100;
   const userADeposit = 20;
   const userBDeposit = 50;
 
   beforeEach(async () => {
-    [owner, userA, userB, fakeUser] = await ethers.getSigners();
+    [owner, userA, userB, fakeUser, adjudicator] = await ethers.getSigners();
     userAAddress = await userA.getAddress();
     userBAddress = await userB.getAddress();
+    adjudicatorAddress = await adjudicator.getAddress();
 
     erc20 = await deployContract(owner, ERC20Mintable, []);
 
@@ -37,6 +41,7 @@ describe('Withdraw', () => {
       userBAddress,
       userADeposit,
       userBDeposit,
+      adjudicatorAddress,
     ]);
     await betterDeposit.deployed();
 
