@@ -1,10 +1,11 @@
 import { ethers, waffle } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
 import { Contract, Signer } from 'ethers';
+import { solidity } from 'ethereum-waffle';
 
 import ERC20Mintable from '../../src/artifacts/ERC20Mintable.json';
 import BetterDeposit from '../../src/artifacts/BetterDeposit.json';
-import { solidity } from 'ethereum-waffle';
+import { EscrowState } from '../utils/escrowStates';
 
 const { deployContract } = waffle;
 
@@ -32,8 +33,8 @@ describe('Initialisation', function () {
 
     betterDeposit = await deployContract(owner, BetterDeposit, [
       erc20.address,
-      await userA.getAddress(),
-      userB.getAddress(),
+      userAAddress,
+      userBAddress,
       userADeposit,
       userBDeposit,
     ]);
@@ -64,7 +65,7 @@ describe('Initialisation', function () {
     expect(linkedToken).to.equal(erc20.address);
     expect(retrievedUserARequiredDeposit).to.equal(userADeposit);
     expect(retrievedUserBRequiredDeposit).to.equal(userBDeposit);
-    expect(escrowState).to.equal(0);
+    expect(escrowState).to.equal(EscrowState.PRE_ACTIVE);
   });
 
   it('should get the total required deposit for the agreement', async () => {

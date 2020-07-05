@@ -27,7 +27,7 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
     event Deposit(address indexed depositAddress, uint256 depositAmount);
     event Withdraw(address indexed withdrawAddress, uint256 withdrawAmount);
 
-    enum State {PRE_ACTIVE, ACTIVE, WITHDRAW, SETTLED, COMPLETE}
+    enum State {PRE_ACTIVE, ACTIVE, SETTLED, COMPLETE}
     State public escrowState; // current agreement status of the escrow
 
     constructor(
@@ -168,7 +168,7 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
     function settleAgreement() external override {
         require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
 
-        address[] memory users;
+        address[] memory users = new address[](2);
         users[0] = userA;
         users[1] = userB;
         require(
@@ -187,11 +187,12 @@ contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
     function withdraw() external override onlyUser whenNotPaused {
         require(
             escrowState == State.SETTLED,
-            "BetterDeppsit: AGREEMENT_NOT_SETTLED"
+            "BetterDeposit: AGREEMENT_NOT_SETTLED"
         );
 
         uint256 userDeposit = getUserDeposit(msg.sender);
         require(userDeposit > uint256(0), "BetterDeposit: NO_USER_DEPOSIT");
+        balances[msg.sender] = balances[msg.sender].sub(userDeposit);
 
         require(
             userDeposit <= linkedToken.balanceOf(address(this)),
