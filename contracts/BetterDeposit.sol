@@ -5,8 +5,9 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
 import {IBetterDeposit} from "./interfaces/IBetterDeposit.sol";
 import {Security} from "./Security.sol";
+import {EscrowManagement} from "./EscrowManagement.sol";
 
-contract BetterDeposit is IBetterDeposit, Security {
+contract BetterDeposit is IBetterDeposit, EscrowManagement, Security {
     using SafeMath for uint256;
 
     IERC20 public linkedToken;
@@ -15,19 +16,19 @@ contract BetterDeposit is IBetterDeposit, Security {
 
     mapping(address => uint256) balances;
     mapping(address => uint256) requiredDeposits;
-    mapping(address => bool) depositReleaseApprovals;
 
-    event AgreementActive(
+    event AgreementStart(
         address indexed userA,
         address indexed userB,
         uint256 userADeposit,
         uint256 userBDeposit
     );
+    event AgreementFinish(address indexed userA, address indexed userB);
     event Deposit(address indexed depositAddress, uint256 depositAmount);
     event Withdraw(address indexed withdrawAddress, uint256 withdrawAmount);
 
-    enum State {PRE_ACTIVE, ACTIVE, SETTLED, DISPUTE, COMPLETE}
-    State public escrowState;
+    enum State {PRE_ACTIVE, ACTIVE, WITHDRAW, SETTLED, COMPLETE}
+    State public escrowState; // current agreement status of the escrow
 
     constructor(
         address _linkedToken,
@@ -68,28 +69,13 @@ contract BetterDeposit is IBetterDeposit, Security {
     }
 
     /**
-     * @dev Get the status of whether a user has approved their part of the deposit to be
-     * released or not
-     * @param user - Ethereum address who's deposit release approval is being queried
-     * @return Bool indicating whether approval has been given by the user for the deposit
-     * to be released (true) or not (false)
-     */
-    function getUserDepositReleaseApproval(address user)
-        public
-        view
-        returns (bool)
-    {
-        require(user != address(0), "BetterDeposit: ZERO_ADDRESS");
-        return depositReleaseApprovals[user];
-    }
-
-    /**
      * @dev Get the deposit required of a user in order for this agreement to be in effect
      * @param user - Ethereum address of user in question
      * @return Amount a user is expected to deposit for agreement to be in effect
      */
     function getRequiredUserDeposit(address user)
         public
+        override
         view
         returns (uint256)
     {
@@ -114,7 +100,7 @@ contract BetterDeposit is IBetterDeposit, Security {
      * @dev Get the total deposit required for this contract to be considered active
      * @return Total deposit required for contract to be active
      */
-    function getTotalRequiredDeposit() public view returns (uint256) {
+    function getTotalRequiredDeposit() public override view returns (uint256) {
         uint256 userARequiredDeposit = getRequiredUserDeposit(userA);
         uint256 userBRequiredDeposit = getRequiredUserDeposit(userB);
         return userARequiredDeposit.add(userBRequiredDeposit);
@@ -129,48 +115,6 @@ contract BetterDeposit is IBetterDeposit, Security {
     }
 
     /**
-     * @dev Determine if funds time-lock is expired
-     */
-    function isPastTimelock() public override returns (bool) {
-        return true;
-    }
-
-    /**
-     * @dev Determines whether all parties to the agreement have approved
-     * for the deposit to be released
-     * @return Bool determining whether all parties have approved the
-     * release of the deposit
-     */
-    function allApprovedDepositRelease() public view returns (bool) {
-        bool userAApproval = getUserDepositReleaseApproval(userA);
-        bool userBApproval = getUserDepositReleaseApproval(userB);
-        if (userAApproval && userBApproval) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    function isAgreementSettled() public returns (bool) {
-        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
-        require(
-            allApprovedDepositRelease(),
-            "BetterDeposit: DEPOSIT_RELEASE_NOT_APPROVED"
-        );
-        escrowState = State.SETTLED;
-        return true;
-    }
-
-    /**
-     * @dev Allow a party to the agreement to approve the deposit to be
-     * released at the end of the agreement
-     */
-    function approveDepositRelease() external onlyUser {
-        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
-        depositReleaseApprovals[msg.sender] = true;
-    }
-
-    /**
      * @dev User deposits funds, their part of the deposit being escrowed
      * Currently, the whole deposit must be deposited in one go. Must be called by the
      * user themselves
@@ -178,6 +122,10 @@ contract BetterDeposit is IBetterDeposit, Security {
      * @param amount - amount to be deposited
      */
     function deposit(uint256 amount) external override onlyUser whenNotPaused {
+        require(
+            escrowState == State.PRE_ACTIVE,
+            "BetterDeposit: AGREEMENT_NOT_PRE_ACTIVE"
+        );
         require(
             amount == requiredDeposits[msg.sender],
             "BetterDeposit: INCORRECT_DEPOSIT"
@@ -198,9 +146,10 @@ contract BetterDeposit is IBetterDeposit, Security {
             "BetterDeposit: DEPOSIT_FAILED"
         );
 
+        // if both users have deposited, start the agreement
         if (getTotalRequiredDeposit() == getTotalDeposit()) {
             escrowState = State.ACTIVE;
-            emit AgreementActive(
+            emit AgreementStart(
                 userA,
                 userB,
                 getUserDeposit(userA),
@@ -212,13 +161,35 @@ contract BetterDeposit is IBetterDeposit, Security {
     }
 
     /**
+     * @dev Mark the agreement as being settled and so enable a withdraw of funds
+     * to occur. Requires the time lock to have passed and for all users to have
+     * approved the deposit to be released
+     */
+    function settleAgreement() external override {
+        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
+
+        address[] memory users;
+        users[0] = userA;
+        users[1] = userB;
+        require(
+            isDepositReleaseApproved(users),
+            "BetterDeposit: DEPOSIT_RELEASE_NOT_APPROVED"
+        );
+        escrowState = State.SETTLED;
+    }
+
+    /**
      * @dev Withdraw a user's locked deposit. Requires that the locked deposit period
      * is past and both parties have agreed for the deposits to be released
      *
      * Withdraws the whole of the user's deposit to their address
      */
     function withdraw() external override onlyUser whenNotPaused {
-        require(isAgreementSettled(), "BetterDeppsit: AGREEMENT_NOT_EXPIRED");
+        require(
+            escrowState == State.SETTLED,
+            "BetterDeppsit: AGREEMENT_NOT_SETTLED"
+        );
+
         uint256 userDeposit = getUserDeposit(msg.sender);
         require(userDeposit > uint256(0), "BetterDeposit: NO_USER_DEPOSIT");
 
@@ -231,6 +202,13 @@ contract BetterDeposit is IBetterDeposit, Security {
             linkedToken.transfer(msg.sender, userDeposit),
             "BetterDeposit: WITHDRAW_FAILED"
         );
+
         emit Withdraw(msg.sender, userDeposit);
+
+        // if both users have withdrawn, mark agreement status as complete
+        if (getTotalDeposit() == uint256(0)) {
+            escrowState = State.COMPLETE;
+            emit AgreementFinish(userA, userB);
+        }
     }
 }
