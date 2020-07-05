@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.10 <0.7.0;
 
-import {IEscrowManagement} from "./interfaces/IEscrowManagement.sol";
+import {IReleaseManager} from "./interfaces/IReleaseManager.sol";
 
-contract EscrowManagement is IEscrowManagement {
+contract ReleaseManager is IReleaseManager {
     mapping(address => bool) depositReleaseApprovals;
+
+    event DepositReleaseApproval(address indexed user);
 
     constructor() public {}
 
@@ -23,15 +25,6 @@ contract EscrowManagement is IEscrowManagement {
     {
         require(user != address(0), "BetterDeposit: ZERO_ADDRESS");
         return depositReleaseApprovals[user];
-    }
-
-    /**
-     * @dev Allow a party to the agreement to approve the deposit to be
-     * released at the end of the agreement
-     */
-    function approveDepositRelease() external override {
-        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
-        depositReleaseApprovals[msg.sender] = true;
     }
 
     /**
@@ -60,5 +53,19 @@ contract EscrowManagement is IEscrowManagement {
      */
     function isPastTimelock() public override returns (bool) {
         return true;
+    }
+
+    /**
+     * @dev Allow a party to the agreement to approve the deposit to be
+     * released at the end of the agreement
+     *
+     * Should be called in child inheriting contract, where appropriate
+     * permissioning is performed
+     */
+    function internalApproveDepositRelease() internal {
+        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
+        depositReleaseApprovals[msg.sender] = true;
+
+        emit DepositReleaseApproval(msg.sender);
     }
 }

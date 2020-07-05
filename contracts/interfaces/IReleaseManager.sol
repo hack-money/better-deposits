@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.10 <0.7.0;
 
-interface IEscrowManagement {
-    function approveDepositRelease() external;
-
+interface IReleaseManager {
     function isDepositReleaseApproved(address[] memory users)
         external
         view
