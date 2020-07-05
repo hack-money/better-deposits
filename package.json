@@ -9,7 +9,8 @@
     "build": "tsc -p tsconfig.json",
     "compile": "buidler compile",
     "clean": "buidler clean",
-    "test": "buidler test"
+    "test": "buidler test",
+    "deploy:localhost": "buidler run --network localhost scripts/deploy.ts"
   },
   "devDependencies": {
     "@nomiclabs/buidler": "^1.3.8",

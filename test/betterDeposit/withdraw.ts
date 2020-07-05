@@ -10,7 +10,7 @@ import { EscrowState } from '../utils/escrowStates';
 const { deployContract } = waffle;
 use(solidity);
 
-describe.only('Withdraw', () => {
+describe('Withdraw', () => {
   let betterDeposit!: Contract;
   let erc20!: Contract;
   let owner!: Signer;
