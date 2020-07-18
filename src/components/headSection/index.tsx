@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import NavBar from './NavBar';
 import Hero from './Hero';
 
 export default function HeadSection() {
   return (
-    <Fragment>
+    <div style={{ backgroundColor: '#FFFFFF' }}>
       <NavBar />
       <Hero />
-    </Fragment>
+    </div>
   );
 }
