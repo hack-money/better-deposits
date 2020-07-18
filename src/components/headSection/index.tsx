@@ -4,7 +4,7 @@ import Hero from './Hero';
 
 export default function HeadSection() {
   return (
-    <div style={{ backgroundColor: '#FFFFFF' }}>
+    <div>
       <NavBar />
       <Hero />
     </div>

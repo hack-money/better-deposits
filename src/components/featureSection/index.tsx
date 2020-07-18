@@ -1,10 +1,17 @@
-import React, { Props } from 'react';
-import { Typography, Grid, isWidthUp, withWidth } from '@material-ui/core';
+import React from 'react';
+import {
+  Typography,
+  Grid,
+  isWidthUp,
+  withWidth,
+  Container,
+} from '@material-ui/core';
 import ComputerIcon from '@material-ui/icons/Computer';
 import SpeedIcon from '@material-ui/icons/Speed';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import FeatureCard from './FeatureCard';
+import { useStyles } from '../useStyles';
 
 const iconSize = 30;
 
@@ -54,34 +61,39 @@ type FeatureProps = { width: Breakpoint };
 
 function FeatureSection(props: FeatureProps) {
   const { width } = props;
+  const classes = useStyles();
   return (
-    <div style={{ backgroundColor: '#FFFFFF' }}>
-      <Typography variant="h3" align="center" className="lg-mg-bottom">
-        Features
-      </Typography>
-      <div className="container-fluid">
-        <Grid container spacing={calculateSpacing(width)}>
-          {features.map((element) => (
-            <Grid
-              item
-              xs={6}
-              md={4}
-              data-aos="zoom-in-up"
-              data-aos-delay={
-                isWidthUp('md', width) ? element.mdDelay : element.smDelay
-              }
-              key={element.headline}
-            >
-              <FeatureCard
-                Icon={element.icon}
-                color={element.color}
-                headline={element.headline}
-                text={element.text}
-              />
+    <div className={classes.featureSection}>
+      <Container>
+        <div style={{ backgroundColor: '#FFFFFF' }}>
+          <Typography variant="h3" align="center" className="lg-mg-bottom">
+            Features
+          </Typography>
+          <div className="container-fluid">
+            <Grid container spacing={calculateSpacing(width)}>
+              {features.map((element) => (
+                <Grid
+                  item
+                  xs={6}
+                  md={4}
+                  data-aos="zoom-in-up"
+                  data-aos-delay={
+                    isWidthUp('md', width) ? element.mdDelay : element.smDelay
+                  }
+                  key={element.headline}
+                >
+                  <FeatureCard
+                    Icon={element.icon}
+                    color={element.color}
+                    headline={element.headline}
+                    text={element.text}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </div>
+          </div>
+        </div>
+      </Container>
     </div>
   );
 }

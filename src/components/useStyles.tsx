@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(8, 0, 20),
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -29,5 +29,13 @@ export const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
+  },
+  howWorksSection: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 20),
+  },
+  featureSection: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 20),
   },
 }));

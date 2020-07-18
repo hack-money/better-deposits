@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <Fragment>
       <HeadSection />
-      <FeatureSection />
       <HowWorksSection />
+      <FeatureSection />
     </Fragment>
   );
 }

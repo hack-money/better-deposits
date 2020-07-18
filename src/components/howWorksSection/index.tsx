@@ -1,6 +1,12 @@
 import React from 'react';
-import Footer from './Footer';
+import Explainer from './Explainer';
+import { useStyles } from '../useStyles';
 
 export default function HowWorksSection() {
-  return <Footer />;
+  const classes = useStyles();
+  return (
+    <div className={classes.howWorksSection}>
+      <Explainer />
+    </div>
+  );
 }
