@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 20),
+    padding: theme.spacing(8, 0, 15),
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -32,10 +32,14 @@ export const useStyles = makeStyles((theme) => ({
   },
   howWorksSection: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 20),
+    padding: theme.spacing(8, 0, 15),
   },
   featureSection: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 20),
+    padding: theme.spacing(8, 0, 15),
+  },
+  bottomSection: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 15),
   },
 }));

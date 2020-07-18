@@ -1,5 +1,10 @@
 import React from 'react';
 import { Container, Typography } from '@material-ui/core';
+import LooksOneRoundedIcon from '@material-ui/icons/LooksOneRounded';
+import LooksTwoRoundedIcon from '@material-ui/icons/LooksTwoRounded';
+import Looks3RoundedIcon from '@material-ui/icons/Looks3Rounded';
+import Looks4RoundedIcon from '@material-ui/icons/Looks4Rounded';
+import Looks5RoundedIcon from '@material-ui/icons/Looks5Rounded';
 
 export default function Explainer() {
   return (
@@ -8,7 +13,19 @@ export default function Explainer() {
         How it works
       </Typography>
       <Container>
-        <p>Better Deposits is a</p>
+        <LooksOneRoundedIcon color="primary" fontSize="large" />
+      </Container>
+      <Container>
+        <LooksTwoRoundedIcon color="primary" fontSize="large" />
+      </Container>
+      <Container>
+        <Looks3RoundedIcon color="primary" fontSize="large" />
+      </Container>
+      <Container>
+        <Looks4RoundedIcon color="primary" fontSize="large" />
+      </Container>
+      <Container>
+        <Looks5RoundedIcon color="primary" fontSize="large" />
       </Container>
     </div>
   );

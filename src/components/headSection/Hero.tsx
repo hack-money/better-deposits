@@ -7,7 +7,7 @@ export default function Hero() {
 
   return (
     <div className={classes.heroContent}>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Typography
           component="h1"
           variant="h2"
@@ -18,8 +18,12 @@ export default function Hero() {
           Better Deposits
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
-          A smart, coded, financial contract that acts as escrow for deposits in
-          low trust renting environments. Rely on code, not law
+          Trustless, automated, escrow solution for your deposit. Agree on a set
+          of rules with the other party (deposit, lock-up period) and deposit
+          into a smart contract
+        </Typography>
+        <Typography variant="h6" align="center" color="textPrimary">
+          Rely on code, not trust
         </Typography>
         <div className={classes.heroButtons}>
           <Grid container spacing={1} justify="center">
