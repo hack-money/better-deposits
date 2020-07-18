@@ -1,14 +1,14 @@
-import React from 'react';
-import NavBar from '../components/NavBar';
-import Hero from '../components/Hero';
-import Footer from '../components/Footer';
+import React, { Fragment } from 'react';
+import HeadSection from '../components/headSection';
+import FeatureSection from '../components/featureSection';
+import HowWorksSection from '../components/howWorksSection';
 
 export default function Home() {
   return (
-    <main>
-      <NavBar />
-      <Hero />
-      <Footer />
-    </main>
+    <Fragment>
+      <HeadSection />
+      <FeatureSection />
+      <HowWorksSection />
+    </Fragment>
   );
 }

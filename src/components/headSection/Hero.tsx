@@ -1,6 +1,6 @@
 import { Container, Typography, Grid, Button } from '@material-ui/core';
 import React from 'react';
-import { useStyles } from '../styles/useStyles';
+import { useStyles } from '../useStyles';
 
 export default function Hero() {
   const classes = useStyles();

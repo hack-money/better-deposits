@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
-import { useStyles } from '../styles/useStyles';
+import { useStyles } from '../useStyles';
 
 export default function Footer() {
   const classes = useStyles();
