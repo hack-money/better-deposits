@@ -5,6 +5,7 @@ import {
   isWidthUp,
   withWidth,
   Container,
+  Box,
 } from '@material-ui/core';
 import ComputerIcon from '@material-ui/icons/Computer';
 import SpeedIcon from '@material-ui/icons/Speed';
@@ -66,9 +67,11 @@ function FeatureSection(props: FeatureProps) {
     <div className={classes.featureSection}>
       <Container>
         <div style={{ backgroundColor: '#FFFFFF' }}>
-          <Typography variant="h3" align="center" className="lg-mg-bottom">
-            Features
-          </Typography>
+          <Box m={5}>
+            <Typography variant="h3" align="center" className="lg-mg-bottom">
+              Features
+            </Typography>
+          </Box>
           <div className="container-fluid">
             <Grid container spacing={calculateSpacing(width)}>
               {features.map((element) => (

@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(8, 0, 15),
   },
   heroButtons: {
@@ -30,20 +30,16 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
-  howWorksSection: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 15),
-  },
   featureSection: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 15),
+    padding: theme.spacing(8, 0, 7),
   },
   bottomSection: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 15),
+    padding: theme.spacing(8, 0, 7),
   },
   productHowItWorks: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 15),
+    padding: theme.spacing(8, 0, 7),
   },
 }));
