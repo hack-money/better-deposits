@@ -10,6 +10,9 @@ import {
 import ComputerIcon from '@material-ui/icons/Computer';
 import SpeedIcon from '@material-ui/icons/Speed';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import EmailIcon from '@material-ui/icons/Email';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import FeatureCard from './FeatureCard';
 import { useStyles } from '../useStyles';
@@ -41,18 +44,42 @@ const features = [
   },
   {
     color: '#6200EA',
-    headline: 'Earn high yield interest',
-    text:
-      'Earn interest on the deposit throughout via DeFi money market protocols',
+    headline: 'Earn interest',
+    text: 'Earn interest on the deposit via DeFi money market protocols',
     icon: <MonetizationOnIcon style={{ fontSize: iconSize }} />,
     mdDelay: '200',
     smDelay: '200',
   },
   {
-    color: '#0091EA',
+    color: '#FCC639',
     headline: 'Speed',
     text: 'Deposit and withdraw within seconds, not days',
     icon: <SpeedIcon style={{ fontSize: iconSize }} />,
+    mdDelay: '400',
+    smDelay: '0',
+  },
+  {
+    color: '#FD6565',
+    headline: 'Transparency',
+    text: 'Always maintain visibility of your deposit status via a dashboard',
+    icon: <AssessmentIcon style={{ fontSize: iconSize }} />,
+    mdDelay: '400',
+    smDelay: '0',
+  },
+  {
+    color: '#0091EA',
+    headline: 'Nominate dispute resolver',
+    text:
+      'Agree on a third party to resolve any disputes at end of the agreement',
+    icon: <ThumbUpIcon style={{ fontSize: iconSize }} />,
+    mdDelay: '400',
+    smDelay: '0',
+  },
+  {
+    color: '#FD65F8',
+    headline: 'Real time notifications',
+    text: 'Get notified of your deposit status as and when changes happen ',
+    icon: <EmailIcon style={{ fontSize: iconSize }} />,
     mdDelay: '400',
     smDelay: '0',
   },
