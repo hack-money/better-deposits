@@ -28,7 +28,7 @@ export default function Hero() {
         <div className={classes.heroButtons}>
           <Grid container spacing={1} justify="center">
             <Button variant="contained" color="primary" size="large">
-              Launch
+              Launch App
             </Button>
           </Grid>
         </div>
