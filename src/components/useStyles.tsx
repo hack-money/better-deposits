@@ -1,6 +1,23 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
+import grey from '@material-ui/core/colors/grey';
 
-export const useStyles = makeStyles((theme) => ({
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: blue[700],
+    },
+    secondary: {
+      main: blue[500],
+    },
+    background: {
+      default: grey[100],
+    },
+  },
+});
+
+export const useStyles = makeStyles(() => ({
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -41,5 +58,11 @@ export const useStyles = makeStyles((theme) => ({
   productHowItWorks: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 7),
+  },
+  navBar: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  button: {
+    backgroundColor: theme.palette.primary.main,
   },
 }));

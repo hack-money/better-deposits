@@ -27,7 +27,12 @@ export default function Hero() {
         </Typography>
         <div className={classes.heroButtons}>
           <Grid container spacing={1} justify="center">
-            <Button variant="contained" color="primary" size="large">
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.button}
+            >
               Launch App
             </Button>
           </Grid>
