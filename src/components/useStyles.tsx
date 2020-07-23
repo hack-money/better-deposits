@@ -44,8 +44,8 @@ export const useStyles = makeStyles(() => ({
     flexGrow: 1,
   },
   footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(3, 2),
   },
   featureSection: {
     backgroundColor: theme.palette.background.paper,

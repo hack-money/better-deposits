@@ -14,22 +14,39 @@ export default function NavBar() {
     <div>
       <AppBar position="static" className={classes.navBar}>
         <Toolbar>
-          <Typography color="inherit" variant="h5" noWrap>
-            Better Deposits
-          </Typography>
+          <div
+            style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              width: '30rem',
+            }}
+          >
+            <Typography color="inherit" variant="h4" noWrap>
+              Better Deposits
+            </Typography>
+          </div>
           <Grid justify="flex-end" container>
-            {' '}
             <Grid>
-              <Button color="inherit" component={Link} to={homeRoute}>
+              <Button
+                color="inherit"
+                component={Link}
+                to={homeRoute}
+                size="large"
+              >
                 Home
               </Button>
             </Grid>
-            <Button color="inherit" component={Link} to={technologyRoute}>
+            <Button
+              color="inherit"
+              component={Link}
+              to={technologyRoute}
+              size="large"
+            >
               Technology
             </Button>
           </Grid>
           <Grid>
-            <Button color="inherit" component={Link} to={faqRoute}>
+            <Button color="inherit" component={Link} to={faqRoute} size="large">
               FAQs
             </Button>
           </Grid>
