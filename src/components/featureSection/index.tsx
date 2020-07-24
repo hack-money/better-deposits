@@ -45,7 +45,8 @@ const features = [
   {
     color: '#6200EA',
     headline: 'Earn interest',
-    text: 'Earn interest on the deposit via DeFi money market protocols',
+    text:
+      'Get interest in real time on your deposit. Generates passive income via DeFi protocols',
     icon: <MonetizationOnIcon style={{ fontSize: iconSize }} />,
     mdDelay: '200',
     smDelay: '200',
@@ -61,7 +62,7 @@ const features = [
   {
     color: '#FD6565',
     headline: 'Transparency',
-    text: 'Always maintain visibility of your deposit status via a dashboard',
+    text: 'Always maintain visibility of your deposit status',
     icon: <AssessmentIcon style={{ fontSize: iconSize }} />,
     mdDelay: '400',
     smDelay: '0',
@@ -78,7 +79,7 @@ const features = [
   {
     color: '#FD65F8',
     headline: 'Real time notifications',
-    text: 'Get notified of your deposit status as and when changes happen ',
+    text: 'Get notified of your deposit status as and when changes happen',
     icon: <EmailIcon style={{ fontSize: iconSize }} />,
     mdDelay: '400',
     smDelay: '0',

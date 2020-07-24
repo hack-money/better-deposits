@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import { homeRoute, technologyRoute, faqRoute } from '../routes';
+import { homeRoute, howItWorksRoute, faqRoute } from '../routes';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from './useStyles';
 
@@ -39,10 +39,10 @@ export default function NavBar() {
             <Button
               color="inherit"
               component={Link}
-              to={technologyRoute}
+              to={howItWorksRoute}
               size="large"
             >
-              Technology
+              How it works
             </Button>
           </Grid>
           <Grid>
