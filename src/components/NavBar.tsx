@@ -47,7 +47,7 @@ export default function NavBar() {
           </Grid>
           <Grid>
             <Button color="inherit" component={Link} to={faqRoute} size="large">
-              FAQs
+              FAQ
             </Button>
           </Grid>
         </Toolbar>

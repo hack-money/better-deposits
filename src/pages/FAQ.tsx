@@ -40,18 +40,11 @@ export default function FAQ() {
           </AccordionSummary>
           <AccordionDetails>
             <Answer
-              answer="A smart contract is a piece of software, code that acts according to a set of pre-programmed rules. They have a few properties that make them very useful for 
-          acting as escrow for funds"
+              answer="A smart contract is a piece of software, code that acts according to a set of pre-programmed rules. They are immutable (their code and rules 
+                cannot be changed once deployed), always on 24/7, and are able to store and manipulate money.
+                
+                They are deployed on the Ethereum blockchain."
             />
-            <Answer
-              answer="a) Immutability - once deployed, their code can not be changed. This means you can have confidence that the rules 
-          governing your deposit will not change"
-            />
-            <Answer
-              answer="b) Always on, 24/7 - they are permissionless and always online. You can always query the status of your deposit
-          "
-            />
-            <Answer answer="c) Store money - the software can store and process funds easily" />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -64,11 +57,9 @@ export default function FAQ() {
           </AccordionSummary>
           <AccordionDetails>
             <Answer
-              answer="A smart contract is a piece of computer code that once deployed will perform as programmed in perpetuity. In addition, this computer code
-            can store, transfer and manage funds. Together, this means that you rely on a smart contract to store and manage a deposit for you according to set of public, agreed upon rules.
-            There isn't a need to trust an individual or company, you trust immutable code."
+              answer="It is the smart contract that holds your funds and acts on them according to the deposit and escrow rules you setup. This means that you're not trusting an individual or company, rather 
+              you rely on immutable, always-on and permissionless code. Currently, this is alpha software and not ready for real use. Better Deposits, at the moment, is a priviledged actor has various admin priviledges."
             />
-            <Answer answer="This is however currently alpha software and not ready for real use. Better Deposits, at the moment, is a priviledged actor has various admin priviledges." />
           </AccordionDetails>
         </Accordion>
         <Accordion>

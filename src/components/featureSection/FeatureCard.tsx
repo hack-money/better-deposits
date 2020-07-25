@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, withStyles, Theme } from '@material-ui/core';
+import { Typography, withStyles, Theme, Container } from '@material-ui/core';
 import { Styles } from '@material-ui/core/styles/withStyles';
 
 const styles: Styles<Theme, {}, 'iconWrapper'> = (theme: any) => ({
   iconWrapper: {
     borderRadius: theme.shape.borderRadius,
     textAlign: 'center',
-    display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: theme.spacing(3),
@@ -48,21 +47,21 @@ function FeatureCard(props: FeatureCardProps) {
   const { classes, Icon, color, headline, text } = props;
   return (
     <Fragment>
-      <div
-        // We will set color and fill here, due to some prios complications
+      <Container
         className={classes.iconWrapper}
         style={{
           color: color,
           backgroundColor: shadeColor(color, 0.5),
-          fill: color,
+          width: '75px',
         }}
       >
         {Icon}
-      </div>
-      <Typography variant="h5" paragraph>
+      </Container>
+      <Typography variant="h5" paragraph align="center">
         {headline}
       </Typography>
-      <Typography variant="body1" color="textSecondary">
+
+      <Typography variant="body1" color="textSecondary" align="center">
         {text}
       </Typography>
     </Fragment>
