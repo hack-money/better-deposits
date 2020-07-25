@@ -2,7 +2,9 @@
 
 pragma solidity >=0.6.10 <0.7.0;
 
-interface IBetterDeposit {
+import {IBaseBetterDeposit} from "./IBaseBetterDeposit.sol";
+
+interface IBetterDeposit is IBaseBetterDeposit {
     function create(
         address _userA,
         address _userB,
@@ -15,28 +17,7 @@ interface IBetterDeposit {
 
     function withdraw(uint256 escrowId) external;
 
-    function getTotalDeposit(uint256 escrowId) external view returns (uint256);
-
-    function getUserDeposit(address user, uint256 escrowId)
-        external
-        view
-        returns (uint256);
-
-    function getAgreementEnd() external;
-
-    function getTotalRequiredDeposit(uint256 escrowId)
-        external
-        view
-        returns (uint256);
-
     function settleAgreement(uint256 escrowId) external;
 
-    function getRequiredUserDeposit(address user, uint256 escrowId)
-        external
-        view
-        returns (uint256);
-
     function dispute(uint256 escrowId) external;
-
-    function approveDepositRelease(uint256 escrowId) external;
 }

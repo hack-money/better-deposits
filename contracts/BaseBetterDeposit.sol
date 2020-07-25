@@ -1,9 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.10 <0.7.0;
-import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
 
-contract BaseBetterDeposit {
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
+import {IBaseBetterDeposit} from "./interfaces/IBaseBetterDeposit.sol";
+import {State, Escrow} from "./Types.sol";
+
+contract BaseBetterDeposit is IBaseBetterDeposit {
     using SafeMath for uint256;
+
     Escrow[] public escrows;
     IERC20 public linkedToken;
 
@@ -78,7 +83,7 @@ contract BaseBetterDeposit {
     /**
      * Get the number of escrow arrangements ever to be created
      */
-    function getNumEscrows() external view returns (uint256) {
+    function getNumEscrows() external override view returns (uint256) {
         return escrows.length;
     }
 
@@ -88,6 +93,7 @@ contract BaseBetterDeposit {
      */
     function getEscrowInfo(uint256 escrowId)
         external
+        override
         view
         returns (
             address,
@@ -105,5 +111,140 @@ contract BaseBetterDeposit {
             escrow.startTime,
             escrow.escrowState
         );
+    }
+
+    /**
+     * @dev Get the deposit required of a user in order for this agreement to be in effect
+     * @param user - Ethereum address of user in question
+     * @param escrowId - unique identifier for a particular escrow
+     * @return Amount a user is expected to deposit for agreement to be in effect
+     */
+    function getRequiredUserDeposit(address user, uint256 escrowId)
+        public
+        override
+        view
+        returns (uint256)
+    {
+        require(user != address(0), "BetterDeposit: ZERO_ADDRESS");
+        Escrow storage escrow = escrows[escrowId];
+        return escrow.requiredDeposits[user];
+    }
+
+    /**
+     * @dev Get the total deposit escrowed by this contract in the agreement between
+     * userA and userB
+     *
+     * Total deposit = userADeposit + userBDeposit
+     * @param escrowId  - nique identifier for a particular escrow
+     * @return Total deposit escrowed by this contract
+     */
+    function getTotalDeposit(uint256 escrowId)
+        public
+        override
+        view
+        returns (uint256)
+    {
+        Escrow storage escrow = escrows[escrowId];
+        address userA = escrow.userA;
+        address userB = escrow.userB;
+
+        uint256 userADeposit = escrow.balances[userA];
+        uint256 userBDeposit = escrow.balances[userB];
+        return userADeposit.add(userBDeposit);
+    }
+
+    /**
+     * @dev Get the total deposit required for this contract to be considered active
+     * @param escrowId - unique identifier for a particular escrow
+     * @return Total deposit required for contract to be active
+     */
+    function getTotalRequiredDeposit(uint256 escrowId)
+        public
+        override
+        view
+        returns (uint256)
+    {
+        Escrow storage escrow = escrows[escrowId];
+        address userA = escrow.userA;
+        address userB = escrow.userB;
+
+        uint256 userARequiredDeposit = escrow.requiredDeposits[userA];
+        uint256 userBRequiredDeposit = escrow.requiredDeposits[userB];
+        return userARequiredDeposit.add(userBRequiredDeposit);
+    }
+
+    /**
+     * @dev Get the time that this agreement ends. The escrowed funds are locked
+     * and cannot be withdrawn until this period is past
+     */
+    function getAgreementEnd() public override {
+        uint256 temp;
+    }
+
+    /**
+     * @dev Determines whether all parties to the agreement have approved
+     * for the deposit to be released
+     * @return Bool determining whether all parties have approved the
+     * release of the deposit
+     */
+    function isDepositReleaseApproved(uint256 escrowId, address[] memory users)
+        public
+        override
+        view
+        returns (bool)
+    {
+        for (uint256 i = 0; i < users.length; i += 1) {
+            bool userApproval = getUserDepositReleaseApproval(
+                escrowId,
+                users[i]
+            );
+            if (!userApproval) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @dev Determine if funds time-lock is expired
+     */
+    function isPastTimelock() public override returns (bool) {
+        return true;
+    }
+
+    /**
+     * @dev Get the status of whether a user has approved their part of the deposit to be
+     * released or not
+     * @param user - Ethereum address who's deposit release approval is being queried
+     * @return Bool indicating whether approval has been given by the user for the deposit
+     * to be released (true) or not (false)
+     */
+    function getUserDepositReleaseApproval(uint256 escrowId, address user)
+        internal
+        view
+        returns (bool)
+    {
+        require(user != address(0), "BetterDeposit: ZERO_ADDRESS");
+        Escrow storage escrow = escrows[escrowId];
+        return escrow.depositReleaseApprovals[user];
+    }
+
+    /**
+     * @dev Allow a party to the agreement to approve the deposit to be
+     * released at the end of the agreement
+     * @param escrowId - unique identifier for a particular escrow
+     *
+     * Only calleable by parties involved in agreement
+     */
+    function approveDepositRelease(uint256 escrowId)
+        external
+        override
+        onlyUser(escrowId)
+    {
+        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
+
+        Escrow storage escrow = escrows[escrowId];
+        escrow.depositReleaseApprovals[msg.sender] = true;
+        emit DepositReleaseApproval(escrowId, msg.sender);
     }
 }
