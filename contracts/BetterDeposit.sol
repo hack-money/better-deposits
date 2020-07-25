@@ -27,6 +27,7 @@ contract BetterDeposit is IBetterDeposit, BaseBetterDeposit, Security {
         require(_userARequiredDeposit > 0, "BetterDeposits: ZERO_VALUE");
         require(_userBRequiredDeposit > 0, "BetterDeposits: ZERO_VALUE");
 
+        uint256 escrowId = escrows.length;
         Escrow memory newEscrow = Escrow({
             userA: _userA,
             userB: _userB,
@@ -34,16 +35,12 @@ contract BetterDeposit is IBetterDeposit, BaseBetterDeposit, Security {
             startTime: now,
             escrowState: State.PRE_ACTIVE
         });
-
         escrows.push(newEscrow);
-        uint256 escrowId = escrows.length;
-
-        Escrow storage createdEscrow = escrows[escrowId];
-        createdEscrow.requiredDeposits[_userA] = _userARequiredDeposit;
-        createdEscrow.requiredDeposits[_userB] = _userBRequiredDeposit;
+        escrows[escrowId].requiredDeposits[_userA] = _userARequiredDeposit;
+        escrows[escrowId].requiredDeposits[_userB] = _userBRequiredDeposit;
 
         emit Create(escrowId, _userA, _userB);
-        return escrowId;
+        return uint256(5);
     }
 
     /**
@@ -209,5 +206,24 @@ contract BetterDeposit is IBetterDeposit, BaseBetterDeposit, Security {
             "BetterDeposit: DISPUTE_TRANSFER_FAILED"
         );
         emit Dispute(escrowId, userA, userB, escrow.adjudicator, totalDeposit);
+    }
+
+    /**
+     * @dev Allow a party to the agreement to approve the deposit to be
+     * released at the end of the agreement
+     * @param escrowId - unique identifier for a particular escrow
+     *
+     * Only calleable by parties involved in agreement
+     */
+    function approveDepositRelease(uint256 escrowId)
+        external
+        override
+        onlyUser(escrowId)
+    {
+        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
+
+        Escrow storage escrow = escrows[escrowId];
+        escrow.depositReleaseApprovals[msg.sender] = true;
+        emit DepositReleaseApproval(escrowId, msg.sender);
     }
 }

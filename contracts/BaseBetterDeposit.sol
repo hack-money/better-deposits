@@ -114,6 +114,14 @@ contract BaseBetterDeposit is IBaseBetterDeposit {
     }
 
     /**
+     * Get the state of an escrow - whether it is PRE-ACTIVE, ACTIVE etc
+     */
+    function getEscrowState(uint256 escrowId) external override view returns (State) {
+        Escrow memory escrow = escrows[escrowId];
+        return escrow.escrowState;
+    }
+
+    /**
      * @dev Get the deposit required of a user in order for this agreement to be in effect
      * @param user - Ethereum address of user in question
      * @param escrowId - unique identifier for a particular escrow
@@ -227,24 +235,5 @@ contract BaseBetterDeposit is IBaseBetterDeposit {
         require(user != address(0), "BetterDeposit: ZERO_ADDRESS");
         Escrow storage escrow = escrows[escrowId];
         return escrow.depositReleaseApprovals[user];
-    }
-
-    /**
-     * @dev Allow a party to the agreement to approve the deposit to be
-     * released at the end of the agreement
-     * @param escrowId - unique identifier for a particular escrow
-     *
-     * Only calleable by parties involved in agreement
-     */
-    function approveDepositRelease(uint256 escrowId)
-        external
-        override
-        onlyUser(escrowId)
-    {
-        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
-
-        Escrow storage escrow = escrows[escrowId];
-        escrow.depositReleaseApprovals[msg.sender] = true;
-        emit DepositReleaseApproval(escrowId, msg.sender);
     }
 }

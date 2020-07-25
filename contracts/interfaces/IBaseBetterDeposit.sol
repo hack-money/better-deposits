@@ -44,5 +44,5 @@ interface IBaseBetterDeposit {
 
     function isPastTimelock() external returns (bool);
 
-    function approveDepositRelease(uint256 escrowId) external;
+    function getEscrowState(uint256 escrowId) external view returns (State);
 }

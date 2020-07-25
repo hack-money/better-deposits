@@ -20,4 +20,6 @@ interface IBetterDeposit is IBaseBetterDeposit {
     function settleAgreement(uint256 escrowId) external;
 
     function dispute(uint256 escrowId) external;
+
+    function approveDepositRelease(uint256 escrowId) external;
 }
