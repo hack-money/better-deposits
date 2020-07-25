@@ -89,6 +89,48 @@ export default function FAQ() {
             <Answer answer="Security is a core focus for the development of the software. However, this is currently alpha software and not yet ready for real use." />
           </AccordionDetails>
         </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Question question="5. How do I get started using BetterDeposits?" />
+          </AccordionSummary>
+          <AccordionDetails>
+            <Answer
+              answer="Click 'Launch App' on the homepage. The software is currently under development, so in the meantime we would appreciate you filling in the feedback questionnaire
+            to help us shape the product!"
+            />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Question question="6. What rules can I set on the escrow or deposit arrangement?" />
+          </AccordionSummary>
+          <AccordionDetails>
+            <Answer
+              answer="All escrows and deposits can be customised according to your specific circumstance. You set the deposit required of each party, the time period over
+            which the funds are locked and the third party who will resolve any deposit disputes."
+            />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Question question="7. What do I need to get started?" />
+          </AccordionSummary>
+          <AccordionDetails>
+            <Answer answer="Getting started is simple and easy. You need an email address and an internet connection." />
+          </AccordionDetails>
+        </Accordion>
       </div>
     </Container>
   );
