@@ -5,91 +5,24 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
 import {IBetterDeposit} from "./interfaces/IBetterDeposit.sol";
 import {Security} from "./Security.sol";
-import {ReleaseManager} from "./ReleaseManager.sol";
+import {State, Escrow} from "./Types.sol";
 
-contract BetterDeposit is IBetterDeposit, ReleaseManager, Security {
-    using SafeMath for uint256;
-
-    IERC20 public linkedToken;
-    address public userA;
-    address public userB;
-    address public adjudicator;
-
-    mapping(address => uint256) balances;
-    mapping(address => uint256) requiredDeposits;
-
-    event Deposit(address indexed depositAddress, uint256 depositAmount);
-    event Withdraw(address indexed withdrawAddress, uint256 withdrawAmount);
-    event AgreementStart(
-        address indexed userA,
-        address indexed userB,
-        uint256 userADeposit,
-        uint256 userBDeposit
-    );
-    event AgreementFinish(address indexed userA, address indexed userB);
-    event Dispute(
-        address indexed userA,
-        address indexed userB,
-        address indexed adjudicator,
-        uint256 totalDeposit
-    );
-
-    enum State {PRE_ACTIVE, ACTIVE, SETTLED, DISPUTE, COMPLETE}
-    State public escrowState; // current agreement status of the escrow
-
-    constructor(
-        address _linkedToken,
-        address _userA,
-        address _userB,
-        uint256 _userARequiredDeposit,
-        uint256 _userBRequiredDeposit,
-        address _adjudicator
-    ) public {
-        linkedToken = IERC20(_linkedToken);
-        userA = _userA;
-        userB = _userB;
-        requiredDeposits[_userA] = _userARequiredDeposit;
-        requiredDeposits[_userB] = _userBRequiredDeposit;
-        adjudicator = _adjudicator;
-
-        escrowState = State.PRE_ACTIVE;
-    }
-
-    modifier onlyUser() {
-        require(
-            msg.sender == userA || msg.sender == userB,
-            "BetterDeposit: NOT_VALID_USER"
-        );
-        _;
-    }
-
-    /**
-     * @dev Get the currently escrowed user deposit
-     * @param user - Ethereum address of user in question
-     */
-    function getUserDeposit(address user)
-        public
-        override
-        view
-        returns (uint256)
-    {
-        require(user != address(0));
-        return balances[user];
-    }
-
+contract BetterDeposit is IBetterDeposit, Security {
     /**
      * @dev Get the deposit required of a user in order for this agreement to be in effect
      * @param user - Ethereum address of user in question
+     * @param escrowId - unique identifier for a particular escrow
      * @return Amount a user is expected to deposit for agreement to be in effect
      */
-    function getRequiredUserDeposit(address user)
+    function getRequiredUserDeposit(address user, uint256 escrowId)
         public
         override
         view
         returns (uint256)
     {
         require(user != address(0), "BetterDeposit: ZERO_ADDRESS");
-        return requiredDeposits[user];
+        Escrow storage escrow = escrows[escrowId];
+        return escrow.requiredDeposits[user];
     }
 
     /**
@@ -97,21 +30,41 @@ contract BetterDeposit is IBetterDeposit, ReleaseManager, Security {
      * userA and userB
      *
      * Total deposit = userADeposit + userBDeposit
+     * @param escrowId  - nique identifier for a particular escrow
      * @return Total deposit escrowed by this contract
      */
-    function getTotalDeposit() public override view returns (uint256) {
-        uint256 userADeposit = getUserDeposit(userA);
-        uint256 userBDeposit = getUserDeposit(userB);
+    function getTotalDeposit(uint256 escrowId)
+        public
+        override
+        view
+        returns (uint256)
+    {
+        Escrow storage escrow = escrows[escrowId];
+        address userA = escrow.userA;
+        address userB = escrow.userB;
+
+        uint256 userADeposit = escrow.balances[userA];
+        uint256 userBDeposit = escrow.balances[userB];
         return userADeposit.add(userBDeposit);
     }
 
     /**
      * @dev Get the total deposit required for this contract to be considered active
+     * @param escrowId - unique identifier for a particular escrow
      * @return Total deposit required for contract to be active
      */
-    function getTotalRequiredDeposit() public override view returns (uint256) {
-        uint256 userARequiredDeposit = getRequiredUserDeposit(userA);
-        uint256 userBRequiredDeposit = getRequiredUserDeposit(userB);
+    function getTotalRequiredDeposit(uint256 escrowId)
+        public
+        override
+        view
+        returns (uint256)
+    {
+        Escrow storage escrow = escrows[escrowId];
+        address userA = escrow.userA;
+        address userB = escrow.userB;
+
+        uint256 userARequiredDeposit = escrow.requiredDeposits[userA];
+        uint256 userBRequiredDeposit = escrow.requiredDeposits[userB];
         return userARequiredDeposit.add(userBRequiredDeposit);
     }
 
@@ -124,23 +77,67 @@ contract BetterDeposit is IBetterDeposit, ReleaseManager, Security {
     }
 
     /**
+     * Create an escrow arrangement. Initialises it, but the escrow is not yet active - users need to deposit
+     * the required amounts using deposit() to enact the agreement
+     */
+    function create(
+        address _userA,
+        address _userB,
+        address _adjudicator,
+        uint256 _userARequiredDeposit,
+        uint256 _userBRequiredDeposit
+    ) external override returns (uint256) {
+        require(_userA != address(0), "BetterDeposits: ZERO_ADDRESS");
+        require(_userB != address(0), "BetterDeposits: ZERO_ADDRESS");
+        require(_adjudicator != address(0), "BetterDeposits: ZERO_ADDRESS");
+        require(_userARequiredDeposit > 0, "BetterDeposits: ZERO_VALUE");
+        require(_userBRequiredDeposit > 0, "BetterDeposits: ZERO_VALUE");
+
+        Escrow memory newEscrow = Escrow({
+            userA: _userA,
+            userB: _userB,
+            adjudicator: _adjudicator,
+            startTime: now,
+            escrowState: State.PRE_ACTIVE
+        });
+
+        escrows.push(newEscrow);
+        uint256 escrowId = escrows.length;
+
+        Escrow storage createdEscrow = escrows[escrowId];
+        createdEscrow.requiredDeposits[_userA] = _userARequiredDeposit;
+        createdEscrow.requiredDeposits[_userB] = _userBRequiredDeposit;
+        createdEscrow.id = escrowId;
+
+        emit Create(escrowId, _userA, _userB);
+        return escrowId;
+    }
+
+    /**
      * @dev User deposits funds, their part of the deposit being escrowed
      * Currently, the whole deposit must be deposited in one go. Must be called by the
      * user themselves
      *
      * @param amount - amount to be deposited
+     * @param escrowId - unique identifier for a particular escrow
      *
      * Only calleable by parties involved in the agreement
      */
     // TODO: add escape mechanism to pull funds if other party to the agreement
     // doesn't deposit
-    function deposit(uint256 amount) external override onlyUser whenNotPaused {
+    function deposit(uint256 amount, uint256 escrowId)
+        external
+        override
+        onlyUser(escrowId)
+        whenNotPaused
+    {
+        Escrow storage escrow = escrows[escrowId];
         require(
-            escrowState == State.PRE_ACTIVE,
+            escrow.escrowState == State.PRE_ACTIVE,
             "BetterDeposit: AGREEMENT_NOT_PRE_ACTIVE"
         );
         require(
-            amount == requiredDeposits[msg.sender],
+            amount == escrow.requiredDeposits[msg.sender],
             "BetterDeposit: INCORRECT_DEPOSIT"
         );
         uint256 approvedAllowance = linkedToken.allowance(
@@ -152,7 +149,7 @@ contract BetterDeposit is IBetterDeposit, ReleaseManager, Security {
             "BetterDeposit: INSUFFICIENT_APPROVAL"
         );
 
-        balances[msg.sender] = balances[msg.sender].add(amount);
+        escrow.balances[msg.sender] = escrow.balances[msg.sender].add(amount);
 
         require(
             linkedToken.transferFrom(msg.sender, address(this), amount),
@@ -160,57 +157,70 @@ contract BetterDeposit is IBetterDeposit, ReleaseManager, Security {
         );
 
         // if both users have deposited, start the agreement
-        if (getTotalRequiredDeposit() == getTotalDeposit()) {
-            escrowState = State.ACTIVE;
+        if (getTotalRequiredDeposit(escrowId) == getTotalDeposit(escrowId)) {
+            escrow.escrowState = State.ACTIVE;
             emit AgreementStart(
-                userA,
-                userB,
-                getUserDeposit(userA),
-                getUserDeposit(userB)
+                escrowId,
+                escrow.userA,
+                escrow.userB,
+                getUserDeposit(escrow.userA, escrowId),
+                getUserDeposit(escrow.userB, escrowId)
             );
         }
 
-        emit Deposit(msg.sender, amount);
+        emit Deposit(escrowId, msg.sender, amount);
     }
 
     /**
      * @dev Mark the agreement as being settled and so enable a withdraw of funds
      * to occur. Requires the time lock to have passed and for all users to have
      * approved the deposit to be released
+     * @param escrowId - unique identifier for a particular escrow
      *
      * Calleable by anyone - by definition when this will execute successfully, all
      * parties have given their approval for the deposit to be released
      */
-    function settleAgreement() external override {
+    function settleAgreement(uint256 escrowId) external override {
         require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
 
+        Escrow storage escrow = escrows[escrowId];
+
         address[] memory users = new address[](2);
-        users[0] = userA;
-        users[1] = userB;
+        users[0] = escrow.userA;
+        users[1] = escrow.userB;
         require(
             isDepositReleaseApproved(users),
             "BetterDeposit: DEPOSIT_RELEASE_NOT_APPROVED"
         );
-        escrowState = State.SETTLED;
+        escrow.escrowState = State.SETTLED;
     }
 
     /**
      * @dev Withdraw a user's locked deposit. Requires that the locked deposit period
      * is past and both parties have agreed for the deposits to be released
-     *
+     * @param escrowId - unique identifier for a particular escrow
      * Withdraws the whole of the user's deposit to their address.
      *
      * Only calleable by parties involved in the agreement
      */
-    function withdraw() external override onlyUser whenNotPaused {
+    function withdraw(uint256 escrowId)
+        external
+        override
+        onlyUser(escrowId)
+        whenNotPaused
+    {
+        Escrow storage escrow = escrows[escrowId];
+
         require(
-            escrowState == State.SETTLED,
+            escrow.escrowState == State.SETTLED,
             "BetterDeposit: AGREEMENT_NOT_SETTLED"
         );
 
-        uint256 userDeposit = getUserDeposit(msg.sender);
+        uint256 userDeposit = getUserDeposit(msg.sender, escrowId);
         require(userDeposit > uint256(0), "BetterDeposit: NO_USER_DEPOSIT");
-        balances[msg.sender] = balances[msg.sender].sub(userDeposit);
+        escrow.balances[msg.sender] = escrow.balances[msg.sender].sub(
+            userDeposit
+        );
 
         require(
             userDeposit <= linkedToken.balanceOf(address(this)),
@@ -222,12 +232,12 @@ contract BetterDeposit is IBetterDeposit, ReleaseManager, Security {
             "BetterDeposit: WITHDRAW_FAILED"
         );
 
-        emit Withdraw(msg.sender, userDeposit);
+        emit Withdraw(escrowId, msg.sender, userDeposit);
 
         // if both users have withdrawn, mark agreement status as complete
-        if (getTotalDeposit() == uint256(0)) {
-            escrowState = State.COMPLETE;
-            emit AgreementFinish(userA, userB);
+        if (getTotalDeposit(escrowId) == uint256(0)) {
+            escrow.escrowState = State.COMPLETE;
+            emit AgreementFinish(escrowId, escrow.userA, escrow.userB);
         }
     }
 
@@ -235,38 +245,110 @@ contract BetterDeposit is IBetterDeposit, ReleaseManager, Security {
      * @dev Start a dispute over the deposit. If successfully called, it will
      * transfer the deposit held by the contract to the third party adjudicator
      * address.
+     * @param escrowId - unique identifier for a particular escrow
      *
      * Adjudicator then resolves dispute off-chain
      *
      * Only calleable by parties involved in agreement
      * TODO: restrict to only be calleable when agreement term is expired
      */
-    function dispute() external override onlyUser {
+    function dispute(uint256 escrowId) external override onlyUser(escrowId) {
+        Escrow storage escrow = escrows[escrowId];
         // TODO: only allow this to be called when agreement term has expired
-        escrowState = State.DISPUTE;
+        escrow.escrowState = State.DISPUTE;
 
         // local variable holding deposit, will decrease to 0 when
         // user deposit balances decremented
-        uint256 totalDeposit = getTotalDeposit();
+        uint256 totalDeposit = getTotalDeposit(escrowId);
+        address userA = escrow.userA;
+        address userB = escrow.userB;
 
         // decrement deposit balances of users
-        balances[userA] = balances[userA].sub(getUserDeposit(userA));
-        balances[userB] = balances[userB].sub(getUserDeposit(userB));
+        escrow.balances[userA] = escrow.balances[userA].sub(
+            getUserDeposit(userA, escrowId)
+        );
+        escrow.balances[userB] = escrow.balances[userB].sub(
+            getUserDeposit(userB, escrowId)
+        );
 
         require(
-            linkedToken.transfer(adjudicator, totalDeposit),
+            linkedToken.transfer(escrow.adjudicator, totalDeposit),
             "BetterDeposit: DISPUTE_TRANSFER_FAILED"
         );
-        emit Dispute(userA, userB, adjudicator, totalDeposit);
+        emit Dispute(escrowId, userA, userB, escrow.adjudicator, totalDeposit);
+    }
+
+    /**
+     * @dev Allow a party to the agreement to approve the deposit to be
+     * released at the end of the agreement
+     * @param escrowId - unique identifier for a particular escrow
+     *
+     * Only calleable by parties involved in agreement
+     */
+    function approveDepositRelease(uint256 escrowId)
+        external
+        override
+        onlyUser(escrowId)
+    {
+        Escrow storage escrow = escrows[escrowId];
+        internalApproveDepositRelease(escrow);
+    }
+
+    /**
+     * @dev Get the status of whether a user has approved their part of the deposit to be
+     * released or not
+     * @param user - Ethereum address who's deposit release approval is being queried
+     * @return Bool indicating whether approval has been given by the user for the deposit
+     * to be released (true) or not (false)
+     */
+    function getUserDepositReleaseApproval(Escrow storage escrow, address user)
+        internal
+        view
+        returns (bool)
+    {
+        require(user != address(0), "BetterDeposit: ZERO_ADDRESS");
+        return escrow.depositReleaseApprovals[user];
+    }
+
+    /**
+     * @dev Determines whether all parties to the agreement have approved
+     * for the deposit to be released
+     * @return Bool determining whether all parties have approved the
+     * release of the deposit
+     */
+    function isDepositReleaseApproved(uint256 escrowId, address[] memory users)
+        public
+        override
+        view
+        returns (bool)
+    {
+        for (uint256 i = 0; i < users.length; i += 1) {
+            bool userApproval = getUserDepositReleaseApproval(users[i]);
+            if (!userApproval) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @dev Determine if funds time-lock is expired
+     */
+    function isPastTimelock() public override returns (bool) {
+        return true;
     }
 
     /**
      * @dev Allow a party to the agreement to approve the deposit to be
      * released at the end of the agreement
      *
-     * Only calleable by parties involved in agreement
+     * Should be called in child inheriting contract, where appropriate
+     * permissioning is performed
      */
-    function approveDepositRelease() external override onlyUser {
-        internalApproveDepositRelease();
+    function internalApproveDepositRelease(Escrow storage escrow) internal {
+        require(isPastTimelock(), "BetterDeposit: TIME_LOCK_NOT_EXPIRED");
+        escrow.depositReleaseApprovals[msg.sender] = true;
+
+        emit DepositReleaseApproval(escrow.id, msg.sender);
     }
 }
