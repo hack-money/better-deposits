@@ -30,7 +30,7 @@ export default function ProductHowItWorks() {
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
                   Deposit escrow funds to the smart contract. Funds are now
-                  locked until the escrow expiry
+                  locked until the escrow expiry.
                 </Typography>
               </div>
             </Grid>
