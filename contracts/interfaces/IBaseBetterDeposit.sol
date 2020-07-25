@@ -37,7 +37,7 @@ interface IBaseBetterDeposit {
 
     function getAgreementEnd() external;
 
-    function isDepositReleaseApproved(uint256 escrowId, address[] memory users)
+    function isDepositReleaseApproved(address[] memory users, uint256 escrowId)
         external
         view
         returns (bool);
@@ -45,4 +45,9 @@ interface IBaseBetterDeposit {
     function isPastTimelock() external returns (bool);
 
     function getEscrowState(uint256 escrowId) external view returns (State);
+
+    function getUserDepositReleaseApproval(address user, uint256 escrowId)
+        external
+        view
+        returns (bool);
 }

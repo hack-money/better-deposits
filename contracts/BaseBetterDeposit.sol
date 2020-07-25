@@ -116,7 +116,12 @@ contract BaseBetterDeposit is IBaseBetterDeposit {
     /**
      * Get the state of an escrow - whether it is PRE-ACTIVE, ACTIVE etc
      */
-    function getEscrowState(uint256 escrowId) external override view returns (State) {
+    function getEscrowState(uint256 escrowId)
+        external
+        override
+        view
+        returns (State)
+    {
         Escrow memory escrow = escrows[escrowId];
         return escrow.escrowState;
     }
@@ -195,7 +200,7 @@ contract BaseBetterDeposit is IBaseBetterDeposit {
      * @return Bool determining whether all parties have approved the
      * release of the deposit
      */
-    function isDepositReleaseApproved(uint256 escrowId, address[] memory users)
+    function isDepositReleaseApproved(address[] memory users, uint256 escrowId)
         public
         override
         view
@@ -203,8 +208,8 @@ contract BaseBetterDeposit is IBaseBetterDeposit {
     {
         for (uint256 i = 0; i < users.length; i += 1) {
             bool userApproval = getUserDepositReleaseApproval(
-                escrowId,
-                users[i]
+                users[i],
+                escrowId
             );
             if (!userApproval) {
                 return false;
@@ -227,8 +232,9 @@ contract BaseBetterDeposit is IBaseBetterDeposit {
      * @return Bool indicating whether approval has been given by the user for the deposit
      * to be released (true) or not (false)
      */
-    function getUserDepositReleaseApproval(uint256 escrowId, address user)
-        internal
+    function getUserDepositReleaseApproval(address user, uint256 escrowId)
+        public
+        override
         view
         returns (bool)
     {

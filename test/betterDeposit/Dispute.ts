@@ -1,13 +1,9 @@
-import { ethers, waffle } from '@nomiclabs/buidler';
+import { ethers } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
 import { Contract, Signer } from 'ethers';
 import { solidity } from 'ethereum-waffle';
-
-import ERC20Mintable from '../../src/artifacts/ERC20Mintable.json';
-import BetterDeposit from '../../src/artifacts/BetterDeposit.json';
 import { EscrowState } from '../utils/escrowStates';
-
-const { deployContract } = waffle;
+import { depositFixture } from '../fixtures';
 
 use(solidity);
 
@@ -27,38 +23,35 @@ describe('Dispute', () => {
   const userADeposit = 20;
   const userBDeposit = 50;
 
+  let escrowId: bigint;
+
   beforeEach(async () => {
     [owner, userA, userB, adjudicator] = await ethers.getSigners();
-    userAAddress = await userA.getAddress();
-    userBAddress = await userB.getAddress();
-    adjudicatorAddress = await adjudicator.getAddress();
-
-    erc20 = await deployContract(owner, ERC20Mintable, []);
-    betterDeposit = await deployContract(owner, BetterDeposit, [
-      erc20.address,
+    ({
+      erc20,
+      betterDeposit,
+      escrowId,
       userAAddress,
       userBAddress,
+      adjudicatorAddress,
+    } = await depositFixture(
+      [owner, userA, userB, adjudicator],
       userADeposit,
       userBDeposit,
-      adjudicatorAddress,
-    ]);
-    await betterDeposit.deployed();
-
-    // mint users some tokens
-    await erc20.mint(userAAddress, mintAmount);
-    await erc20.mint(userBAddress, mintAmount);
+      mintAmount
+    ));
 
     // make deposit and start agreement
     await erc20.connect(userA).approve(betterDeposit.address, userADeposit);
-    await betterDeposit.connect(userA).deposit(userADeposit);
+    await betterDeposit.connect(userA).deposit(userADeposit, escrowId);
 
     await erc20.connect(userB).approve(betterDeposit.address, userBDeposit);
-    await betterDeposit.connect(userB).deposit(userBDeposit);
+    await betterDeposit.connect(userB).deposit(userBDeposit, escrowId);
   });
 
   describe('Success states', async () => {
     it('should activate dispute and transfer funds to adjudicator', async () => {
-      await betterDeposit.connect(userA).dispute();
+      await betterDeposit.connect(userA).dispute(escrowId);
 
       const contractBalance = await erc20.balanceOf(betterDeposit.address);
       expect(contractBalance).to.equal(0);
@@ -72,26 +65,32 @@ describe('Dispute', () => {
       const adjudicatorBalance = await erc20.balanceOf(adjudicatorAddress);
       expect(adjudicatorBalance).to.equal(userADeposit + userBDeposit);
 
-      const totalHeldDeposit = await betterDeposit.getTotalDeposit();
+      const totalHeldDeposit = await betterDeposit.getTotalDeposit(escrowId);
       expect(totalHeldDeposit).to.equal(0);
 
-      const userAHeldDeposit = await betterDeposit.getUserDeposit(userAAddress);
+      const userAHeldDeposit = await betterDeposit.getUserDeposit(
+        userAAddress,
+        escrowId
+      );
       expect(userAHeldDeposit).to.equal(0);
 
-      const userBHeldDeposit = await betterDeposit.getUserDeposit(userBAddress);
+      const userBHeldDeposit = await betterDeposit.getUserDeposit(
+        userBAddress,
+        escrowId
+      );
       expect(userBHeldDeposit).to.equal(0);
     });
 
     it('should set escrowState to DISPUTE', async () => {
-      await betterDeposit.connect(userA).dispute();
-      const escrowState = await betterDeposit.escrowState();
+      await betterDeposit.connect(userA).dispute(escrowId);
+      const escrowState = await betterDeposit.getEscrowState(escrowId);
       expect(escrowState).to.equal(EscrowState.DISPUTE);
     });
   });
 
   describe('Failure states', async () => {
     it('should reject dispute when state not xx', async () => {
-      await betterDeposit.connect(userA).dispute();
+      await betterDeposit.connect(userA).dispute(escrowId);
     });
   });
 });

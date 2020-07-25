@@ -1,77 +1,72 @@
-import { ethers, waffle } from '@nomiclabs/buidler';
+import { ethers } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
 import { Contract, Signer } from 'ethers';
-
-import ERC20Mintable from '../../src/artifacts/ERC20Mintable.json';
-import BetterDeposit from '../../src/artifacts/BetterDeposit.json';
 import { solidity } from 'ethereum-waffle';
 import { EscrowState } from '../utils/escrowStates';
+import { depositFixture } from '../fixtures';
 
-const { deployContract } = waffle;
 use(solidity);
 
 describe('Withdraw', () => {
-  let betterDeposit!: Contract;
-  let erc20!: Contract;
-  let owner!: Signer;
-  let userA!: Signer;
-  let userB!: Signer;
-  let fakeUser!: Signer;
+  let betterDeposit: Contract;
+  let erc20: Contract;
+  let owner: Signer;
+  let userA: Signer;
+  let userB: Signer;
+  let fakeUser: Signer;
   let adjudicator: Signer;
 
-  let userAAddress!: string;
-  let userBAddress!: string;
+  let userAAddress: string;
+  let userBAddress: string;
+  let ownerAddress: string;
   let adjudicatorAddress: string;
 
   const mintAmount = 100;
   const userADeposit = 20;
   const userBDeposit = 50;
 
+  let escrowId: bigint;
+
   beforeEach(async () => {
-    [owner, userA, userB, fakeUser, adjudicator] = await ethers.getSigners();
-    userAAddress = await userA.getAddress();
-    userBAddress = await userB.getAddress();
-    adjudicatorAddress = await adjudicator.getAddress();
-
-    erc20 = await deployContract(owner, ERC20Mintable, []);
-
-    betterDeposit = await deployContract(owner, BetterDeposit, [
-      erc20.address,
+    [owner, userA, userB, adjudicator] = await ethers.getSigners();
+    ({
+      erc20,
+      betterDeposit,
+      escrowId,
+      ownerAddress,
       userAAddress,
       userBAddress,
+      adjudicatorAddress,
+    } = await depositFixture(
+      [owner, userA, userB, adjudicator],
       userADeposit,
       userBDeposit,
-      adjudicatorAddress,
-    ]);
-    await betterDeposit.deployed();
+      mintAmount
+    ));
 
-    // mint users some tokens
-    await erc20.mint(userAAddress, mintAmount);
-    await erc20.mint(userBAddress, mintAmount);
-
-    // make deposit and start agreement
+    // make the deposits to start the agreement
     await erc20.connect(userA).approve(betterDeposit.address, userADeposit);
-    await betterDeposit.connect(userA).deposit(userADeposit);
+    await betterDeposit.connect(userA).deposit(userADeposit, escrowId);
 
     await erc20.connect(userB).approve(betterDeposit.address, userBDeposit);
-    await betterDeposit.connect(userB).deposit(userBDeposit);
+    await betterDeposit.connect(userB).deposit(userBDeposit, escrowId);
   });
 
   describe('Success states', async () => {
     beforeEach(async () => {
-      await betterDeposit.connect(userA).approveDepositRelease();
-      await betterDeposit.connect(userB).approveDepositRelease();
-      await betterDeposit.settleAgreement();
+      await betterDeposit.connect(userA).approveDepositRelease(escrowId);
+      await betterDeposit.connect(userB).approveDepositRelease(escrowId);
+      await betterDeposit.settleAgreement(escrowId);
     });
 
     it('should settle agreement if all release approvals given', async () => {
-      const escrowState = await betterDeposit.escrowState();
+      const escrowState = await betterDeposit.getEscrowState(escrowId);
       expect(escrowState).to.equal(EscrowState.SETTLED);
     });
 
     it('should allow users to withdraw once settled', async () => {
-      await betterDeposit.connect(userA).withdraw();
-      await betterDeposit.connect(userB).withdraw();
+      await betterDeposit.connect(userA).withdraw(escrowId);
+      await betterDeposit.connect(userB).withdraw(escrowId);
 
       const contractBalance = await erc20.balanceOf(betterDeposit.address);
       expect(contractBalance).to.equal(0);
@@ -84,24 +79,26 @@ describe('Withdraw', () => {
     });
 
     it('should mark escrowState as complete once all withdrawn', async () => {
-      await betterDeposit.connect(userA).withdraw();
-      await betterDeposit.connect(userB).withdraw();
+      await betterDeposit.connect(userA).withdraw(escrowId);
+      await betterDeposit.connect(userB).withdraw(escrowId);
 
-      const escrowState = await betterDeposit.escrowState();
+      const escrowState = await betterDeposit.getEscrowState(escrowId);
       expect(escrowState).to.equal(EscrowState.COMPLETE);
     });
 
     it('should update users escrowed deposits once withdrawn', async () => {
-      await betterDeposit.connect(userA).withdraw();
-      await betterDeposit.connect(userB).withdraw();
+      await betterDeposit.connect(userA).withdraw(escrowId);
+      await betterDeposit.connect(userB).withdraw(escrowId);
 
       const userAEscrowedDeposit = await betterDeposit.getUserDeposit(
-        userAAddress
+        userAAddress,
+        escrowId
       );
       const userBEscrowedDeposit = await betterDeposit.getUserDeposit(
-        userBAddress
+        userBAddress,
+        escrowId
       );
-      const totalHeldDeposit = await betterDeposit.getTotalDeposit();
+      const totalHeldDeposit = await betterDeposit.getTotalDeposit(escrowId);
 
       expect(userAEscrowedDeposit).to.equal(0);
       expect(userBEscrowedDeposit).to.equal(0);
@@ -111,16 +108,16 @@ describe('Withdraw', () => {
 
   describe('Failure states', async () => {
     it('should reject settle agreement if not all release approvals given', async () => {
-      await betterDeposit.connect(userA).approveDepositRelease();
-      await expect(betterDeposit.settleAgreement()).to.be.revertedWith(
+      await betterDeposit.connect(userA).approveDepositRelease(escrowId);
+      await expect(betterDeposit.settleAgreement(escrowId)).to.be.revertedWith(
         'BetterDeposit: DEPOSIT_RELEASE_NOT_APPROVED'
       );
     });
 
     it('should reject withdraw attempt from user not part of the agreement', async () => {
-      await betterDeposit.connect(userA).approveDepositRelease();
-      await betterDeposit.connect(userB).approveDepositRelease();
-      await betterDeposit.settleAgreement();
+      await betterDeposit.connect(userA).approveDepositRelease(escrowId);
+      await betterDeposit.connect(userB).approveDepositRelease(escrowId);
+      await betterDeposit.settleAgreement(escrowId);
 
       // fakeUser attempts to withdraw
       await expect(
@@ -129,13 +126,13 @@ describe('Withdraw', () => {
     });
 
     it('should not mark escrowState as complete until all withdrawn', async () => {
-      await betterDeposit.connect(userA).approveDepositRelease();
-      await betterDeposit.connect(userB).approveDepositRelease();
-      await betterDeposit.settleAgreement();
-      await betterDeposit.connect(userA).withdraw();
+      await betterDeposit.connect(userA).approveDepositRelease(escrowId);
+      await betterDeposit.connect(userB).approveDepositRelease(escrowId);
+      await betterDeposit.settleAgreement(escrowId);
+      await betterDeposit.connect(userA).withdraw(escrowId);
       // userB not withdrawn yet
 
-      const escrowState = await betterDeposit.escrowState();
+      const escrowState = await betterDeposit.getEscrowState(escrowId);
       expect(escrowState).to.not.equal(EscrowState.COMPLETE);
     });
   });

@@ -119,7 +119,7 @@ contract BetterDeposit is IBetterDeposit, BaseBetterDeposit, Security {
         users[0] = escrow.userA;
         users[1] = escrow.userB;
         require(
-            isDepositReleaseApproved(escrowId, users),
+            isDepositReleaseApproved(users, escrowId),
             "BetterDeposit: DEPOSIT_RELEASE_NOT_APPROVED"
         );
         escrow.escrowState = State.SETTLED;
