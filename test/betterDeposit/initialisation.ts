@@ -3,7 +3,7 @@ import { expect, use } from 'chai';
 import { Contract, Signer } from 'ethers';
 import { solidity } from 'ethereum-waffle';
 import { EscrowState } from '../utils/escrowStates';
-import { depositFixture } from '../fixtures';
+import { depositFixture, escrowTestData } from '../fixtures';
 
 use(solidity);
 
@@ -28,6 +28,12 @@ describe('Initialisation', function () {
 
   beforeEach(async () => {
     [owner, userA, userB, adjudicator] = await ethers.getSigners();
+    const escrowData: escrowTestData = {
+      parties: [owner, userA, userB, adjudicator],
+      firstUserDeposit: userADeposit,
+      secondUserDeposit: userBDeposit,
+      mintAmount,
+    };
     ({
       erc20,
       betterDeposit,
@@ -37,10 +43,7 @@ describe('Initialisation', function () {
       userBAddress,
       adjudicatorAddress,
     } = await depositFixture(
-      [owner, userA, userB, adjudicator],
-      userADeposit,
-      userBDeposit,
-      mintAmount
+      escrowData
     ));
   });
 

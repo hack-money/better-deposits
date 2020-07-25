@@ -2,7 +2,7 @@ import { ethers } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
 import { Contract, Signer } from 'ethers';
 import { solidity } from 'ethereum-waffle';
-import { depositFixture } from '../fixtures';
+import { depositFixture, escrowTestData } from '../fixtures';
 
 use(solidity);
 
@@ -23,17 +23,19 @@ describe('Release manager', () => {
     const userBDeposit = 50;
     const mintAmount = 200;
 
+    const escrowData: escrowTestData = {
+      parties: [owner, userA, userB, adjudicator],
+      firstUserDeposit: userADeposit,
+      secondUserDeposit: userBDeposit,
+      mintAmount,
+    };
+
     ({
       betterDeposit,
       escrowId,
       userAAddress,
       userBAddress,
-    } = await depositFixture(
-      [owner, userA, userB, adjudicator],
-      userADeposit,
-      userBDeposit,
-      mintAmount
-    ));
+    } = await depositFixture(escrowData));
 
     allUsers = [userAAddress, userBAddress];
   });

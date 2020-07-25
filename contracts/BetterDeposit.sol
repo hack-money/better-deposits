@@ -40,7 +40,7 @@ contract BetterDeposit is IBetterDeposit, BaseBetterDeposit, Security {
         escrows[escrowId].requiredDeposits[_userB] = _userBRequiredDeposit;
 
         emit Create(escrowId, _userA, _userB);
-        return uint256(5);
+        return escrowId;
     }
 
     /**

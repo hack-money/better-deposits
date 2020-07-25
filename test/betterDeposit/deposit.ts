@@ -4,7 +4,7 @@ import { Contract, Signer } from 'ethers';
 import { solidity } from 'ethereum-waffle';
 
 import { EscrowState } from '../utils/escrowStates';
-import { depositFixture } from '../fixtures';
+import { depositFixture, escrowTestData } from '../fixtures';
 
 use(solidity);
 
@@ -28,18 +28,21 @@ describe('Deposit', () => {
 
   beforeEach(async () => {
     [owner, userA, userB, fakeUser, adjudicator] = await ethers.getSigners();
+
+    const escrowData: escrowTestData = {
+      parties: [owner, userA, userB, adjudicator],
+      firstUserDeposit: userADeposit,
+      secondUserDeposit: userBDeposit,
+      mintAmount,
+    };
+
     ({
       erc20,
       betterDeposit,
       escrowId,
       userAAddress,
       userBAddress,
-    } = await depositFixture(
-      [owner, userA, userB, adjudicator],
-      userADeposit,
-      userBDeposit,
-      mintAmount
-    ));
+    } = await depositFixture(escrowData));
   });
 
   describe('Success states', async () => {

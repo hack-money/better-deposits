@@ -7,12 +7,15 @@ import { Interface } from 'ethers/lib/utils';
 
 const { deployContract } = waffle;
 
-export const depositFixture = async (
-  [owner, userA, userB, adjudicator]: Signer[],
-  userADeposit: number,
-  userBDeposit: number,
-  mintAmount: number
-) => {
+export const depositFixture = async (escrowData: escrowTestData) => {
+  const {
+    parties,
+    firstUserDeposit,
+    secondUserDeposit,
+    mintAmount,
+  } = escrowData;
+  const [owner, userA, userB, adjudicator] = parties;
+
   const ownerAddress = await owner.getAddress();
   const userAAddress = await userA.getAddress();
   const userBAddress = await userB.getAddress();
@@ -34,13 +37,14 @@ export const depositFixture = async (
     userAAddress,
     userBAddress,
     adjudicatorAddress,
-    userADeposit,
-    userBDeposit
+    firstUserDeposit,
+    secondUserDeposit
   );
   const receipt = await tx.wait();
   const escrowId = BetterDepositInterface.parseLog(
     receipt.logs[receipt.logs.length - 1]
   ).args.escrowId;
+  console.log({ escrowId });
 
   return {
     erc20,
@@ -52,3 +56,11 @@ export const depositFixture = async (
     adjudicatorAddress,
   };
 };
+
+export type escrowTestData = {
+  parties: Signer[];
+  firstUserDeposit: number;
+  secondUserDeposit: number;
+  mintAmount: number;
+};
+
