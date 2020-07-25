@@ -1,13 +1,10 @@
-import { ethers, waffle } from '@nomiclabs/buidler';
+import { ethers } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
 import { Contract, Signer } from 'ethers';
 import { solidity } from 'ethereum-waffle';
 
-import ERC20Mintable from '../../src/artifacts/ERC20Mintable.json';
-import BetterDeposit from '../../src/artifacts/BetterDeposit.json';
 import { EscrowState } from '../utils/escrowStates';
-
-const { deployContract } = waffle;
+import { depositFixture } from '../fixtures';
 
 use(solidity);
 
@@ -22,32 +19,27 @@ describe('Deposit', () => {
 
   let userAAddress: string;
   let userBAddress: string;
-  let adjudicatorAddress: string;
 
   const mintAmount = 100;
   const userADeposit = 20;
   const userBDeposit = 50;
 
+  let escrowId: bigint;
+
   beforeEach(async () => {
     [owner, userA, userB, fakeUser, adjudicator] = await ethers.getSigners();
-    userAAddress = await userA.getAddress();
-    userBAddress = await userB.getAddress();
-    adjudicatorAddress = await adjudicator.getAddress();
-
-    erc20 = await deployContract(owner, ERC20Mintable, []);
-    betterDeposit = await deployContract(owner, BetterDeposit, [
-      erc20.address,
+    ({
+      erc20,
+      betterDeposit,
+      escrowId,
       userAAddress,
       userBAddress,
+    } = await depositFixture(
+      [owner, userA, userB, adjudicator],
       userADeposit,
       userBDeposit,
-      adjudicatorAddress,
-    ]);
-    await betterDeposit.deployed();
-
-    // mint users some tokens
-    await erc20.mint(userAAddress, mintAmount);
-    await erc20.mint(userBAddress, mintAmount);
+      mintAmount
+    ));
   });
 
   describe('Success states', async () => {
@@ -59,11 +51,11 @@ describe('Deposit', () => {
 
       // userA depositing funds
       await erc20.connect(userA).approve(betterDeposit.address, userADeposit);
-      await betterDeposit.connect(userA).deposit(userADeposit);
+      await betterDeposit.connect(userA).deposit(userADeposit, escrowId);
 
       // userB depositing funds
       await erc20.connect(userB).approve(betterDeposit.address, userBDeposit);
-      await betterDeposit.connect(userB).deposit(userBDeposit);
+      await betterDeposit.connect(userB).deposit(userBDeposit, escrowId);
 
       const postDepositContractBalance = await erc20.balanceOf(
         betterDeposit.address
@@ -79,28 +71,31 @@ describe('Deposit', () => {
       expect(postDepositUserBBalance).to.equal(mintAmount - userBDeposit);
 
       const queriedUserADeposit = await betterDeposit.getUserDeposit(
-        userAAddress
+        userAAddress,
+        escrowId
       );
       expect(queriedUserADeposit).to.equal(userADeposit);
 
       const queriedUserBDeposit = await betterDeposit.getUserDeposit(
-        userBAddress
+        userBAddress,
+        escrowId
       );
       expect(queriedUserBDeposit).to.equal(userBDeposit);
     });
 
     it('should update escrow state on deposit', async () => {
-      const initialEscrowState = await betterDeposit.escrowState();
+      const initialEscrowState = await betterDeposit.getEscrowState(escrowId);
       expect(initialEscrowState).to.equal(EscrowState.PRE_ACTIVE);
+
       // userA depositing funds
       await erc20.connect(userA).approve(betterDeposit.address, userADeposit);
-      await betterDeposit.connect(userA).deposit(userADeposit);
+      await betterDeposit.connect(userA).deposit(userADeposit, escrowId);
 
       // userB depositing funds
       await erc20.connect(userB).approve(betterDeposit.address, userBDeposit);
-      await betterDeposit.connect(userB).deposit(userBDeposit);
+      await betterDeposit.connect(userB).deposit(userBDeposit, escrowId);
 
-      const finalEscrowState = await betterDeposit.escrowState();
+      const finalEscrowState = await betterDeposit.getEscrowState(escrowId);
       expect(finalEscrowState).to.equal(EscrowState.ACTIVE);
     });
   });
@@ -112,15 +107,15 @@ describe('Deposit', () => {
 
     it('should reject user not involved in agreement from depositing', async () => {
       await betterDeposit.connect(fakeUser);
-      await expect(betterDeposit.deposit(userADeposit)).to.be.revertedWith(
-        'BetterDeposit: NOT_VALID_USER'
-      );
+      await expect(
+        betterDeposit.deposit(userADeposit, escrowId)
+      ).to.be.revertedWith('BetterDeposit: NOT_VALID_USER');
     });
 
     it('should reject incorrect deposit', async () => {
       const incorrectDeposit = 10;
       await expect(
-        betterDeposit.connect(userA).deposit(incorrectDeposit)
+        betterDeposit.connect(userA).deposit(incorrectDeposit, escrowId)
       ).to.be.revertedWith('BetterDeposit: INCORRECT_DEPOSIT');
     });
   });

@@ -2,12 +2,8 @@ import { ethers, waffle } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
 import { Contract, Signer } from 'ethers';
 import { solidity } from 'ethereum-waffle';
-
-import ERC20Mintable from '../../src/artifacts/ERC20Mintable.json';
-import BetterDeposit from '../../src/artifacts/BetterDeposit.json';
 import { EscrowState } from '../utils/escrowStates';
-
-const { deployContract } = waffle;
+import { depositFixture } from '../fixtures';
 
 use(solidity);
 
@@ -28,54 +24,60 @@ describe('Initialisation', function () {
   const userADeposit = 20;
   const userBDeposit = 50;
 
+  let escrowId: bigint;
+
   beforeEach(async () => {
     [owner, userA, userB, adjudicator] = await ethers.getSigners();
-    ownerAddress = await owner.getAddress();
-    userAAddress = await userA.getAddress();
-    userBAddress = await userB.getAddress();
-    adjudicatorAddress = await adjudicator.getAddress();
-
-    erc20 = await deployContract(owner, ERC20Mintable, []);
-
-    betterDeposit = await deployContract(owner, BetterDeposit, [
-      erc20.address,
+    ({
+      erc20,
+      betterDeposit,
+      escrowId,
+      ownerAddress,
       userAAddress,
       userBAddress,
+      adjudicatorAddress,
+    } = await depositFixture(
+      [owner, userA, userB, adjudicator],
       userADeposit,
       userBDeposit,
-      adjudicatorAddress,
-    ]);
-    await betterDeposit.deployed();
-
-    // mint users some tokens
-    await erc20.mint(userAAddress, mintAmount);
-    await erc20.mint(userBAddress, mintAmount);
+      mintAmount
+    ));
   });
 
   it('should initialise escrow state variables: users, third party, linkedToken, owner, escrowState', async function () {
     const linkedToken = await betterDeposit.linkedToken();
-    const retrievedUserA = await betterDeposit.userA();
-    const retrievedUserB = await betterDeposit.userB();
-    const retrievedOwner = await betterDeposit.owner();
-    const retrievedUserARequiredDeposit = await betterDeposit.getRequiredUserDeposit(
-      userAAddress
-    );
-    const retrievedUserBRequiredDeposit = await betterDeposit.getRequiredUserDeposit(
-      userBAddress
-    );
-    const escrowState = await betterDeposit.escrowState();
+    const [
+      recoveredUserA,
+      recoveredUserB,
+      recoveredAdjudicator,
+      ,
+      recoveredEscrowState,
+    ] = await betterDeposit.getEscrowInfo(escrowId);
 
+    const retrievedOwner = await betterDeposit.owner();
+    const recoveredUserARequiredDeposit = await betterDeposit.getRequiredUserDeposit(
+      userAAddress,
+      escrowId
+    );
+    const recoveredUserBRequiredDeposit = await betterDeposit.getRequiredUserDeposit(
+      userBAddress,
+      escrowId
+    );
     expect(retrievedOwner).to.equal(ownerAddress);
-    expect(retrievedUserA).to.equal(userAAddress);
-    expect(retrievedUserB).to.equal(userBAddress);
+
+    expect(recoveredUserA).to.equal(userAAddress);
+    expect(recoveredUserB).to.equal(userBAddress);
     expect(linkedToken).to.equal(erc20.address);
-    expect(retrievedUserARequiredDeposit).to.equal(userADeposit);
-    expect(retrievedUserBRequiredDeposit).to.equal(userBDeposit);
-    expect(escrowState).to.equal(EscrowState.PRE_ACTIVE);
+    expect(recoveredUserARequiredDeposit).to.equal(userADeposit);
+    expect(recoveredUserBRequiredDeposit).to.equal(userBDeposit);
+    expect(recoveredAdjudicator).to.equal(adjudicatorAddress);
+    expect(recoveredEscrowState).to.equal(EscrowState.PRE_ACTIVE);
   });
 
   it('should get the total required deposit for the agreement', async () => {
-    const totalRequiredDeposit = await betterDeposit.getTotalRequiredDeposit();
+    const totalRequiredDeposit = await betterDeposit.getTotalRequiredDeposit(
+      escrowId
+    );
     expect(totalRequiredDeposit).to.equal(userADeposit + userBDeposit);
   });
 });
