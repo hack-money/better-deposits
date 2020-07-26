@@ -17,6 +17,8 @@ const theme = createMuiTheme({
   },
 });
 
+const sectionUpperPadding = 7;
+const sectionLowerPadding = 7;
 export const useStyles = makeStyles(() => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -57,7 +59,7 @@ export const useStyles = makeStyles(() => ({
   },
   getStarted: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 7),
+    padding: theme.spacing(sectionUpperPadding, 0, sectionLowerPadding),
   },
   navBar: {
     backgroundColor: theme.palette.primary.main,
@@ -66,7 +68,7 @@ export const useStyles = makeStyles(() => ({
     backgroundColor: theme.palette.primary.main,
   },
   howItWorks: {
-    padding: theme.spacing(8, 0, 7),
+    padding: theme.spacing(sectionUpperPadding, 0, sectionLowerPadding),
     width: '100%',
   },
 }));
