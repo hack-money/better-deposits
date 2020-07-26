@@ -25,11 +25,13 @@ const useStyles = makeStyles({
 
 type InfoCardProps = {
   title: string;
+  firstPara: string;
+  secondPara: string;
 };
 
 export default function InfoCard(props: InfoCardProps) {
   const classes = useStyles();
-  const { title } = props;
+  const { title, firstPara, secondPara } = props;
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -37,9 +39,8 @@ export default function InfoCard(props: InfoCardProps) {
         <Typography variant="h4" component="h2">
           {title}
         </Typography>
-        <Typography variant="body1" component="p">
-          Main text
-        </Typography>
+        <Typography style={{ padding: '10px' }}>{firstPara}</Typography>
+        <Typography style={{ padding: '10px' }}>{secondPara}</Typography>
       </CardContent>
       <CardContent></CardContent>
     </Card>
