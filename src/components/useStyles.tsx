@@ -6,7 +6,7 @@ import grey from '@material-ui/core/colors/grey';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: blue[700],
+      main: blue[600],
     },
     secondary: {
       main: blue[500],
@@ -62,7 +62,7 @@ export const useStyles = makeStyles(() => ({
     padding: theme.spacing(sectionUpperPadding, 0, sectionLowerPadding),
   },
   navBar: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: blue[600],
   },
   button: {
     backgroundColor: theme.palette.primary.main,

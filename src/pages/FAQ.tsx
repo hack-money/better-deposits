@@ -40,7 +40,7 @@ export default function FAQ() {
           </AccordionSummary>
           <AccordionDetails>
             <Answer
-              answer="A smart contract is a piece of software, code that acts according to a set of pre-programmed rules. They are immutable (their code and rules 
+              answer="A smart contract is a piece of software that acts according to a set of pre-programmed rules. They are immutable (their code and rules 
                 cannot be changed once deployed), always on 24/7, and are able to store and manipulate money.
                 
                 They are deployed on the Ethereum blockchain."
@@ -57,8 +57,8 @@ export default function FAQ() {
           </AccordionSummary>
           <AccordionDetails>
             <Answer
-              answer="It is the smart contract that holds your funds and acts on them according to the deposit and escrow rules you setup. This means that you're not trusting an individual or company, rather 
-              you rely on immutable, always-on and permissionless code. Currently, this is alpha software and not ready for real use. Better Deposits, at the moment, is a priviledged actor has various admin priviledges."
+              answer="It is the smart contract that holds your funds and acts on the funds according to the escrow rules you setup. This means that you're not trusting an individual or company to hold the deposit, rather 
+              you rely on immutable, always-on and permissionless code. However, this is currently alpha software and not ready for real use. Better Deposits, at the moment, is a priviledged actor has various admin priviledges."
             />
           </AccordionDetails>
         </Accordion>
@@ -73,7 +73,7 @@ export default function FAQ() {
           <AccordionDetails>
             <Answer
               answer="DeFi stands for Decentralised Finance and is an ecosystem of financial software running on the Ethereum blockchain. It allows for
-            lending, borrowing and insurance amongst common financial activities. Better Deposits uses this to generate passive interest on your escrowed deposit."
+            lending, borrowing and insurance amongst other common financial activities. Better Deposits uses this to generate passive interest on your escrowed deposit."
             />
           </AccordionDetails>
         </Accordion>

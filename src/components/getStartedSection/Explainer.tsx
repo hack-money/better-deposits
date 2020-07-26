@@ -19,7 +19,8 @@ export default function GetStarted() {
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
                   Untrusting parties want to make an agreement and escrow funds.
-                  They agree on the terms of the escrow: value, duration etc.
+                  They agree on the terms of the escrow: value, duration, third
+                  party adjudicator.
                 </Typography>
               </div>
             </Grid>
@@ -40,8 +41,9 @@ export default function GetStarted() {
                   3. Settle escrow or raise dispute
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
-                  At end of escrow, parties have deposits returned if both
-                  parties happy. If not, nominated third party settles dispute.
+                  At end of escrow, if parties are happy then deposits are
+                  returned. If not, the nominated third party adjudicator
+                  settles the dispute.
                 </Typography>
               </div>
             </Grid>
