@@ -1,7 +1,12 @@
 {
   "short_name": "Better Deposits",
   "name": "Better Deposits",
-  "icons": [],
+  "icons": [
+    {
+      "src": "house.png",
+      "type": "image/png"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
