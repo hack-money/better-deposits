@@ -55,7 +55,7 @@ export const useStyles = makeStyles(() => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 7),
   },
-  productHowItWorks: {
+  getStarted: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 7),
   },
@@ -64,5 +64,9 @@ export const useStyles = makeStyles(() => ({
   },
   button: {
     backgroundColor: theme.palette.primary.main,
+  },
+  howItWorks: {
+    padding: theme.spacing(8, 0, 7),
+    width: '100%',
   },
 }));

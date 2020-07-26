@@ -1,13 +1,13 @@
 import React from 'react';
 import { Typography, Grid, Container, Box } from '@material-ui/core';
 
-export default function ProductHowItWorks() {
+export default function GetStarted() {
   return (
     <div>
       <Container>
         <Box m={5}>
           <Typography variant="h3" align="center" component="h2">
-            How it works
+            Get started
           </Typography>
         </Box>
         <div>
