@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+<<<<<<< HEAD
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -16,4 +17,21 @@
     "jsx": "react"
   },
   "include": ["src", "react-typeform-embed.d.ts"]
+=======
+    "target": "esnext",
+    "moduleResolution": "node",
+    "lib": ["dom", "esnext", "es2017.object"],
+    "outDir": "dest",
+    "module": "commonjs",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": ["./scripts", "./test", "artifacts"],
+  "files": [
+    "./node_modules/@nomiclabs/buidler-ethers/src/type-extensions.d.ts",
+    "./node_modules/@nomiclabs/buidler-waffle/src/type-extensions.d.ts"
+  ]
+>>>>>>> contracts/master
 }
