@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Technology from './pages/HowItWorks';
 import FAQ from './pages/FAQ';
 import Questionnaire from './pages/Questionnaire';
+import AppLanding from './pages/AppLanding';
 import BottomSection from './components/bottomSection';
 import NavBar from './components/NavBar';
 import {
@@ -11,6 +12,7 @@ import {
   howItWorksRoute,
   faqRoute,
   questionnaireRoute,
+  appRoute,
 } from './routes';
 import './App.css';
 
@@ -23,6 +25,7 @@ function App() {
         <Route path={howItWorksRoute} exact component={Technology} />
         <Route path={faqRoute} exact component={FAQ} />
         <Route path={questionnaireRoute} exact component={Questionnaire} />
+        <Route path={appRoute} exact component={AppLanding} />
       </Switch>
       <BottomSection />
     </Router>

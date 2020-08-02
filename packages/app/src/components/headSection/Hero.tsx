@@ -2,7 +2,7 @@ import { Container, Typography, Grid, Button } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from '../useStyles';
-import { questionnaireRoute } from '../../routes';
+import { questionnaireRoute, appRoute } from '../../routes';
 
 export default function Hero() {
   const classes = useStyles();
@@ -26,8 +26,25 @@ export default function Hero() {
         <Typography variant="h6" align="center" color="textPrimary">
           Rely on code, not trust
         </Typography>
-        <div className={classes.heroButtons}>
-          <Grid container spacing={1} justify="center">
+      </Container>
+
+      <Grid container direction="row" justify="center" alignItems="center">
+        <Grid>
+          <div className={classes.heroButtons}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.button}
+              component={Link}
+              to={appRoute}
+            >
+              Launch App
+            </Button>
+          </div>
+        </Grid>
+        <Grid>
+          <div className={classes.heroButtons}>
             <Button
               variant="contained"
               color="primary"
@@ -36,11 +53,11 @@ export default function Hero() {
               component={Link}
               to={questionnaireRoute}
             >
-              Launch App
+              Feedback
             </Button>
-          </Grid>
-        </div>
-      </Container>
+          </div>
+        </Grid>
+      </Grid>
     </div>
   );
 }

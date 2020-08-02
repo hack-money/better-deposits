@@ -28,7 +28,8 @@ export const useStyles = makeStyles(() => ({
     padding: theme.spacing(8, 0, 15),
   },
   heroButtons: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(2),
+    paddingRight: theme.spacing(5),
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
