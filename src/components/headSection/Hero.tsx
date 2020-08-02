@@ -2,7 +2,7 @@ import { Container, Typography, Grid, Button } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from '../useStyles';
-import { questionnaireRoute } from '../../routes';
+import { questionnaireRoute, appRoute } from '../../routes';
 
 export default function Hero() {
   const classes = useStyles();
@@ -36,6 +36,8 @@ export default function Hero() {
               color="primary"
               size="large"
               className={classes.button}
+              component={Link}
+              to={appRoute}
             >
               Launch App
             </Button>
@@ -51,7 +53,7 @@ export default function Hero() {
               component={Link}
               to={questionnaireRoute}
             >
-              Learn more
+              Feedback
             </Button>
           </div>
         </Grid>
