@@ -1,0 +1,16 @@
+{
+  "name": "better-deposits",
+  "version": "0.0.0",
+  "description": "Monorepo for Better Deposits",
+  "main": "index.js",
+  "repository": "https://github.com/thomas-waite/better-deposits.git",
+  "author": "thomas-waite <thomas.waite4@gmail.com>",
+  "license": "Unlicensed",
+  "private": true,
+  "dependencies": {
+    "lerna": "^3.22.1"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
