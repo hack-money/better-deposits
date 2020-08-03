@@ -12,5 +12,11 @@
   },
   "workspaces": [
     "packages/*"
+  ],
+  "nohoist": [
+    "**/contracts",
+    "**/contracts/**",
+    "**/packages/contracts",
+    "**/packages/contracts/**"
   ]
 }
