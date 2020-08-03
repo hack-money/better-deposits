@@ -15,6 +15,7 @@ import {
   appRoute,
 } from './routes';
 import './App.css';
+import EscrowApp from './pages/EscrowApp';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <Route path={howItWorksRoute} exact component={Technology} />
         <Route path={faqRoute} exact component={FAQ} />
         <Route path={questionnaireRoute} exact component={Questionnaire} />
-        <Route path={appRoute} exact component={AppLanding} />
+        <Route path={appRoute} exact component={EscrowApp} />
       </Switch>
       <BottomSection />
     </Router>
