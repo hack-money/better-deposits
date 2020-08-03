@@ -4,7 +4,6 @@ import Home from './pages/Home';
 import Technology from './pages/HowItWorks';
 import FAQ from './pages/FAQ';
 import Questionnaire from './pages/Questionnaire';
-import AppLanding from './pages/AppLanding';
 import BottomSection from './components/bottomSection';
 import NavBar from './components/NavBar';
 import {

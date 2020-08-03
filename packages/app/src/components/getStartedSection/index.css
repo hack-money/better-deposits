@@ -1,0 +1,8 @@
+.center {
+  text-align: center;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  width: 0%;
+  padding: 500;
+}

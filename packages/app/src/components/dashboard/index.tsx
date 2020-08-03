@@ -10,11 +10,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { mainListItems } from '../listItems';
-import Deposits from '../deposits';
-import Settle from '../settle';
-import Dispute from '../dispute';
 import EscrowSummary from './EscrowSummary';
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -98,8 +94,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const [open] = React.useState(true);
 
   return (
     <div className={classes.root}>
