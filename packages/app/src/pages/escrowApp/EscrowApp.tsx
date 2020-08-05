@@ -1,4 +1,5 @@
-import React from 'react';
+import { Web3Provider } from '@ethersproject/providers';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -27,6 +28,7 @@ import Withdrawal from './withdraw';
 import Dispute from './dispute';
 import Create from './create';
 import { useStyles } from '../../components/escrowApp/useStyles';
+import { betterDepositAddress } from '../../config';
 
 const mainListItems = (
   <div>
@@ -66,6 +68,19 @@ const mainListItems = (
 export default function EscrowApp() {
   const classes = useStyles();
   const [open] = React.useState(true);
+  const [provider, setProvider] = useState<Web3Provider>();
+
+  useEffect(() => {
+    async function connectMetamask() {
+      if (typeof window.ethereum === undefined) {
+        throw new Error('Please install Metamask');
+      } else if (!provider) {
+        await window.ethereum.enable();
+        setProvider(new Web3Provider(window.ethereum));
+      }
+    }
+    connectMetamask();
+  });
 
   return (
     <div className={classes.root}>
@@ -84,7 +99,12 @@ export default function EscrowApp() {
         </Drawer>
         <Switch>
           <Route path={dashboardRoute} exact component={Dashboard} />
-          <Route path={createRoute} exact component={Create} />
+          <Route path={createRoute} exact>
+            <Create
+              provider={provider!}
+              betterDepositAddress={betterDepositAddress}
+            />
+          </Route>
           <Route path={depositRoute} exact component={Deposit} />
           <Route path={withdrawRoute} exact component={Withdrawal} />
           <Route path={disputeRoute} exact component={Dispute} />
