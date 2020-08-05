@@ -15,5 +15,6 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "include": ["src", "react-typeform-embed.d.ts"]
+  "include": ["src", "react-typeform-embed.d.ts"],
+  "extends": "./tsconfig.build.json"
 }

@@ -7,16 +7,20 @@
   "author": "thomas-waite <thomas.waite4@gmail.com>",
   "license": "Unlicensed",
   "private": true,
+  "scripts": {
+    "clean": "rm -rf node_modules && rm -rf ./packages/*/node_modules",
+    "compile": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
     "lerna": "^3.22.1"
   },
-  "workspaces": [
-    "packages/*"
-  ],
-  "nohoist": [
-    "**/contracts",
-    "**/contracts/**",
-    "**/packages/contracts",
-    "**/packages/contracts/**"
-  ]
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/protocol/",
+      "**/protocol/**"
+    ]
+  }
 }
