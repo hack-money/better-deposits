@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Settle() {
+export default function Deposit() {
   return <div></div>;
 }

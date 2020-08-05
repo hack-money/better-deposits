@@ -1,19 +1,7 @@
-import React from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { mainListItems } from '../listItems';
-import EscrowSummary from './EscrowSummary';
-const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const drawerWidth = 240;
+export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
@@ -91,38 +79,3 @@ const useStyles = makeStyles((theme) => ({
     height: 240,
   },
 }));
-
-export default function Dashboard() {
-  const classes = useStyles();
-  const [open] = React.useState(true);
-
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <EscrowSummary />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}></Box>
-        </Container>
-      </main>
-    </div>
-  );
-}

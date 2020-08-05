@@ -19,6 +19,7 @@ const theme = createMuiTheme({
 
 const sectionUpperPadding = 7;
 const sectionLowerPadding = 7;
+
 export const useStyles = makeStyles(() => ({
   icon: {
     marginRight: theme.spacing(2),
