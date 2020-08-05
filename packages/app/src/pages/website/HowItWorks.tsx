@@ -1,15 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import InfoCard from '../components/howItWorksSection/InfoCard';
+import InfoCard from '../../components/website/howItWorksSection/InfoCard';
 import { Typography, Container } from '@material-ui/core';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import SendIcon from '@material-ui/icons/Send';
 import BlockIcon from '@material-ui/icons/Block';
 
-import { useStyles } from '../components/useStyles';
-import { shadeColor } from '../components/shadeColor';
+import { useStyles } from '../../components/useStyles';
+import { shadeColor } from '../../components/shadeColor';
 
 const iconSize = '175px';
 const localUseStyles = makeStyles((theme) => ({

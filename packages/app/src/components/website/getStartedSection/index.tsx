@@ -1,6 +1,6 @@
 import React from 'react';
 import Explainer from './Explainer';
-import { useStyles } from '../useStyles';
+import { useStyles } from '../../useStyles';
 import DashboardImage from './Dashboard.png';
 import { Container, Typography, Box } from '@material-ui/core';
 

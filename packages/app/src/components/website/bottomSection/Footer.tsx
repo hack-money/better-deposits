@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '@material-ui/core';
-import { useStyles } from '../useStyles';
+import { useStyles } from '../../useStyles';
 import Copyright from './Copyright';
 
 export default function Footer() {

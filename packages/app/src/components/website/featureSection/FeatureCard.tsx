@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Typography, withStyles, Theme, Container } from '@material-ui/core';
 import { Styles } from '@material-ui/core/styles/withStyles';
-import { shadeColor } from '../shadeColor';
+import { shadeColor } from '../../shadeColor';
 
 const styles: Styles<Theme, {}, 'iconWrapper'> = (theme: any) => ({
   iconWrapper: {

@@ -1,8 +1,8 @@
 import { Container, Typography, Grid, Button } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useStyles } from '../useStyles';
-import { questionnaireRoute, appRoute } from '../../routes';
+import { useStyles } from '../../useStyles';
+import { questionnaireRoute, appRoute } from '../../../routes';
 
 export default function Hero() {
   const classes = useStyles();

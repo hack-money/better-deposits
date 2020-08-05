@@ -15,7 +15,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import FeatureCard from './FeatureCard';
-import { useStyles } from '../useStyles';
+import { useStyles } from '../../useStyles';
 
 const iconSize = 30;
 
