@@ -12,9 +12,10 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import PeopleIcon from '@material-ui/icons/People';
 import PaymentIcon from '@material-ui/icons/Payment';
 import GavelIcon from '@material-ui/icons/Gavel';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import {
-  overviewRoute,
+  dashboardRoute,
   createRoute,
   depositRoute,
   withdrawRoute,
@@ -29,31 +30,31 @@ import { useStyles } from '../../components/escrowApp/useStyles';
 
 const mainListItems = (
   <div>
-    <ListItem button>
+    <ListItem button to={dashboardRoute} component={Link}>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to={createRoute} component={Link}>
       <ListItemIcon>
         <AccountBalanceIcon />
       </ListItemIcon>
       <ListItemText primary="Create" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to={depositRoute} component={Link}>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Deposit" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to={withdrawRoute} component={Link}>
       <ListItemIcon>
         <PaymentIcon />
       </ListItemIcon>
-      <ListItemText primary="Settle" />
+      <ListItemText primary="Withdraw" />
     </ListItem>
-    <ListItem button>
+    <ListItem button to={disputeRoute} component={Link}>
       <ListItemIcon>
         <GavelIcon />
       </ListItemIcon>
@@ -68,21 +69,21 @@ export default function EscrowApp() {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-      </Drawer>
       <Router>
+        <CssBaseline />
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          }}
+          open={open}
+        >
+          <Divider />
+          <List>{mainListItems}</List>
+          <Divider />
+        </Drawer>
         <Switch>
-          <Route path={overviewRoute} exact component={Dashboard} />
+          <Route path={dashboardRoute} exact component={Dashboard} />
           <Route path={createRoute} exact component={Create} />
           <Route path={depositRoute} exact component={Deposit} />
           <Route path={withdrawRoute} exact component={Withdrawal} />

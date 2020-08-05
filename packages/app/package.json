@@ -14,13 +14,16 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.5",
     "bnc-onboard": "^1.11.0",
+    "eth-hooks": "^1.1.2",
     "ethers": "^5.0.8",
     "react": "^16.13.1",
+    "react-blockies": "^1.4.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-typeform-embed": "^0.2.1",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "web3modal": "^1.9.0"
   },
   "scripts": {
     "start": "react-scripts start",
