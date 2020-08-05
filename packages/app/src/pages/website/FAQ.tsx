@@ -131,6 +131,21 @@ export default function FAQ() {
             <Answer answer="Getting started is simple and easy. You need an email address and an internet connection." />
           </AccordionDetails>
         </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Question question="8. Isn't crypto volatile? Won't my deposit fluctuate in value?" />
+          </AccordionSummary>
+          <AccordionDetails>
+            <Answer
+              answer="No, your deposit will not fluctuate in value. Your deposit is stored behind the scenes as a stablecoin (not as Ether for example).
+            Stablecoins have their value pegged to $1, their value doesn't change. "
+            />
+          </AccordionDetails>
+        </Accordion>
       </div>
     </Container>
   );
