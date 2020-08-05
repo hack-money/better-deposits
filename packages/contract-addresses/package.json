@@ -1,0 +1,9 @@
+{
+  "name": "contract-addresses",
+  "version": "0.0.0",
+  "description": "Contract addresses for BetterDeposits across various networks",
+  "main": "index.js",
+  "author": "Tom Waite",
+  "license": "Unlicensed",
+  "private": true
+}
