@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Web3Provider } from '@ethersproject/providers';
 import { Contract } from 'ethers';
 import { getBetterDepositsContract } from '../../contracts';
+import Form from '../../components/escrowApp/create/Form';
 
 interface CreateProps {
   provider: Web3Provider;
@@ -34,7 +35,7 @@ export default function Create({
 
   return (
     <React.Fragment>
-      <div>here</div>
+      <Form />
     </React.Fragment>
   );
 }
