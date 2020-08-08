@@ -19,12 +19,13 @@ export default function Hero() {
         >
           Better Deposits
         </Typography>
-        <Typography variant="h5" align="center" color="textSecondary" paragraph>
-          Trustless, automated, escrow solution for your deposit. Agree on a set
-          of rules with the other party and deposit into a smart contract
-        </Typography>
-        <Typography variant="h6" align="center" color="textPrimary">
-          Rely on code, not trust
+        <Typography
+          variant="h4"
+          align="center"
+          color="textPrimary"
+          style={{ padding: '15px' }}
+        >
+          Taking control of your finances
         </Typography>
       </Container>
 
