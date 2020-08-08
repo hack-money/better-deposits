@@ -1,1 +1,1 @@
-export * from './getBetterDepositsContract';
+export * from './getEscrowContract';

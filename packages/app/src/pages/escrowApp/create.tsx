@@ -1,41 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Web3Provider } from '@ethersproject/providers';
 import { Contract } from 'ethers';
-import { getBetterDepositsContract } from '../../contracts';
-import Form from '../../components/escrowApp/create/Form';
+import { getEscrowContract } from '../../contracts';
+import CreateTable from '../../components/escrowApp/create/CreateTable';
 
 interface CreateProps {
   provider: Web3Provider;
-  betterDepositAddress: string;
+  escrowContractAddress: string;
 }
 
-// want to create an escrow arrangement
-// need to instantiate the contracts
-// need to input params - likely via a form
-// need to send tx to contract, likely at press of a button
 export default function Create({
   provider,
-  betterDepositAddress,
+  escrowContractAddress,
 }: CreateProps) {
-  const [betterDepositsContract, setBetterDepositsContract] = useState<
-    Contract
-  >();
+  const [escrowContract, setEscrowContract] = useState<Contract>();
 
   useEffect(() => {
     try {
-      const contract = getBetterDepositsContract(
-        provider,
-        betterDepositAddress
-      );
-      setBetterDepositsContract(contract);
+      const contract = getEscrowContract(provider, escrowContractAddress);
+      setEscrowContract(contract);
     } catch (err) {
       console.log(err.message);
     }
-  }, [betterDepositAddress, provider]);
+  }, [escrowContractAddress, provider]);
 
   return (
     <React.Fragment>
-      <Form />
+      <CreateTable escrowContract={escrowContract!} />
     </React.Fragment>
   );
 }

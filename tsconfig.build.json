@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es5"
+    "target": "ESNext"
   },
   "exclude": ["./node_modules"]
 }

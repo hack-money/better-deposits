@@ -102,7 +102,7 @@ export default function EscrowApp() {
           <Route path={createRoute} exact>
             <Create
               provider={provider!}
-              betterDepositAddress={betterDepositAddress}
+              escrowContractAddress={betterDepositAddress}
             />
           </Route>
           <Route path={depositRoute} exact component={Deposit} />
