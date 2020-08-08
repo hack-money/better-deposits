@@ -1,29 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Web3Provider } from '@ethersproject/providers';
-import { Contract } from 'ethers';
-import { getEscrowContract } from '../../contracts';
+import React from 'react';
 import CreateTable from '../../components/escrowApp/create/CreateTable';
+import { Contract } from 'ethers';
 
 interface CreateProps {
-  provider: Web3Provider;
-  escrowContractAddress: string;
+  escrowContract: Contract;
 }
 
-export default function Create({
-  provider,
-  escrowContractAddress,
-}: CreateProps) {
-  const [escrowContract, setEscrowContract] = useState<Contract>();
-
-  useEffect(() => {
-    try {
-      const contract = getEscrowContract(provider, escrowContractAddress);
-      setEscrowContract(contract);
-    } catch (err) {
-      console.log(err.message);
-    }
-  }, [escrowContractAddress, provider]);
-
+export default function Create({ escrowContract }: CreateProps) {
   return (
     <React.Fragment>
       <CreateTable escrowContract={escrowContract!} />

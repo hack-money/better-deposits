@@ -4,7 +4,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import { Button, Container } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { Contract } from 'ethers';
 
 const useStyles = makeStyles((theme) => ({
@@ -122,7 +122,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
           />
         </FormControl>
       </div>
-      <Container>
+      <Grid container direction="row" justify="center" alignItems="center">
         <Button
           variant="contained"
           color="primary"
@@ -139,7 +139,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
         >
           Create
         </Button>
-      </Container>
+      </Grid>
     </div>
   );
 }

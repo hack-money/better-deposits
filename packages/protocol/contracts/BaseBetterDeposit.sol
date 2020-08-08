@@ -90,6 +90,7 @@ contract BaseBetterDeposit is IBaseBetterDeposit {
     /**
      * Get all info associated with a particular escrow
      * @param escrowId - unique identifier for a particular escrow
+     * @return userA, userB, ajudicator, startTime, escrowState
      */
     function getEscrowInfo(uint256 escrowId)
         external

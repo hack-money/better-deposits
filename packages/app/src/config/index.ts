@@ -1,1 +1,2 @@
-export const betterDepositAddress = '';
+export const escrowContractAddress = '';
+export const linkedERC20Address = '';

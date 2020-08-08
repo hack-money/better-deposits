@@ -28,7 +28,9 @@ import Withdrawal from './withdraw';
 import Dispute from './dispute';
 import Create from './create';
 import { useStyles } from '../../components/escrowApp/useStyles';
-import { betterDepositAddress } from '../../config';
+import { escrowContractAddress, linkedERC20Address } from '../../config';
+import { getEscrowContract, getERC20Contract } from '../../contracts';
+import { Contract } from 'ethers';
 
 const mainListItems = (
   <div>
@@ -69,6 +71,8 @@ export default function EscrowApp() {
   const classes = useStyles();
   const [open] = React.useState(true);
   const [provider, setProvider] = useState<Web3Provider>();
+  const [escrowContract, setEscrowContract] = useState<Contract>();
+  const [erc20Contract, setERC20Contract] = useState<Contract>();
 
   useEffect(() => {
     async function connectMetamask() {
@@ -81,6 +85,28 @@ export default function EscrowApp() {
     }
     connectMetamask();
   });
+
+  useEffect(() => {
+    try {
+      const contract = provider
+        ? getEscrowContract(provider, escrowContractAddress)
+        : undefined;
+      setEscrowContract(contract);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }, [provider]);
+
+  useEffect(() => {
+    try {
+      const contract = provider
+        ? getERC20Contract(provider, linkedERC20Address)
+        : undefined;
+      setERC20Contract(contract);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }, [provider]);
 
   return (
     <div className={classes.root}>
@@ -100,12 +126,14 @@ export default function EscrowApp() {
         <Switch>
           <Route path={dashboardRoute} exact component={Dashboard} />
           <Route path={createRoute} exact>
-            <Create
-              provider={provider!}
-              escrowContractAddress={betterDepositAddress}
+            <Create escrowContract={escrowContract!} />
+          </Route>
+          <Route path={depositRoute} exact>
+            <Deposit
+              escrowContract={escrowContract!}
+              linkedERC20Contract={erc20Contract!}
             />
           </Route>
-          <Route path={depositRoute} exact component={Deposit} />
           <Route path={withdrawRoute} exact component={Withdrawal} />
           <Route path={disputeRoute} exact component={Dispute} />
         </Switch>
