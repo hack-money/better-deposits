@@ -134,11 +134,14 @@ export default function EscrowApp() {
               linkedERC20Contract={erc20Contract!}
             />
           </Route>
-          <Route path={withdrawRoute} exact component={Withdrawal} />
-          <Route path={disputeRoute} exact component={Dispute} />
+          <Route path={withdrawRoute} exact>
+            <Withdrawal escrowContract={escrowContract!} />
+          </Route>
+          <Route path={disputeRoute} exact>
+            <Dispute escrowContract={escrowContract!} />
+          </Route>
         </Switch>
       </Router>
-      );
     </div>
   );
 }
