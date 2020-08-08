@@ -1,5 +1,15 @@
 import React from 'react';
+import DisputeTable from '../../components/escrowApp/dispute/DisputeTable';
+import { Contract } from 'ethers';
 
-export default function Dispute() {
-  return <div></div>;
+interface DisputeProps {
+  escrowContract: Contract;
+}
+
+export default function Dispute({ escrowContract }: DisputeProps) {
+  return (
+    <React.Fragment>
+      <DisputeTable escrowContract={escrowContract!} />
+    </React.Fragment>
+  );
 }
