@@ -39,6 +39,10 @@ export default function WithdrawalTable({
     escrowContract.approveDepositRelease(escrowId);
   };
 
+  const withdrawDeposit = (escrowId: bigint) => {
+    escrowContract.withdraw(escrowId);
+  };
+
   return (
     <div>
       <div className={classes.root}>
@@ -55,14 +59,34 @@ export default function WithdrawalTable({
         </FormControl>
       </div>
       <Grid container direction="row" justify="center" alignItems="center">
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={() => approveDepositRelease(escrowId)}
-        >
-          Approve release
-        </Button>
+        <Grid>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => approveDepositRelease(escrowId)}
+            style={{
+              marginTop: '10px',
+              paddingRight: '20px',
+            }}
+          >
+            Approve release
+          </Button>
+        </Grid>
+        <Grid>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => withdrawDeposit(escrowId)}
+            style={{
+              marginTop: '10px',
+              paddingRight: '20px',
+            }}
+          >
+            Withdraw
+          </Button>
+        </Grid>
       </Grid>
     </div>
   );

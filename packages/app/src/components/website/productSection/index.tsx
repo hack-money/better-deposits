@@ -1,7 +1,8 @@
 import React from 'react';
 import { useStyles } from '../../useStyles';
-import DashboardImage from './Dashboard.png';
+import DashboardImage from '../../../images/dashboard.png';
 import { Container, Typography, Box } from '@material-ui/core';
+import ImageBox from '../howItWorksSection/ImageBox';
 
 export default function ProductSection() {
   const classes = useStyles();
@@ -13,7 +14,7 @@ export default function ProductSection() {
         </Typography>
       </Box>
       <Container>
-        <img src={DashboardImage} alt="" width="100%" className="center"></img>
+        <ImageBox src={DashboardImage} />
       </Container>
     </div>
   );

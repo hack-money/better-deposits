@@ -18,9 +18,9 @@ export default function GetStarted() {
                   1. Agree escrow
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
-                  Untrusting parties want to make an agreement and escrow funds.
-                  They agree on the terms of the escrow: value, duration, third
-                  party adjudicator.
+                  Two parties (e.g. tenant and landlord) want to make an
+                  agreement and lock up a deposit for a period of time. They
+                  agree on: value, duration, third party adjudicator.
                 </Typography>
               </div>
             </Grid>
@@ -30,8 +30,9 @@ export default function GetStarted() {
                   2. Deposit funds into smart contract
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
-                  Deposit escrow funds to the smart contract. Funds are now
-                  locked until the escrow expiry.
+                  Parties transfer the deposit funds to BetterDeposits financial
+                  software - a smart contract. Funds are now locked until the
+                  expiry.
                 </Typography>
               </div>
             </Grid>
@@ -41,7 +42,7 @@ export default function GetStarted() {
                   3. Settle escrow or raise dispute
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
-                  At end of escrow, if parties are happy then deposits are
+                  At end of deposit, if parties are happy then deposits are
                   returned. If not, the nominated third party adjudicator
                   settles the dispute.
                 </Typography>
