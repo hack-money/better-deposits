@@ -1,4 +1,5 @@
 import { Web3Provider } from '@ethersproject/providers';
+import { Contract } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,7 +31,7 @@ import Create from './create';
 import { useStyles } from '../../components/escrowApp/useStyles';
 import { escrowContractAddress, linkedERC20Address } from '../../config';
 import { getEscrowContract, getERC20Contract } from '../../contracts';
-import { Contract } from 'ethers';
+import { getOnboard } from '../../web3/getOnboard';
 
 const mainListItems = (
   <div>
@@ -75,16 +76,15 @@ export default function EscrowApp() {
   const [erc20Contract, setERC20Contract] = useState<Contract>();
 
   useEffect(() => {
-    async function connectMetamask() {
-      if (typeof window.ethereum === undefined) {
-        throw new Error('Please install Metamask');
-      } else if (!provider) {
-        await window.ethereum.enable();
-        setProvider(new Web3Provider(window.ethereum));
-      }
-    }
-    connectMetamask();
-  });
+    const getUserWallet = async () => {
+      const { onboard, provider } = getOnboard();
+      await onboard.walletSelect();
+      await onboard.walletCheck();
+      setProvider(provider);
+    };
+
+    getUserWallet();
+  }, []);
 
   useEffect(() => {
     try {

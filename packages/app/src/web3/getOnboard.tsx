@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
 import Onboard from 'bnc-onboard';
 import dotenv from 'dotenv';
 import {
   Initialization,
   WalletInitOptions,
   WalletCheckInit,
-  Wallet,
 } from 'bnc-onboard/dist/src/interfaces';
+import { Web3Provider } from '@ethersproject/providers';
 dotenv.config();
 
-export function getUserWallet() {
+export function getOnboard() {
+  let provider: any;
+
   const walletChecks: Array<WalletCheckInit> = [
     { checkName: 'connect' },
     { checkName: 'network' },
@@ -29,8 +30,14 @@ export function getUserWallet() {
         'To use BetterDeposits, you need an Ethereum wallet. We support:',
       wallets,
     },
+    subscriptions: {
+      wallet: (wallet) => {
+        provider = new Web3Provider(wallet.provider);
+        console.log(`${wallet.name} connected!`);
+      },
+    },
     hideBranding: true,
   };
 
-  return Onboard(config);
+  return { onboard: Onboard(config), provider };
 }
