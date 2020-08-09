@@ -3,13 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import InfoCard from '../../components/website/howItWorksSection/InfoCard';
 import { Typography, Container } from '@material-ui/core';
-import PeopleIcon from '@material-ui/icons/People';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import SendIcon from '@material-ui/icons/Send';
-import BlockIcon from '@material-ui/icons/Block';
+
+import ConnectWalletImage from '../../images/connectWallet.png';
+import CreateEscrowImage from '../../images/createEscrow.png';
+import DepositImage from '../../images/deposit.png';
+import WithdrawImage from '../../images/withdraw.png';
+import DisputeImage from '../../images/dispute.png';
+import ImageBox from '../../components/website/howItWorksSection/ImageBox';
 
 import { useStyles } from '../../components/useStyles';
-import { shadeColor } from '../../components/shadeColor';
 
 const iconSize = '175px';
 const localUseStyles = makeStyles((theme) => ({
@@ -39,85 +41,81 @@ export default function HowItWorks() {
         <Grid container spacing={5} style={{ padding: '50px' }}>
           <Container>
             <Grid container className={localClasses.card}>
-              <Grid item xs={6}>
+              <Grid item xs={11}>
                 <InfoCard
-                  title="Escrow setup"
-                  firstPara="Two parties that want to setup a trustless escrow arrangement make an account and login to the platform. They agree the rules of the escrow:
-                deposit amount, timelock and a third party adjudicator. "
-                  secondPara="The escrow is then created on the Ethereum smart contract."
+                  title="1. Login and connect wallet"
+                  firstPara="Login to the platform and connect your wallet"
+                  secondPara=""
                 ></InfoCard>
               </Grid>
-              <Grid item xs={2} style={{ margin: 'auto' }}>
-                <Container
-                  style={{
-                    color: shadeColor('#FCB539', 0.5),
-                  }}
-                >
-                  <PeopleIcon className={localClasses.icon} />
+              <Grid item xs={10} style={{ margin: 'auto' }}>
+                <Container>
+                  <ImageBox src={ConnectWalletImage} />
                 </Container>
               </Grid>
             </Grid>
           </Container>
           <Container>
             <Grid container className={localClasses.card}>
-              <Grid item xs={6}>
+              <Grid item xs={11}>
                 <InfoCard
-                  title="Deposit and activate"
-                  firstPara="Next both parties will deposit their parts of the deposit through the platform to the escrow smart contract. Once done, the funds are locked and the escrow is treated
-                as active."
+                  title="2. Setup deposit"
+                  firstPara="Fill out the details of the deposit arrangement you wish to setup:
+                deposit amount, other party involved (e.g. landlord) and a third party adjudicator."
+                  secondPara="Click 'Create' to setup the escrow on the Ethereum smart contract."
+                ></InfoCard>
+              </Grid>
+              <Grid item xs={10} style={{ margin: 'auto' }}>
+                <Container>
+                  <ImageBox src={CreateEscrowImage} />
+                </Container>
+              </Grid>
+            </Grid>
+          </Container>
+          <Container>
+            <Grid container className={localClasses.card}>
+              <Grid item xs={11}>
+                <InfoCard
+                  title="3. Deposit funds"
+                  firstPara="Both parties transfer funds through the platform to the Ethereum escrow smart contract. Once done, the funds are locked and the deposit arrangement is active."
                   secondPara="The status of the deposit can now be viewed through the dashboard."
                 ></InfoCard>
               </Grid>
-              <Grid item xs={2} style={{ margin: 'auto' }}>
-                <Container
-                  style={{
-                    color: shadeColor('#8A39FC', 0.5),
-                  }}
-                >
-                  <AccountBalanceIcon className={localClasses.icon} />
+              <Grid item xs={10} style={{ margin: 'auto' }}>
+                <Container>
+                  <ImageBox src={DepositImage} />
                 </Container>
               </Grid>
             </Grid>
           </Container>
           <Container>
             <Grid container className={localClasses.card}>
-              <Grid item xs={6}>
+              <Grid item xs={11}>
                 <InfoCard
-                  title="Withdraw"
-                  firstPara="At the end of the escrow period, the deposit becomes unlocked and available for the parties involved to signal that it should be
-                released. If both parties are happy that the terms of the arrangement were adhered to, they will both approve the deposit release."
-                  secondPara="Once all approvals have been received, the smart contract unlocks the deposit and makes it available for withdraw."
+                  title="4. Withdraw"
+                  firstPara="At the end of the escrow period, if both parties are happy happy that the terms of the arrangement were adhered to then they will signal their approval for the deposit to be released by clicking 'Approve Release'."
+                  secondPara="Once all approvals have been received, uses will be able to click 'Withdraw' and withdraw their funds."
                 ></InfoCard>
               </Grid>
-              <Grid item xs={2} style={{ margin: 'auto' }}>
-                <Container
-                  style={{
-                    color: shadeColor('#39FC64', 0.5),
-                  }}
-                >
-                  <SendIcon className={localClasses.icon} />
+              <Grid item xs={10} style={{ margin: 'auto' }}>
+                <Container>
+                  <ImageBox src={WithdrawImage} />
                 </Container>
               </Grid>
             </Grid>
           </Container>
           <Container>
             <Grid container className={localClasses.card}>
-              <Grid item xs={6}>
+              <Grid item xs={11}>
                 <InfoCard
-                  title="Dispute"
+                  title="5. Dispute"
                   firstPara="If one of the parties instead feels that the terms of the escrow were violated, they can dispute the deposit. This will make the smart contract transfer the 
                 deposit to the third party adjudicator that both parties agreed on at the start of the arrangement."
                   secondPara="It is then the responsibility of the third party adjudicator to determine any possible deposit deducations."
                 ></InfoCard>
               </Grid>
-              <Grid item xs={2} style={{ margin: 'auto' }}>
-                <Container
-                  style={{
-                    color: shadeColor('#FC3945', 0.5),
-                  }}
-                >
-                  <BlockIcon className={localClasses.icon} />
-                </Container>
+              <Grid item xs={10} style={{ margin: 'auto' }}>
+                <ImageBox src={DisputeImage} />
               </Grid>
             </Grid>
           </Container>

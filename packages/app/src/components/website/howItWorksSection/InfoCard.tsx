@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -32,14 +33,12 @@ export default function InfoCard(props: InfoCardProps) {
   const { title, firstPara, secondPara } = props;
 
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography variant="h4" component="h2">
-          {title}
-        </Typography>
-        <Typography style={{ padding: '10px' }}>{firstPara}</Typography>
-        <Typography style={{ padding: '10px' }}>{secondPara}</Typography>
-      </CardContent>
-    </Card>
+    <Box className={classes.root}>
+      <Typography variant="h4" component="h2" color="textPrimary">
+        {title}
+      </Typography>
+      <Typography style={{ padding: '10px' }}>{firstPara}</Typography>
+      <Typography style={{ padding: '10px' }}>{secondPara}</Typography>
+    </Box>
   );
 }
