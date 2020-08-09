@@ -11,6 +11,7 @@ const config: BuidlerConfig = {
       blockGasLimit: 10000000,
       gas: 8000000,
       hardfork: 'istanbul',
+      chainId: 31337,
     },
   },
   paths: {

@@ -8,7 +8,7 @@ import {
 import { Web3Provider } from '@ethersproject/providers';
 dotenv.config();
 
-export function getOnboard() {
+export async function getOnboard(): Promise<Web3Provider> {
   let provider: any;
 
   const walletChecks: Array<WalletCheckInit> = [
@@ -22,7 +22,7 @@ export function getOnboard() {
 
   const config: Initialization = {
     dappId: process.env.ONBOARD_API_KEY,
-    networkId: 3, // ropsten
+    networkId: 31337, // networkId of buidlerEVM test network
     walletCheck: walletChecks,
     walletSelect: {
       heading: 'Connect your wallet',
@@ -39,5 +39,9 @@ export function getOnboard() {
     hideBranding: true,
   };
 
-  return { onboard: Onboard(config), provider };
+  const onboard = Onboard(config);
+  await onboard.walletSelect();
+  await onboard.walletCheck();
+
+  return provider;
 }

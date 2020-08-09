@@ -77,9 +77,9 @@ export default function EscrowApp() {
 
   useEffect(() => {
     const getUserWallet = async () => {
-      const { onboard, provider } = getOnboard();
-      await onboard.walletSelect();
-      await onboard.walletCheck();
+      const provider = await getOnboard();
+      console.log({ provider });
+
       setProvider(provider);
     };
 

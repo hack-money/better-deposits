@@ -30,11 +30,11 @@ interface CreateTableProps {
 export default function CreateTable({ escrowContract }: CreateTableProps) {
   const classes = useStyles();
   const [values, setValues] = useState({
-    currentUser: '',
-    deposit: 0n,
-    counterpartyAddress: '',
-    counterpartyDeposit: 0n,
-    adjudicator: '',
+    currentUser: '0xBb29eAAFC879a8C22c4de2398c85437237d9d289',
+    deposit: 2,
+    counterpartyAddress: '0x11743b069F67FD5150950B72766D06dE8a62e5E6',
+    counterpartyDeposit: 1,
+    adjudicator: '0x5C983f7f954F84680381E816ca7e3385d15650Bc',
   });
 
   const handleChange = (prop: any) => (event: any) => {
@@ -45,8 +45,8 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
     userA: string,
     userB: string,
     adjudicator: string,
-    userARequiredDeposit: bigint,
-    userBRequiredDeposit: bigint
+    userARequiredDeposit: number,
+    userBRequiredDeposit: number
   ) => {
     try {
       escrowContract.create(
@@ -61,8 +61,6 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
     }
   };
 
-  // TODO: format better, stop text entererd in one box being entered in all
-  // make a submit button, which will send all data off to smart contract
   return (
     <div>
       <div className={classes.root}>
@@ -74,7 +72,6 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
             id="standard-adornment-amount"
             value={values.currentUser}
             onChange={handleChange('currentUser')}
-            startAdornment={<InputAdornment position="start"></InputAdornment>}
           />
         </FormControl>
         <FormControl fullWidth className={classes.margin}>
@@ -96,7 +93,6 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
             id="standard-adornment-amount"
             value={values.counterpartyAddress}
             onChange={handleChange('counterpartyAddress')}
-            startAdornment={<InputAdornment position="start"></InputAdornment>}
           />
         </FormControl>
         <FormControl fullWidth className={classes.margin}>
@@ -117,8 +113,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
           <Input
             id="standard-adornment-amount"
             value={values.adjudicator}
-            onChange={handleChange('timeLock')}
-            startAdornment={<InputAdornment position="start"></InputAdornment>}
+            onChange={handleChange('adjudicator')}
           />
         </FormControl>
       </div>
