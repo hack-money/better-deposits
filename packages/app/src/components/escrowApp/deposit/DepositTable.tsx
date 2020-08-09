@@ -85,6 +85,10 @@ export default function DepositTable({
             color="primary"
             size="large"
             onClick={() => approveContract(values.depositAmount)}
+            style={{
+              marginTop: '10px',
+              paddingRight: '20px',
+            }}
           >
             Approve
           </Button>
@@ -97,6 +101,10 @@ export default function DepositTable({
             onClick={() =>
               depositToContract(values.escrowId, values.depositAmount)
             }
+            style={{
+              marginTop: '10px',
+              paddingLeft: '20px',
+            }}
           >
             Deposit
           </Button>

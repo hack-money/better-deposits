@@ -52,7 +52,7 @@ export const useStyles = makeStyles(() => ({
     padding: theme.spacing(3, 2),
   },
   featureSection: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 7),
   },
   bottomSection: {
@@ -78,7 +78,7 @@ export const useStyles = makeStyles(() => ({
     padding: theme.spacing(8, 0, 7),
   },
   product: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(8, 0, 7),
   },
 }));

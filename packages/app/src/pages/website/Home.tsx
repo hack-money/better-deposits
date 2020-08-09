@@ -11,8 +11,8 @@ export default function Home() {
       <HeadSection />
       <IntroSection />
       <GetStartedSection />
-      <ProductSection />
       <FeatureSection />
+      <ProductSection />
     </Fragment>
   );
 }
