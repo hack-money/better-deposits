@@ -5,7 +5,6 @@ import {
   FormControl,
   InputLabel,
   Input,
-  InputAdornment,
   Button,
   Grid,
 } from '@material-ui/core';
