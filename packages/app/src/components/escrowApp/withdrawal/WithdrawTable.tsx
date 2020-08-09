@@ -52,7 +52,6 @@ export default function WithdrawalTable({
             onChange={(event) => {
               setEscrowId(BigInt(event.target.value));
             }}
-            startAdornment={<InputAdornment position="start"></InputAdornment>}
           />
         </FormControl>
       </div>

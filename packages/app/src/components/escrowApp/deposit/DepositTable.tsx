@@ -63,7 +63,6 @@ export default function DepositTable({
             id="standard-adornment-amount"
             value={values.escrowId}
             onChange={handleChange('escrowId')}
-            startAdornment={<InputAdornment position="start"></InputAdornment>}
           />
         </FormControl>
         <FormControl fullWidth className={classes.margin}>
