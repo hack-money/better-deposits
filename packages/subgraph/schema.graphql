@@ -1,6 +1,7 @@
-type Gravatar @entity {
+type Escrow @entity {
   id: ID!
-  owner: Bytes!
-  displayName: String!
-  imageUrl: String!
+  user: Bytes!
+  counterParty: Bytes!
+  started: Boolean!
+  finished: Boolean!
 }

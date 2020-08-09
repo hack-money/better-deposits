@@ -1,27 +1,36 @@
 specVersion: 0.0.2
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: BetterDeposits subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Gravity
-    network: mainnet
+    name: BetterDeposits
+    network: testnet
     source:
       address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eC'
-      abi: Gravity
+      abi: BetterDeposits
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Gravatar
+        - Escrow
       abis:
-        - name: Gravity
-          file: ./abis/Gravity.json
+        - name: BetterDeposits
+          file: ./abis/BetterDeposits.json
       eventHandlers:
-        - event: NewGravatar(uint256,address,string,string)
-          handler: handleNewGravatar
-        - event: UpdatedGravatar(uint256,address,string,string)
-          handler: handleUpdatedGravatar
+        - event: Create(indexed uint256,indexed address,indexed address)
+          handler: handleNewEscrow
+        - event: Deposit(indexed uint256,indexed address,uint256)
+          handler: handleDeposit
+        - event: AgreementStart(indexed uint256,indexed address,indexed address,uint256,uint256)
+          handler: handleAgreementStart
+        - event: AgreementFinish(indexed uint256,indexed address,indexed address)
+          handler: handleAgreementFinish
+        - event: Dispute(indexed uint256,indexed address,indexed address,address,uint256)
+          handler: handleDispute
+        - event: DepositReleaseApproval(indexed uint256,indexed address)
+          handler: handleDepositReleaseApproval
+        - event: Withdraw(indexed uint256,indexed address,uint256)
+          handler: handleWithdraw
       file: ./src/mapping.ts
