@@ -29,6 +29,8 @@ module.exports = {
           "error",
           "ignorePackages",
           {
+            "js": "never",
+            "jsx": "never",
             "ts": "never",
             "tsx": "never"
           }
@@ -44,7 +46,7 @@ module.exports = {
       'import/resolver': {
           node: {
               paths: ["src", "node_modules"],
-              extensions: ['.ts', '.tsx']
+              extensions: ['.js', '.jsx','.ts', '.tsx']
           },
       },
   }
