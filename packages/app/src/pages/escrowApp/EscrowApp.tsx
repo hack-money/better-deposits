@@ -1,37 +1,41 @@
-import { Web3Provider } from '@ethersproject/providers';
-import { Contract } from 'ethers';
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import PeopleIcon from '@material-ui/icons/People';
-import PaymentIcon from '@material-ui/icons/Payment';
-import GavelIcon from '@material-ui/icons/Gavel';
-import { Link } from 'react-router-dom';
-import clsx from 'clsx';
+import { Web3Provider } from "@ethersproject/providers";
+import { Contract } from "@ethersproject/contracts";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import {
+  CssBaseline,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
+import {
+  AccountBalance as AccountBalanceIcon,
+  Dashboard as DashboardIcon,
+  Gavel as GavelIcon,
+  Payment as PaymentIcon,
+  People as PeopleIcon,
+} from "@material-ui/icons";
+import clsx from "clsx";
+
 import {
   dashboardRoute,
   createRoute,
   depositRoute,
   withdrawRoute,
   disputeRoute,
-} from '../../routes/escrowApp';
-import Dashboard from './dashboard';
-import Deposit from './deposit';
-import Withdrawal from './withdraw';
-import Dispute from './dispute';
-import Create from './create';
-import { useStyles } from '../../components/escrowApp/useStyles';
-import { escrowContractAddress, linkedERC20Address } from '../../config';
-import { getEscrowContract, getERC20Contract } from '../../contracts';
-import { getOnboard } from '../../web3/getOnboard';
+} from "../../routes/escrowApp";
+import Dashboard from "./dashboard";
+import Deposit from "./deposit";
+import Withdrawal from "./withdraw";
+import Dispute from "./dispute";
+import Create from "./create";
+import { useStyles } from "../../components/escrowApp/useStyles";
+import { escrowContractAddress, linkedERC20Address } from "../../config";
+import { getEscrowContract, getERC20Contract } from "../../contracts";
+import { getOnboard } from "../../web3/getOnboard";
 
 const mainListItems = (
   <div>

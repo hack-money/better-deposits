@@ -1,1 +1,1 @@
-declare module 'react-typeform-embed';
+declare module "react-typeform-embed";

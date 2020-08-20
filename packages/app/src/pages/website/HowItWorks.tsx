@@ -1,20 +1,18 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import InfoCard from '../../components/website/howItWorksSection/InfoCard';
-import { Typography, Container } from '@material-ui/core';
+import React from "react";
+import { Grid, makeStyles, Typography, Container } from "@material-ui/core";
+import InfoCard from "../../components/website/howItWorksSection/InfoCard";
 
-import ConnectWalletImage from '../../images/connectWallet.png';
-import CreateEscrowImage from '../../images/createEscrow.png';
-import DepositImage from '../../images/deposit.png';
-import WithdrawImage from '../../images/withdraw.png';
-import DisputeImage from '../../images/dispute.png';
-import ImageBox from '../../components/website/howItWorksSection/ImageBox';
+import ConnectWalletImage from "../../images/connectWallet.png";
+import CreateEscrowImage from "../../images/createEscrow.png";
+import DepositImage from "../../images/deposit.png";
+import WithdrawImage from "../../images/withdraw.png";
+import DisputeImage from "../../images/dispute.png";
+import ImageBox from "../../components/website/howItWorksSection/ImageBox";
 
-import { useStyles } from '../../components/useStyles';
+import { useStyles } from "../../components/useStyles";
 
-const iconSize = '175px';
-const localUseStyles = makeStyles((theme) => ({
+const iconSize = "175px";
+const localUseStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
@@ -38,7 +36,7 @@ export default function HowItWorks() {
         <Typography variant="h3" align="center">
           How it works
         </Typography>
-        <Grid container spacing={5} style={{ padding: '50px' }}>
+        <Grid container spacing={5} style={{ padding: "50px" }}>
           <Container>
             <Grid container className={localClasses.card}>
               <Grid item xs={11}>
@@ -48,7 +46,7 @@ export default function HowItWorks() {
                   secondPara=""
                 ></InfoCard>
               </Grid>
-              <Grid item xs={10} style={{ margin: 'auto' }}>
+              <Grid item xs={10} style={{ margin: "auto" }}>
                 <Container>
                   <ImageBox src={ConnectWalletImage} />
                 </Container>
@@ -65,7 +63,7 @@ export default function HowItWorks() {
                   secondPara="Click 'Create' to setup the escrow on the Ethereum smart contract."
                 ></InfoCard>
               </Grid>
-              <Grid item xs={10} style={{ margin: 'auto' }}>
+              <Grid item xs={10} style={{ margin: "auto" }}>
                 <Container>
                   <ImageBox src={CreateEscrowImage} />
                 </Container>
@@ -81,7 +79,7 @@ export default function HowItWorks() {
                   secondPara="The status of the deposit can now be viewed through the dashboard."
                 ></InfoCard>
               </Grid>
-              <Grid item xs={10} style={{ margin: 'auto' }}>
+              <Grid item xs={10} style={{ margin: "auto" }}>
                 <Container>
                   <ImageBox src={DepositImage} />
                 </Container>
@@ -97,7 +95,7 @@ export default function HowItWorks() {
                   secondPara="Once all approvals have been received, uses will be able to click 'Withdraw' and withdraw their funds."
                 ></InfoCard>
               </Grid>
-              <Grid item xs={10} style={{ margin: 'auto' }}>
+              <Grid item xs={10} style={{ margin: "auto" }}>
                 <Container>
                   <ImageBox src={WithdrawImage} />
                 </Container>
@@ -114,7 +112,7 @@ export default function HowItWorks() {
                   secondPara="It is then the responsibility of the third party adjudicator to determine any possible deposit deducations."
                 ></InfoCard>
               </Grid>
-              <Grid item xs={10} style={{ margin: 'auto' }}>
+              <Grid item xs={10} style={{ margin: "auto" }}>
                 <ImageBox src={DisputeImage} />
               </Grid>
             </Grid>

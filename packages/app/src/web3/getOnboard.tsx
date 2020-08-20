@@ -1,23 +1,25 @@
-import Onboard from 'bnc-onboard';
-import dotenv from 'dotenv';
+import Onboard from "bnc-onboard";
+import dotenv from "dotenv";
 import {
   Initialization,
   WalletInitOptions,
   WalletCheckInit,
-} from 'bnc-onboard/dist/src/interfaces';
-import { Web3Provider } from '@ethersproject/providers';
+  Wallet,
+} from "bnc-onboard/dist/src/interfaces";
+import { Web3Provider } from "@ethersproject/providers";
+
 dotenv.config();
 
 export async function getOnboard(): Promise<Web3Provider> {
   let provider: any;
 
   const walletChecks: Array<WalletCheckInit> = [
-    { checkName: 'connect' },
-    { checkName: 'network' },
+    { checkName: "connect" },
+    { checkName: "network" },
   ];
 
   const wallets: Array<WalletInitOptions> = [
-    { walletName: 'metamask', preferred: true },
+    { walletName: "metamask", preferred: true },
   ];
 
   const config: Initialization = {
@@ -25,13 +27,13 @@ export async function getOnboard(): Promise<Web3Provider> {
     networkId: 31337, // networkId of buidlerEVM test network
     walletCheck: walletChecks,
     walletSelect: {
-      heading: 'Connect your wallet',
+      heading: "Connect your wallet",
       description:
-        'To use BetterDeposits, you need an Ethereum wallet. We support:',
+        "To use BetterDeposits, you need an Ethereum wallet. We support:",
       wallets,
     },
     subscriptions: {
-      wallet: (wallet) => {
+      wallet: wallet => {
         provider = new Web3Provider(wallet.provider);
         console.log(`${wallet.name} connected!`);
       },

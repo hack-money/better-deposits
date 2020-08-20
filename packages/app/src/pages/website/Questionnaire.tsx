@@ -1,5 +1,5 @@
-import React from 'react';
-import { ReactTypeformEmbed } from 'react-typeform-embed';
+import React from "react";
+import { ReactTypeformEmbed } from "react-typeform-embed";
 
 export default function Questionnaire() {
   return (

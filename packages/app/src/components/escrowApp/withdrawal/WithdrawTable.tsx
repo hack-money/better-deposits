@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Contract } from 'ethers';
+import React, { useState } from "react";
+import { Contract } from "@ethersproject/contracts";
 import {
   makeStyles,
   FormControl,
@@ -7,16 +7,16 @@ import {
   Input,
   Button,
   Grid,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 interface WithdrawalTableProps {
   escrowContract: Contract;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   margin: {
     margin: theme.spacing(1),
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   textField: {
-    width: '25ch',
+    width: "25ch",
   },
 }));
 
@@ -52,7 +52,7 @@ export default function WithdrawalTable({
           </InputLabel>
           <Input
             id="standard-adornment-amount"
-            onChange={(event) => {
+            onChange={event => {
               setEscrowId(BigInt(event.target.value));
             }}
           />
@@ -66,8 +66,8 @@ export default function WithdrawalTable({
             size="large"
             onClick={() => approveDepositRelease(escrowId)}
             style={{
-              marginTop: '10px',
-              paddingRight: '20px',
+              marginTop: "10px",
+              paddingRight: "20px",
             }}
           >
             Approve release
@@ -80,8 +80,8 @@ export default function WithdrawalTable({
             size="large"
             onClick={() => withdrawDeposit(escrowId)}
             style={{
-              marginTop: '10px',
-              paddingRight: '20px',
+              marginTop: "10px",
+              paddingRight: "20px",
             }}
           >
             Withdraw

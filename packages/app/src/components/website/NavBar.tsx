@@ -1,12 +1,8 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import { homeRoute, howItWorksRoute, faqRoute } from '../../routes';
-import Grid from '@material-ui/core/Grid';
-import { useStyles } from '../useStyles';
+import React from "react";
+import { AppBar, Button, Grid, Toolbar, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { homeRoute, howItWorksRoute, faqRoute } from "../../routes";
+import { useStyles } from "../useStyles";
 
 export default function NavBar() {
   const classes = useStyles();
@@ -16,9 +12,9 @@ export default function NavBar() {
         <Toolbar>
           <div
             style={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              width: '30rem',
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              width: "30rem",
             }}
           >
             <Typography color="inherit" variant="h4" noWrap>

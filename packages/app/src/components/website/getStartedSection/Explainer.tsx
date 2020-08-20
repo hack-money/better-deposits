@@ -1,5 +1,5 @@
-import React from 'react';
-import { Typography, Grid, Container, Box } from '@material-ui/core';
+import React from "react";
+import { Typography, Grid, Container, Box } from "@material-ui/core";
 
 export default function GetStarted() {
   return (

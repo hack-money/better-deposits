@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ImageBoxProps {
   src: string;
@@ -11,7 +11,7 @@ export default function ImageBox({ src }: ImageBoxProps) {
       alt=""
       width="100%"
       height="100%"
-      style={{ padding: '20px' }}
+      style={{ padding: "20px" }}
     ></img>
   );
 }

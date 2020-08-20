@@ -1,20 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './pages/website/Home';
-import Technology from './pages/website/HowItWorks';
-import FAQ from './pages/website/FAQ';
-import Questionnaire from './pages/website/Questionnaire';
-import BottomSection from './components/website/bottomSection';
-import NavBar from './components/website/NavBar';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./pages/website/Home";
+import Technology from "./pages/website/HowItWorks";
+import FAQ from "./pages/website/FAQ";
+import Questionnaire from "./pages/website/Questionnaire";
+import BottomSection from "./components/website/bottomSection";
+import NavBar from "./components/website/NavBar";
 import {
   homeRoute,
   howItWorksRoute,
   faqRoute,
   questionnaireRoute,
   appRoute,
-} from './routes';
-import './App.css';
-import AppLanding from './pages/website/AppLanding';
+} from "./routes";
+import "./App.css";
+import AppLanding from "./pages/website/AppLanding";
 
 function App() {
   return (

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import { Button, Grid } from '@material-ui/core';
-import { Contract } from 'ethers';
+import React, { useState } from "react";
+import {
+  Button,
+  FormControl,
+  Grid,
+  Input,
+  InputAdornment,
+  InputLabel,
+  makeStyles,
+} from "@material-ui/core";
+import { Contract } from "@ethersproject/contracts";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   margin: {
     margin: theme.spacing(1),
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   textField: {
-    width: '25ch',
+    width: "25ch",
   },
 }));
 
@@ -30,11 +33,11 @@ interface CreateTableProps {
 export default function CreateTable({ escrowContract }: CreateTableProps) {
   const classes = useStyles();
   const [values, setValues] = useState({
-    currentUser: '0xBb29eAAFC879a8C22c4de2398c85437237d9d289',
+    currentUser: "0xBb29eAAFC879a8C22c4de2398c85437237d9d289",
     deposit: 2,
-    counterpartyAddress: '0x11743b069F67FD5150950B72766D06dE8a62e5E6',
+    counterpartyAddress: "0x11743b069F67FD5150950B72766D06dE8a62e5E6",
     counterpartyDeposit: 1,
-    adjudicator: '0x5C983f7f954F84680381E816ca7e3385d15650Bc',
+    adjudicator: "0x5C983f7f954F84680381E816ca7e3385d15650Bc",
   });
 
   const handleChange = (prop: any) => (event: any) => {
@@ -46,7 +49,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
     userB: string,
     adjudicator: string,
     userARequiredDeposit: number,
-    userBRequiredDeposit: number
+    userBRequiredDeposit: number,
   ) => {
     try {
       escrowContract.create(
@@ -54,7 +57,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
         userB,
         adjudicator,
         userARequiredDeposit,
-        userBRequiredDeposit
+        userBRequiredDeposit,
       );
     } catch (err) {
       console.log(err.message);
@@ -71,7 +74,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
           <Input
             id="standard-adornment-amount"
             value={values.currentUser}
-            onChange={handleChange('currentUser')}
+            onChange={handleChange("currentUser")}
           />
         </FormControl>
         <FormControl fullWidth className={classes.margin}>
@@ -81,7 +84,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
           <Input
             id="standard-adornment-amount"
             value={values.deposit}
-            onChange={handleChange('deposit')}
+            onChange={handleChange("deposit")}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
           />
         </FormControl>
@@ -92,7 +95,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
           <Input
             id="standard-adornment-amount"
             value={values.counterpartyAddress}
-            onChange={handleChange('counterpartyAddress')}
+            onChange={handleChange("counterpartyAddress")}
           />
         </FormControl>
         <FormControl fullWidth className={classes.margin}>
@@ -102,7 +105,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
           <Input
             id="standard-adornment-amount"
             value={values.counterpartyDeposit}
-            onChange={handleChange('counterpartyDeposit')}
+            onChange={handleChange("counterpartyDeposit")}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
           />
         </FormControl>
@@ -113,7 +116,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
           <Input
             id="standard-adornment-amount"
             value={values.adjudicator}
-            onChange={handleChange('adjudicator')}
+            onChange={handleChange("adjudicator")}
           />
         </FormControl>
       </div>
@@ -128,7 +131,7 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
               values.counterpartyAddress,
               values.adjudicator,
               values.deposit,
-              values.counterpartyDeposit
+              values.counterpartyDeposit,
             )
           }
         >

@@ -1,6 +1,6 @@
-import React from 'react';
-import { useStyles } from '../../useStyles';
-import { Container, Typography } from '@material-ui/core';
+import React from "react";
+import { Container, Typography } from "@material-ui/core";
+import { useStyles } from "../../useStyles";
 
 export default function IntroSection() {
   const classes = useStyles();
@@ -11,7 +11,7 @@ export default function IntroSection() {
           variant="h3"
           color="textPrimary"
           align="center"
-          style={{ padding: '20px' }}
+          style={{ padding: "20px" }}
         >
           Better Deposits is financial software that allows you to manage your
           property deposits.
@@ -20,7 +20,7 @@ export default function IntroSection() {
           variant="h3"
           color="textPrimary"
           align="center"
-          style={{ padding: '20px' }}
+          style={{ padding: "20px" }}
         >
           It uses cutting edge technology - smart contracts - so you don't have
           to rely on a third party.
@@ -29,7 +29,7 @@ export default function IntroSection() {
           variant="h3"
           color="textPrimary"
           align="center"
-          style={{ padding: '20px' }}
+          style={{ padding: "20px" }}
         >
           You are in control.
         </Typography>

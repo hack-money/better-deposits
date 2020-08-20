@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Contract } from 'ethers';
+import React, { useState } from "react";
+import { Contract } from "@ethersproject/contracts";
 import {
   makeStyles,
   FormControl,
@@ -8,16 +8,16 @@ import {
   Button,
   Grid,
   Container,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 interface DisputeTableProps {
   escrowContract: Contract;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   margin: {
     margin: theme.spacing(1),
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   textField: {
-    width: '25ch',
+    width: "25ch",
   },
 }));
 
@@ -48,7 +48,7 @@ export default function DisputeTable({ escrowContract }: DisputeTableProps) {
             </InputLabel>
             <Input
               id="standard-adornment-amount"
-              onChange={(event) => {
+              onChange={event => {
                 setEscrowId(BigInt(event.target.value));
               }}
             />

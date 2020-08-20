@@ -1,7 +1,7 @@
-import React from 'react';
-import { Container, Grid, Paper, Box } from '@material-ui/core';
-import { useStyles } from '../../components/escrowApp/useStyles';
-import EscrowSummary from '../../components/escrowApp/dashboard/EscrowSummary';
+import React from "react";
+import { Container, Grid, Paper, Box } from "@material-ui/core";
+import { useStyles } from "../../components/escrowApp/useStyles";
+import EscrowSummary from "../../components/escrowApp/dashboard/EscrowSummary";
 
 export default function Dashboard() {
   const classes = useStyles();

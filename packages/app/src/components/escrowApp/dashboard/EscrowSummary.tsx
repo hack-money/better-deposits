@@ -1,10 +1,12 @@
-import React from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Title from './Title';
+import React from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@material-ui/core";
+import Title from "./Title";
 
 // Generate Order Data
 function createData(
@@ -13,7 +15,7 @@ function createData(
   end: any,
   party: any,
   value: any,
-  status: any
+  status: any,
 ) {
   return { id, start, end, party, value, status };
 }
@@ -21,27 +23,27 @@ function createData(
 const rows = [
   createData(
     0,
-    '7th February, 2020',
-    '8th February 2021',
-    'Housing agency A',
-    '£1100',
-    'active'
+    "7th February, 2020",
+    "8th February 2021",
+    "Housing agency A",
+    "£1100",
+    "active",
   ),
   createData(
     1,
-    '14th May, 2020',
-    '14th May, 2021',
-    'Housing Agency B',
-    '£750',
-    'active'
+    "14th May, 2020",
+    "14th May, 2021",
+    "Housing Agency B",
+    "£750",
+    "active",
   ),
   createData(
     2,
-    '2nd July, 2020',
-    '8th July, 2020',
-    'Travel agency',
-    '£125',
-    'inactive'
+    "2nd July, 2020",
+    "8th July, 2020",
+    "Travel agency",
+    "£125",
+    "inactive",
   ),
 ];
 
@@ -60,7 +62,7 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map(row => (
             <TableRow key={row.id}>
               <TableCell>{row.start}</TableCell>
               <TableCell>{row.end}</TableCell>

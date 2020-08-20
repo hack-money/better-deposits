@@ -1,8 +1,8 @@
-import React from 'react';
-import { useStyles } from '../../useStyles';
-import DashboardImage from '../../../images/dashboard.png';
-import { Container, Typography, Box } from '@material-ui/core';
-import ImageBox from '../howItWorksSection/ImageBox';
+import React from "react";
+import { Container, Typography, Box } from "@material-ui/core";
+import { useStyles } from "../../useStyles";
+import DashboardImage from "../../../images/dashboard.png";
+import ImageBox from "../howItWorksSection/ImageBox";
 
 export default function ProductSection() {
   const classes = useStyles();

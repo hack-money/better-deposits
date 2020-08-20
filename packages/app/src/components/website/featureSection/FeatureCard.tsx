@@ -1,15 +1,15 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { Typography, withStyles, Theme, Container } from '@material-ui/core';
-import { Styles } from '@material-ui/core/styles/withStyles';
-import { shadeColor } from '../../shadeColor';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import { Typography, withStyles, Theme, Container } from "@material-ui/core";
+import { Styles } from "@material-ui/core/styles/withStyles";
+import { shadeColor } from "../../shadeColor";
 
-const styles: Styles<Theme, {}, 'iconWrapper'> = (theme: any) => ({
+const styles: Styles<Theme, {}, "iconWrapper"> = (theme: any) => ({
   iconWrapper: {
     borderRadius: theme.shape.borderRadius,
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: theme.spacing(3),
     padding: theme.spacing(1) * 1.5,
   },
@@ -29,9 +29,9 @@ function FeatureCard(props: FeatureCardProps) {
       <Container
         className={classes.iconWrapper}
         style={{
-          color: color,
+          color,
           backgroundColor: shadeColor(color, 0.5),
-          width: '75px',
+          width: "75px",
         }}
       >
         {Icon}

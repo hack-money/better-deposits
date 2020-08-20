@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Contract } from 'ethers';
+import React, { useState } from "react";
+import { Contract } from "@ethersproject/contracts";
 import {
   makeStyles,
   FormControl,
@@ -8,17 +8,17 @@ import {
   InputAdornment,
   Button,
   Grid,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 interface DepositTableProps {
   linkedERC20Contract: Contract;
   escrowContract: Contract;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
   margin: {
     margin: theme.spacing(1),
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   textField: {
-    width: '25ch',
+    width: "25ch",
   },
 }));
 
@@ -62,7 +62,7 @@ export default function DepositTable({
           <Input
             id="standard-adornment-amount"
             value={values.escrowId}
-            onChange={handleChange('escrowId')}
+            onChange={handleChange("escrowId")}
           />
         </FormControl>
         <FormControl fullWidth className={classes.margin}>
@@ -72,7 +72,7 @@ export default function DepositTable({
           <Input
             id="standard-adornment-amount"
             value={values.depositAmount}
-            onChange={handleChange('depositAmount')}
+            onChange={handleChange("depositAmount")}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
           />
         </FormControl>
@@ -85,8 +85,8 @@ export default function DepositTable({
             size="large"
             onClick={() => approveContract(values.depositAmount)}
             style={{
-              marginTop: '10px',
-              paddingRight: '20px',
+              marginTop: "10px",
+              paddingRight: "20px",
             }}
           >
             Approve
@@ -101,8 +101,8 @@ export default function DepositTable({
               depositToContract(values.escrowId, values.depositAmount)
             }
             style={{
-              marginTop: '10px',
-              paddingLeft: '20px',
+              marginTop: "10px",
+              paddingLeft: "20px",
             }}
           >
             Deposit

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Contract } from 'ethers';
-import DepositTable from '../../components/escrowApp/deposit/DepositTable';
+import React from "react";
+import { Contract } from "@ethersproject/contracts";
+import DepositTable from "../../components/escrowApp/deposit/DepositTable";
+
 interface DepositProps {
   escrowContract: Contract;
   linkedERC20Contract: Contract;

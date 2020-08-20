@@ -1,5 +1,5 @@
-import React from 'react';
-import { Typography } from '@material-ui/core';
+import React from "react";
+import { Typography } from "@material-ui/core";
 
 export default function AppLanding() {
   return (
@@ -8,7 +8,7 @@ export default function AppLanding() {
       variant="h1"
       align="center"
       color="textPrimary"
-      style={{ padding: '100px' }}
+      style={{ padding: "100px" }}
     >
       Coming soon!!
     </Typography>

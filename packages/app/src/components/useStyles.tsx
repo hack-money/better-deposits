@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import grey from '@material-ui/core/colors/grey';
+import { makeStyles, createMuiTheme } from "@material-ui/core";
+
+import { blue, grey } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
@@ -37,12 +36,12 @@ export const useStyles = makeStyles(() => ({
     paddingBottom: theme.spacing(8),
   },
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   cardContent: {
     flexGrow: 1,
@@ -71,7 +70,7 @@ export const useStyles = makeStyles(() => ({
   },
   howItWorks: {
     padding: theme.spacing(sectionUpperPadding, 0, sectionLowerPadding),
-    width: '100%',
+    width: "100%",
   },
   intro: {
     backgroundColor: theme.palette.background.paper,

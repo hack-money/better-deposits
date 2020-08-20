@@ -1,16 +1,20 @@
-import React from 'react';
-import { Typography, Container, makeStyles } from '@material-ui/core';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Answer from '../../components/website/FAQ/Answer';
-import Question from '../../components/website/FAQ/Question';
+import React from "react";
+import {
+  Typography,
+  Container,
+  makeStyles,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@material-ui/core";
+import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
+import Answer from "../../components/website/FAQ/Answer";
+import Question from "../../components/website/FAQ/Question";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   faq: {
     padding: theme.spacing(8, 0, 7),
-    width: '100%',
+    width: "100%",
   },
   accordionStart: {
     padding: theme.spacing(3),
