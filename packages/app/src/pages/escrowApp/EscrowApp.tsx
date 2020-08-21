@@ -1,6 +1,6 @@
 import { Web3Provider } from "@ethersproject/providers";
 import { Contract } from "@ethersproject/contracts";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ReactElement } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import {
   CssBaseline,
@@ -37,40 +37,38 @@ import { escrowContractAddress, linkedERC20Address } from "../../config";
 import { getEscrowContract, getERC20Contract } from "../../contracts";
 import { getOnboard } from "../../web3/getOnboard";
 
-const mainListItems = (
-  <div>
-    <ListItem button to={dashboardRoute} component={Link}>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button to={createRoute} component={Link}>
-      <ListItemIcon>
-        <AccountBalanceIcon />
-      </ListItemIcon>
-      <ListItemText primary="Create" />
-    </ListItem>
-    <ListItem button to={depositRoute} component={Link}>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Deposit" />
-    </ListItem>
-    <ListItem button to={withdrawRoute} component={Link}>
-      <ListItemIcon>
-        <PaymentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Withdraw" />
-    </ListItem>
-    <ListItem button to={disputeRoute} component={Link}>
-      <ListItemIcon>
-        <GavelIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dispute" />
-    </ListItem>
-  </div>
-);
+const sidebarLinks: { text: string; icon: ReactElement; route: string }[] = [
+  { text: "Dashboard", icon: <DashboardIcon />, route: "dashboardRoute" },
+  { text: "Create", icon: <AccountBalanceIcon />, route: "createRoute" },
+  { text: "Deposit", icon: <PeopleIcon />, route: "depositRoute" },
+  { text: "Withdraw", icon: <PaymentIcon />, route: "withdrawRoute" },
+  { text: "Dispute", icon: <GavelIcon />, route: "disputeRoute" },
+];
+
+const SideBar: React.FC<{ open: boolean }> = ({ open }) => {
+  const classes = useStyles();
+
+  return (
+    <Drawer
+      variant="permanent"
+      classes={{
+        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+      }}
+      open={open}
+    >
+      <Divider />
+      <List>
+        {sidebarLinks.map(({ text, icon, route }) => (
+          <ListItem button to={route} component={Link} key={disputeRoute}>
+            <ListItemIcon>{icon}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+    </Drawer>
+  );
+};
 
 export default function EscrowApp() {
   const classes = useStyles();
@@ -116,17 +114,7 @@ export default function EscrowApp() {
     <div className={classes.root}>
       <Router>
         <CssBaseline />
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-        </Drawer>
+        <SideBar open={open} />
         <Switch>
           <Route path={dashboardRoute} exact component={Dashboard} />
           <Route path={createRoute} exact>
