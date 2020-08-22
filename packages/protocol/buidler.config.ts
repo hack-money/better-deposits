@@ -1,6 +1,7 @@
 import { BuidlerConfig, usePlugin } from '@nomiclabs/buidler/config';
 
 usePlugin('@nomiclabs/buidler-waffle');
+usePlugin("solidity-coverage");
 
 const config: BuidlerConfig = {
   solc: {
@@ -12,6 +13,9 @@ const config: BuidlerConfig = {
       gas: 8000000,
       hardfork: 'istanbul',
       chainId: 31337,
+    },
+    coverage: {
+      url: "http://127.0.0.1:8555",
     },
   },
   paths: {
