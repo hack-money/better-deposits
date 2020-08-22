@@ -26,7 +26,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-typeform-embed": "^0.2.1",
-    "typescript": "~3.7.2",
+    "typescript": "^3.9.7",
     "web3modal": "^1.9.0"
   },
   "scripts": {
