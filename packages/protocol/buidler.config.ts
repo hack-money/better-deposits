@@ -5,6 +5,11 @@ usePlugin("solidity-coverage");
 
 const config: BuidlerConfig = {
   solc: {
+    /* https://buidler.dev/buidler-evm/#solidity-optimizer-support */
+    optimizer: {
+      enabled: false,
+      runs: 200,
+    },
     version: '0.6.10',
   },
   networks: {
@@ -19,7 +24,13 @@ const config: BuidlerConfig = {
     },
   },
   paths: {
-    artifacts: './src/artifacts',
+    artifacts: "./src/artifacts",
+    cache: "./cache",
+    coverage: "./coverage",
+    coverageJson: "./coverage.json",
+    root: "./",
+    sources: "./contracts",
+    tests: "./test",
   },
 };
 
