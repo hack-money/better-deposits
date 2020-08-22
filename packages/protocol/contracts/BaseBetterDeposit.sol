@@ -16,45 +16,6 @@ contract BaseBetterDeposit is IBaseBetterDeposit {
         linkedToken = IERC20(_linkedToken);
     }
 
-    event Deposit(
-        uint256 indexed escrowId,
-        address indexed depositAddress,
-        uint256 depositAmount
-    );
-    event Withdraw(
-        uint256 indexed escrowId,
-        address indexed withdrawAddress,
-        uint256 withdrawAmount
-    );
-    event AgreementStart(
-        uint256 indexed escrowId,
-        address indexed userA,
-        address indexed userB,
-        uint256 userADeposit,
-        uint256 userBDeposit
-    );
-    event AgreementFinish(
-        uint256 indexed escrowId,
-        address indexed userA,
-        address indexed userB
-    );
-    event Create(
-        uint256 indexed escrowId,
-        address indexed userA,
-        address indexed userB
-    );
-    event Dispute(
-        uint256 indexed escrowId,
-        address indexed userA,
-        address indexed userB,
-        address adjudicator,
-        uint256 totalDeposit
-    );
-    event DepositReleaseApproval(
-        uint256 indexed escrowId,
-        address indexed user
-    );
-
     modifier onlyUser(uint256 escrowId) {
         Escrow memory escrow = escrows[escrowId];
         require(

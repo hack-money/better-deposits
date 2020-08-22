@@ -5,6 +5,45 @@ pragma solidity >=0.6.10 <0.7.0;
 import {State} from "../Types.sol";
 
 interface IBaseBetterDeposit {
+    event Deposit(
+        uint256 indexed escrowId,
+        address indexed depositAddress,
+        uint256 depositAmount
+    );
+    event Withdraw(
+        uint256 indexed escrowId,
+        address indexed withdrawAddress,
+        uint256 withdrawAmount
+    );
+    event AgreementStart(
+        uint256 indexed escrowId,
+        address indexed userA,
+        address indexed userB,
+        uint256 userADeposit,
+        uint256 userBDeposit
+    );
+    event AgreementFinish(
+        uint256 indexed escrowId,
+        address indexed userA,
+        address indexed userB
+    );
+    event Create(
+        uint256 indexed escrowId,
+        address indexed userA,
+        address indexed userB
+    );
+    event Dispute(
+        uint256 indexed escrowId,
+        address indexed userA,
+        address indexed userB,
+        address adjudicator,
+        uint256 totalDeposit
+    );
+    event DepositReleaseApproval(
+        uint256 indexed escrowId,
+        address indexed user
+    );
+
     function getUserDeposit(address user, uint256 escrowId)
         external
         view
