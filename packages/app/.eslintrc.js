@@ -37,7 +37,10 @@ module.exports = {
       ],
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
-      "import/prefer-default-export": "off"
+      "import/prefer-default-export": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error"
+      ]
   },                                                            
   settings: {
       react: {
