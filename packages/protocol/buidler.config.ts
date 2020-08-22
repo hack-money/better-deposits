@@ -1,4 +1,5 @@
 import { BuidlerConfig, usePlugin } from '@nomiclabs/buidler/config';
+import "./tasks/typechain";
 
 usePlugin('@nomiclabs/buidler-waffle');
 usePlugin("solidity-coverage");
@@ -31,6 +32,10 @@ const config: BuidlerConfig = {
     root: "./",
     sources: "./contracts",
     tests: "./test",
+  },
+  typechain: {
+    outDir: "typechain",
+    target: "ethers-v5",
   },
 };
 

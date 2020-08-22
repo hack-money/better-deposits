@@ -10,7 +10,15 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["@types/**/*", "artifacts/**/*", "artifacts/**/*.json", "scripts/**/*", "test/**/*", "buidler.config.ts"],
+  "include": [
+    "@types/**/*",
+    "artifacts/**/*",
+    "artifacts/**/*.json",
+    "scripts/**/*",
+    "tasks/**/*",
+    "test/**/*",
+    "buidler.config.ts"
+  ],
   "files": [
     "./node_modules/@nomiclabs/buidler-ethers/src/type-extensions.d.ts",
     "./node_modules/@nomiclabs/buidler-waffle/src/type-extensions.d.ts"
