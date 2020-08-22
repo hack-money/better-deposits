@@ -8,7 +8,7 @@ import {
   InputLabel,
   makeStyles,
 } from "@material-ui/core";
-import { Contract } from "@ethersproject/contracts";
+import { BetterDeposit } from "../../../contracts/BetterDeposit";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface CreateTableProps {
-  escrowContract: Contract;
+  escrowContract: BetterDeposit;
 }
 
 const CreateTable: React.FC<CreateTableProps> = ({ escrowContract }) => {

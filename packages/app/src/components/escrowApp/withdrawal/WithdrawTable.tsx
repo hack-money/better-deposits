@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Contract } from "@ethersproject/contracts";
 import {
   makeStyles,
   FormControl,
@@ -8,9 +7,11 @@ import {
   Button,
   Grid,
 } from "@material-ui/core";
+import { BigNumberish } from "ethers";
+import { BetterDeposit } from "../../../contracts/BetterDeposit";
 
 interface WithdrawalTableProps {
-  escrowContract: Contract;
+  escrowContract: BetterDeposit;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -33,13 +34,13 @@ const WithdrawalTable: React.FC<WithdrawalTableProps> = ({
   escrowContract,
 }) => {
   const classes = useStyles();
-  const [escrowId, setEscrowId] = useState(0n);
+  const [selectedEscrowId, setSelectedEscrowId] = useState<BigNumberish>(0);
 
-  const approveDepositRelease = (escrowId: bigint) => {
+  const approveDepositRelease = (escrowId: BigNumberish) => {
     escrowContract.approveDepositRelease(escrowId);
   };
 
-  const withdrawDeposit = (escrowId: bigint) => {
+  const withdrawDeposit = (escrowId: BigNumberish) => {
     escrowContract.withdraw(escrowId);
   };
 
@@ -53,7 +54,7 @@ const WithdrawalTable: React.FC<WithdrawalTableProps> = ({
           <Input
             id="standard-adornment-amount"
             onChange={event => {
-              setEscrowId(BigInt(event.target.value));
+              setSelectedEscrowId(event.target.value);
             }}
           />
         </FormControl>
@@ -64,7 +65,7 @@ const WithdrawalTable: React.FC<WithdrawalTableProps> = ({
             variant="contained"
             color="primary"
             size="large"
-            onClick={() => approveDepositRelease(escrowId)}
+            onClick={() => approveDepositRelease(selectedEscrowId)}
             style={{
               marginTop: "10px",
               paddingRight: "20px",
@@ -78,7 +79,7 @@ const WithdrawalTable: React.FC<WithdrawalTableProps> = ({
             variant="contained"
             color="primary"
             size="large"
-            onClick={() => withdrawDeposit(escrowId)}
+            onClick={() => withdrawDeposit(selectedEscrowId)}
             style={{
               marginTop: "10px",
               paddingRight: "20px",

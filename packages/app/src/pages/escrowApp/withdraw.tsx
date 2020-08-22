@@ -1,9 +1,9 @@
 import React from "react";
-import { Contract } from "@ethersproject/contracts";
 import WithdrawTable from "../../components/escrowApp/withdrawal/WithdrawTable";
+import { BetterDeposit } from "../../contracts/BetterDeposit";
 
 interface Props {
-  escrowContract: Contract;
+  escrowContract: BetterDeposit;
 }
 
 const Withdraw: React.FC<Props> = ({ escrowContract }) => (

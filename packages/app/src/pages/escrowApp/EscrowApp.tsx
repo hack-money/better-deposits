@@ -1,5 +1,4 @@
 import { Web3Provider } from "@ethersproject/providers";
-import { Contract } from "@ethersproject/contracts";
 import React, { useEffect, useState, ReactElement } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import {
@@ -34,8 +33,10 @@ import Dispute from "./dispute";
 import Create from "./create";
 import { useStyles } from "../../components/escrowApp/useStyles";
 import { escrowContractAddress, linkedERC20Address } from "../../config";
-import { getEscrowContract, getERC20Contract } from "../../contracts";
 import { getOnboard } from "../../web3/getOnboard";
+import { BetterDepositFactory, Erc20Factory } from "../../contracts";
+import { Erc20 } from "../../contracts/Erc20";
+import { BetterDeposit } from "../../contracts/BetterDeposit";
 
 const sidebarLinks: { text: string; icon: ReactElement; route: string }[] = [
   { text: "Dashboard", icon: <DashboardIcon />, route: dashboardRoute },
@@ -74,8 +75,8 @@ const EscrowApp: React.FC = () => {
   const classes = useStyles();
   const [open] = React.useState(true);
   const [provider, setProvider] = useState<Web3Provider>();
-  const [escrowContract, setEscrowContract] = useState<Contract>();
-  const [erc20Contract, setERC20Contract] = useState<Contract>();
+  const [escrowContract, setEscrowContract] = useState<BetterDeposit>();
+  const [erc20Contract, setERC20Contract] = useState<Erc20>();
 
   useEffect(() => {
     const getUserWallet = async () => {
@@ -91,7 +92,7 @@ const EscrowApp: React.FC = () => {
   useEffect(() => {
     try {
       const contract = provider
-        ? getEscrowContract(provider, escrowContractAddress)
+        ? BetterDepositFactory.connect(escrowContractAddress, provider)
         : undefined;
       setEscrowContract(contract);
     } catch (err) {
@@ -102,7 +103,7 @@ const EscrowApp: React.FC = () => {
   useEffect(() => {
     try {
       const contract = provider
-        ? getERC20Contract(provider, linkedERC20Address)
+        ? Erc20Factory.connect(linkedERC20Address, provider)
         : undefined;
       setERC20Contract(contract);
     } catch (err) {

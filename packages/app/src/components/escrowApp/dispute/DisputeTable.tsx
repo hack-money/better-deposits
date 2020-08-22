@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Contract } from "@ethersproject/contracts";
 import {
   makeStyles,
   FormControl,
@@ -9,9 +8,11 @@ import {
   Grid,
   Container,
 } from "@material-ui/core";
+import { BigNumberish } from "ethers";
+import { BetterDeposit } from "../../../contracts/BetterDeposit";
 
 interface DisputeTableProps {
-  escrowContract: Contract;
+  escrowContract: BetterDeposit;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -32,10 +33,10 @@ const useStyles = makeStyles(theme => ({
 
 const DisputeTable: React.FC<DisputeTableProps> = ({ escrowContract }) => {
   const classes = useStyles();
-  const [escrowId, setEscrowId] = useState(0n);
+  const [escrowId, setEscrowId] = useState<BigNumberish>(0);
 
-  const disputeDeposit = (escrowId: bigint) => {
-    escrowContract.dispute(escrowId);
+  const disputeDeposit = (disputedEscrowId: BigNumberish) => {
+    escrowContract.dispute(disputedEscrowId);
   };
 
   return (
@@ -49,7 +50,7 @@ const DisputeTable: React.FC<DisputeTableProps> = ({ escrowContract }) => {
             <Input
               id="standard-adornment-amount"
               onChange={event => {
-                setEscrowId(BigInt(event.target.value));
+                setEscrowId(event.target.value);
               }}
             />
           </FormControl>
