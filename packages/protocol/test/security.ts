@@ -1,11 +1,15 @@
 import { ethers, waffle } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
-import { Contract, Signer } from 'ethers';
+import { solidity } from 'ethereum-waffle';
+import { Contract } from '@ethersproject/contracts';
+import { Signer } from '@ethersproject/abstract-signer';
 
 import ERC20Mintable from '../src/artifacts/ERC20Mintable.json';
 import Security from '../src/artifacts/Security.json';
 
 const { deployContract } = waffle;
+
+use(solidity);
 
 describe('Security', () => {
   let security!: Contract;

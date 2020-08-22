@@ -1,6 +1,6 @@
 import { waffle } from '@nomiclabs/buidler';
-import { Signer } from 'ethers';
-import { Interface } from 'ethers/lib/utils';
+import { Signer } from '@ethersproject/abstract-signer';
+import { Interface } from '@ethersproject/abi';
 import ERC20Mintable from '../src/artifacts/ERC20Mintable.json';
 import BetterDeposit from '../src/artifacts/BetterDeposit.json';
 

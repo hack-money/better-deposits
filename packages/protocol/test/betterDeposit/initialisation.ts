@@ -1,6 +1,7 @@
 import { ethers, waffle } from '@nomiclabs/buidler';
 import { expect, use } from 'chai';
-import { Contract, Signer } from 'ethers';
+import { Contract } from '@ethersproject/contracts';
+import { Signer } from '@ethersproject/abstract-signer';
 import { solidity } from 'ethereum-waffle';
 import { EscrowState } from '../utils/escrowStates';
 import { depositFixture, escrowTestData } from '../fixtures';
