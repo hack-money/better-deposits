@@ -2,7 +2,7 @@
 
 pragma solidity >=0.6.10 <0.7.0;
 
-import {IBaseBetterDeposit} from "./IBaseBetterDeposit.sol";
+import { IBaseBetterDeposit } from "./IBaseBetterDeposit.sol";
 
 interface IBetterDeposit is IBaseBetterDeposit {
     function create(
