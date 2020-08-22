@@ -38,11 +38,11 @@ import { getEscrowContract, getERC20Contract } from "../../contracts";
 import { getOnboard } from "../../web3/getOnboard";
 
 const sidebarLinks: { text: string; icon: ReactElement; route: string }[] = [
-  { text: "Dashboard", icon: <DashboardIcon />, route: "dashboardRoute" },
-  { text: "Create", icon: <AccountBalanceIcon />, route: "createRoute" },
-  { text: "Deposit", icon: <PeopleIcon />, route: "depositRoute" },
-  { text: "Withdraw", icon: <PaymentIcon />, route: "withdrawRoute" },
-  { text: "Dispute", icon: <GavelIcon />, route: "disputeRoute" },
+  { text: "Dashboard", icon: <DashboardIcon />, route: dashboardRoute },
+  { text: "Create", icon: <AccountBalanceIcon />, route: createRoute },
+  { text: "Deposit", icon: <PeopleIcon />, route: depositRoute },
+  { text: "Withdraw", icon: <PaymentIcon />, route: withdrawRoute },
+  { text: "Dispute", icon: <GavelIcon />, route: disputeRoute },
 ];
 
 const SideBar: React.FC<{ open: boolean }> = ({ open }) => {
