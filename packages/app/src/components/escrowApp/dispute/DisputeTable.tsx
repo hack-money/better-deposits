@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DisputeTable({ escrowContract }: DisputeTableProps) {
+const DisputeTable: React.FC<DisputeTableProps> = ({ escrowContract }) => {
   const classes = useStyles();
   const [escrowId, setEscrowId] = useState(0n);
 
@@ -67,4 +67,5 @@ export default function DisputeTable({ escrowContract }: DisputeTableProps) {
       </Container>
     </div>
   );
-}
+};
+export default DisputeTable;

@@ -29,9 +29,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function WithdrawalTable({
+const WithdrawalTable: React.FC<WithdrawalTableProps> = ({
   escrowContract,
-}: WithdrawalTableProps) {
+}) => {
   const classes = useStyles();
   const [escrowId, setEscrowId] = useState(0n);
 
@@ -90,4 +90,6 @@ export default function WithdrawalTable({
       </Grid>
     </div>
   );
-}
+};
+
+export default WithdrawalTable;

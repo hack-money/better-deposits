@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 
-export default function AppLanding() {
+const AppLanding: React.FC = () => {
   return (
     <Typography
       component="h1"
@@ -13,4 +13,6 @@ export default function AppLanding() {
       Coming soon!!
     </Typography>
   );
-}
+};
+
+export default AppLanding;

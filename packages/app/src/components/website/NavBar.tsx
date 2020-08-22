@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { homeRoute, howItWorksRoute, faqRoute } from "../../routes";
 import { useStyles } from "../useStyles";
 
-export default function NavBar() {
+const NavBar: React.FC = () => {
   const classes = useStyles();
   return (
     <div>
@@ -50,4 +50,6 @@ export default function NavBar() {
       </AppBar>
     </div>
   );
-}
+};
+
+export default NavBar;

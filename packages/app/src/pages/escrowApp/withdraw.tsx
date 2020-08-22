@@ -2,14 +2,12 @@ import React from "react";
 import { Contract } from "@ethersproject/contracts";
 import WithdrawTable from "../../components/escrowApp/withdrawal/WithdrawTable";
 
-interface WithdrawProps {
+interface Props {
   escrowContract: Contract;
 }
 
-export default function Withdraw({ escrowContract }: WithdrawProps) {
-  return (
-    <React.Fragment>
-      <WithdrawTable escrowContract={escrowContract} />
-    </React.Fragment>
-  );
-}
+const Withdraw: React.FC<Props> = ({ escrowContract }) => (
+  <WithdrawTable escrowContract={escrowContract} />
+);
+
+export default Withdraw;

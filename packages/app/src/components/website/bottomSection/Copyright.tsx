@@ -1,7 +1,7 @@
 import { Container, Typography } from "@material-ui/core";
 import React from "react";
 
-export default function Copyright() {
+const Copyright: React.FC = () => {
   return (
     <Container maxWidth="lg">
       <Typography variant="h6" align="center">
@@ -17,4 +17,6 @@ export default function Copyright() {
       </Typography>
     </Container>
   );
-}
+};
+
+export default Copyright;

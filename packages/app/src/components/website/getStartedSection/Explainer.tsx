@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Grid, Container, Box } from "@material-ui/core";
 
-export default function GetStarted() {
+const GetStarted: React.FC = () => {
   return (
     <div>
       <Container>
@@ -53,4 +53,6 @@ export default function GetStarted() {
       </Container>
     </div>
   );
-}
+};
+
+export default GetStarted;

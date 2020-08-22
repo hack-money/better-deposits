@@ -30,7 +30,7 @@ interface CreateTableProps {
   escrowContract: Contract;
 }
 
-export default function CreateTable({ escrowContract }: CreateTableProps) {
+const CreateTable: React.FC<CreateTableProps> = ({ escrowContract }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
     currentUser: "0xBb29eAAFC879a8C22c4de2398c85437237d9d289",
@@ -140,4 +140,6 @@ export default function CreateTable({ escrowContract }: CreateTableProps) {
       </Grid>
     </div>
   );
-}
+};
+
+export default CreateTable;

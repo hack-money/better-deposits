@@ -2,14 +2,12 @@ import React from "react";
 import { Contract } from "@ethersproject/contracts";
 import CreateTable from "../../components/escrowApp/create/CreateTable";
 
-interface CreateProps {
+interface Props {
   escrowContract: Contract;
 }
 
-export default function Create({ escrowContract }: CreateProps) {
-  return (
-    <React.Fragment>
-      <CreateTable escrowContract={escrowContract} />
-    </React.Fragment>
-  );
-}
+const Create: React.FC<Props> = ({ escrowContract }) => (
+  <CreateTable escrowContract={escrowContract} />
+);
+
+export default Create;

@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Typography } from "@material-ui/core";
 import { useStyles } from "../../useStyles";
 
-export default function IntroSection() {
+const IntroSection: React.FC = () => {
   const classes = useStyles();
   return (
     <Container>
@@ -36,4 +36,6 @@ export default function IntroSection() {
       </div>
     </Container>
   );
-}
+};
+
+export default IntroSection;

@@ -26,7 +26,7 @@ const localUseStyles = makeStyles(theme => ({
   },
 }));
 
-export default function HowItWorks() {
+const HowItWorks: React.FC = () => {
   const classes = useStyles();
   const localClasses = localUseStyles();
 
@@ -121,4 +121,6 @@ export default function HowItWorks() {
       </div>
     </Container>
   );
-}
+};
+
+export default HowItWorks;

@@ -7,16 +7,14 @@ interface DepositProps {
   linkedERC20Contract: Contract;
 }
 
-export default function Deposit({
+const Deposit: React.FC<DepositProps> = ({
   escrowContract,
   linkedERC20Contract,
-}: DepositProps) {
-  return (
-    <React.Fragment>
-      <DepositTable
-        escrowContract={escrowContract}
-        linkedERC20Contract={linkedERC20Contract}
-      />
-    </React.Fragment>
-  );
-}
+}) => (
+  <DepositTable
+    escrowContract={escrowContract}
+    linkedERC20Contract={linkedERC20Contract}
+  />
+);
+
+export default Deposit;

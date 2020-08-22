@@ -5,7 +5,7 @@ import FeatureSection from "../../components/website/featureSection";
 import GetStartedSection from "../../components/website/getStartedSection";
 import ProductSection from "../../components/website/productSection";
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
     <Fragment>
       <HeadSection />
@@ -15,4 +15,6 @@ export default function Home() {
       <ProductSection />
     </Fragment>
   );
-}
+};
+
+export default Home;

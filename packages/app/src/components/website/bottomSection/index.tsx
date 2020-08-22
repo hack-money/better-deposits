@@ -3,7 +3,7 @@ import { Divider } from "@material-ui/core";
 import { useStyles } from "../../useStyles";
 import Footer from "./Footer";
 
-export default function BottomSection() {
+const BottomSection: React.FC = () => {
   const classes = useStyles();
   return (
     <div className={classes.bottomSection}>
@@ -11,4 +11,6 @@ export default function BottomSection() {
       <Footer />
     </div>
   );
-}
+};
+
+export default BottomSection;

@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function FAQ() {
+const FAQ: React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -153,4 +153,6 @@ export default function FAQ() {
       </div>
     </Container>
   );
-}
+};
+
+export default FAQ;

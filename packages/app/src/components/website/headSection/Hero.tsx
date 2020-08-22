@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useStyles } from "../../useStyles";
 import { questionnaireRoute, appRoute } from "../../../routes";
 
-export default function Hero() {
+const Hero: React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -61,4 +61,6 @@ export default function Hero() {
       </Grid>
     </div>
   );
-}
+};
+
+export default Hero;

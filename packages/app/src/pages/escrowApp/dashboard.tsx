@@ -3,7 +3,7 @@ import { Container, Grid, Paper, Box } from "@material-ui/core";
 import { useStyles } from "../../components/escrowApp/useStyles";
 import EscrowSummary from "../../components/escrowApp/dashboard/EscrowSummary";
 
-export default function Dashboard() {
+const Dashboard: React.FC = () => {
   const classes = useStyles();
   return (
     <main className={classes.content}>
@@ -20,4 +20,6 @@ export default function Dashboard() {
       </Container>
     </main>
   );
-}
+};
+
+export default Dashboard;

@@ -70,7 +70,7 @@ const SideBar: React.FC<{ open: boolean }> = ({ open }) => {
   );
 };
 
-export default function EscrowApp() {
+const EscrowApp: React.FC = () => {
   const classes = useStyles();
   const [open] = React.useState(true);
   const [provider, setProvider] = useState<Web3Provider>();
@@ -136,4 +136,6 @@ export default function EscrowApp() {
       </Router>
     </div>
   );
-}
+};
+
+export default EscrowApp;

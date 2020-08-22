@@ -31,10 +31,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DepositTable({
+const DepositTable: React.FC<DepositTableProps> = ({
   escrowContract,
   linkedERC20Contract,
-}: DepositTableProps) {
+}) => {
   const classes = useStyles();
   const [values, setValues] = useState({
     escrowId: 0n,
@@ -111,4 +111,6 @@ export default function DepositTable({
       </Grid>
     </div>
   );
-}
+};
+
+export default DepositTable;

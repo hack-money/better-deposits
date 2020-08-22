@@ -4,7 +4,7 @@ interface ImageBoxProps {
   src: string;
 }
 
-export default function ImageBox({ src }: ImageBoxProps) {
+const ImageBox: React.FC<ImageBoxProps> = ({ src }) => {
   return (
     <img
       src={src}
@@ -14,4 +14,6 @@ export default function ImageBox({ src }: ImageBoxProps) {
       style={{ padding: "20px" }}
     ></img>
   );
-}
+};
+
+export default ImageBox;

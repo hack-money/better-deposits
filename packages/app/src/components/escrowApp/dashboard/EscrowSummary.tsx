@@ -47,7 +47,7 @@ const rows = [
   ),
 ];
 
-export default function Orders() {
+const Orders: React.FC = () => {
   return (
     <React.Fragment>
       <Title>Deposit overview</Title>
@@ -75,4 +75,5 @@ export default function Orders() {
       </Table>
     </React.Fragment>
   );
-}
+};
+export default Orders;

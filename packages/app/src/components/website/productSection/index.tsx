@@ -4,7 +4,7 @@ import { useStyles } from "../../useStyles";
 import DashboardImage from "../../../images/dashboard.png";
 import ImageBox from "../howItWorksSection/ImageBox";
 
-export default function ProductSection() {
+const ProductSection: React.FC = () => {
   const classes = useStyles();
   return (
     <div className={classes.product}>
@@ -18,4 +18,6 @@ export default function ProductSection() {
       </Container>
     </div>
   );
-}
+};
+
+export default ProductSection;

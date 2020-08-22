@@ -5,11 +5,12 @@ type QuestionProps = {
   question: string;
 };
 
-export default function Question(props: QuestionProps) {
-  const { question } = props;
+const Question: React.FC<QuestionProps> = ({ question }) => {
   return (
     <Typography align="center" variant="h5" paragraph>
       {question}
     </Typography>
   );
-}
+};
+
+export default Question;

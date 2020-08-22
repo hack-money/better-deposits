@@ -5,11 +5,12 @@ type AnswerProps = {
   answer: string;
 };
 
-export default function Answer(props: AnswerProps) {
-  const { answer } = props;
+const Answer: React.FC<AnswerProps> = ({ answer }) => {
   return (
     <Typography align="left" variant="h6" paragraph>
       {answer}
     </Typography>
   );
-}
+};
+
+export default Answer;

@@ -24,9 +24,12 @@ type InfoCardProps = {
   secondPara: string;
 };
 
-export default function InfoCard(props: InfoCardProps) {
+const InfoCard: React.FC<InfoCardProps> = ({
+  title,
+  firstPara,
+  secondPara,
+}) => {
   const classes = useStyles();
-  const { title, firstPara, secondPara } = props;
 
   return (
     <Box className={classes.root}>
@@ -37,4 +40,6 @@ export default function InfoCard(props: InfoCardProps) {
       <Typography style={{ padding: "10px" }}>{secondPara}</Typography>
     </Box>
   );
-}
+};
+
+export default InfoCard;
