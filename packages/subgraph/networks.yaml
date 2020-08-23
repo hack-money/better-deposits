@@ -2,5 +2,5 @@ ropsten:
   contracts:
     BetterDeposits:
       address: '0x13c0F8F2991E537cF34aa18e2bE50d83Ce64800f'
-      startBlock: 8550860
+      startBlock: 8550800
   networkName: ropsten
