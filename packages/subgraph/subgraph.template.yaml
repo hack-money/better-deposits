@@ -5,11 +5,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: BetterDeposits
-    network: { { networkName } }
+    network: '{{networkName}}'
     source:
       address: '{{contracts.BetterDeposits.address}}'
       abi: BetterDeposits
-      startBlock: { { contracts.BetterDeposits.startBlock } }
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

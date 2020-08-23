@@ -7,6 +7,6 @@ ropsten:
 local:
   contracts:
     BetterDeposits:
-      address: '0x01'
+      address: '0xc0e899A08c839CcAbfeeA5A0B49dAcEA26B49e97'
       startBlock: 1
   networkName: local
