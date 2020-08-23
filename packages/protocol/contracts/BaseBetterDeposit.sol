@@ -5,6 +5,12 @@ import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 import { IBaseBetterDeposit } from "./interfaces/IBaseBetterDeposit.sol";
 import { State, Escrow } from "./Types.sol";
 
+/**
+ * @title BaseBetterDeposit
+ * @author Tom Waite, Tom French
+ 
+ * Copyright 2020 Tom Waite, Tom French
+ */
 contract BaseBetterDeposit is IBaseBetterDeposit {
     using SafeMath for uint256;
 

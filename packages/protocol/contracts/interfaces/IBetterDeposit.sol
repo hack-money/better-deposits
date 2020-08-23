@@ -2,6 +2,12 @@ pragma solidity >=0.6.10 <0.7.0;
 
 import { IBaseBetterDeposit } from "./IBaseBetterDeposit.sol";
 
+/**
+ * @title IBetterDeposit
+ * @author Tom Waite, Tom French
+ 
+ * Copyright 2020 Tom Waite, Tom French
+ */
 interface IBetterDeposit is IBaseBetterDeposit {
     function create(
         address _userA,

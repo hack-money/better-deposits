@@ -6,6 +6,13 @@ import { IBetterDeposit } from "./interfaces/IBetterDeposit.sol";
 import { Security } from "./Security.sol";
 import { State, Escrow } from "./Types.sol";
 
+
+/**
+ * @title BetterDeposit
+ * @author Tom Waite, Tom French
+ 
+ * Copyright 2020 Tom Waite, Tom French
+ */
 contract BetterDeposit is IBetterDeposit, BaseBetterDeposit, Security {
     constructor(address _linkedToken) public BaseBetterDeposit(_linkedToken) {}
 
