@@ -13,7 +13,8 @@
     "lint:sol": "solhint --config ./.solhint.json --max-warnings 0 \"contracts/**/*.sol\"",
     "test": "buidler test",
     "typechain": "buidler typechain",
-    "deploy:localhost": "yarn buidler run --network localhost scripts/deploy.ts"
+    "deploy:localhost": "yarn buidler run --network localhost scripts/deploy.ts",
+    "deploy:ropsten": "yarn buidler run --network ropsten scripts/deploy.ts"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.0.2",
@@ -28,6 +29,7 @@
     "@types/mocha": "^7.0.2",
     "@types/node": "^14.0.14",
     "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
     "ethereum-waffle": "^3.0.0",
     "prettier-plugin-solidity": "^1.0.0-alpha.56",
     "solhint": "^3.2.0",
