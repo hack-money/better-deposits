@@ -1,9 +1,9 @@
 import React from "react";
-import { Contract } from "@ethersproject/contracts";
 import CreateTable from "../../components/escrowApp/create/CreateTable";
+import { BetterDeposit } from "../../contracts/BetterDeposit";
 
 interface Props {
-  escrowContract: Contract;
+  escrowContract: BetterDeposit;
 }
 
 const Create: React.FC<Props> = ({ escrowContract }) => (

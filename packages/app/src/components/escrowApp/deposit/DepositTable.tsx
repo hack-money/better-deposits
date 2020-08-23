@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Contract } from "@ethersproject/contracts";
 import {
   makeStyles,
   FormControl,
@@ -9,10 +8,13 @@ import {
   Button,
   Grid,
 } from "@material-ui/core";
+import { BigNumberish } from "ethers";
+import { Erc20 } from "../../../contracts/Erc20";
+import { BetterDeposit } from "../../../contracts/BetterDeposit";
 
 interface DepositTableProps {
-  linkedERC20Contract: Contract;
-  escrowContract: Contract;
+  linkedERC20Contract: Erc20;
+  escrowContract: BetterDeposit;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -36,19 +38,22 @@ const DepositTable: React.FC<DepositTableProps> = ({
   linkedERC20Contract,
 }) => {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    escrowId: 0n,
-    depositAmount: 0n,
+  const [values, setValues] = useState<{
+    escrowId: BigNumberish;
+    depositAmount: BigNumberish;
+  }>({
+    escrowId: "0",
+    depositAmount: "0",
   });
 
   const handleChange = (prop: any) => (event: any) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  const approveContract = (amount: bigint) => {
+  const approveContract = (amount: BigNumberish) => {
     linkedERC20Contract.approve(escrowContract.address, amount);
   };
 
-  const depositToContract = (escrowId: bigint, amount: bigint) => {
+  const depositToContract = (escrowId: BigNumberish, amount: BigNumberish) => {
     escrowContract.deposit(amount, escrowId);
   };
 

@@ -1,10 +1,11 @@
 import React from "react";
-import { Contract } from "@ethersproject/contracts";
 import DepositTable from "../../components/escrowApp/deposit/DepositTable";
+import { BetterDeposit } from "../../contracts/BetterDeposit";
+import { Erc20 } from "../../contracts/Erc20";
 
 interface DepositProps {
-  escrowContract: Contract;
-  linkedERC20Contract: Contract;
+  escrowContract: BetterDeposit;
+  linkedERC20Contract: Erc20;
 }
 
 const Deposit: React.FC<DepositProps> = ({

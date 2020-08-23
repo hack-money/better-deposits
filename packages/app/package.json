@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ethersproject/abi": "^5.0.2",
+    "@ethersproject/abstract-signer": "^5.0.2",
+    "@ethersproject/bytes": "^5.0.3",
     "@ethersproject/contracts": "^5.0.2",
     "@ethersproject/providers": "^5.0.5",
     "@material-ui/core": "^4.11.0",
@@ -19,6 +22,7 @@
     "clsx": "^1.1.1",
     "dotenv": "^8.2.0",
     "eth-hooks": "^1.1.2",
+    "ethers": "^5.0.8",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-blockies": "^1.4.1",
