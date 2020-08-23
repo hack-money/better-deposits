@@ -14,7 +14,7 @@ import {
   appRoute,
 } from "./routes";
 import "./App.css";
-import AppLanding from "./pages/website/AppLanding";
+import AppLanding from "./pages/escrowApp/EscrowApp";
 
 function App() {
   return (
