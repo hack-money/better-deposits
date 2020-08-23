@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.10 <0.7.0;
 
 enum State { PRE_ACTIVE, ACTIVE, SETTLED, DISPUTE, COMPLETE }
