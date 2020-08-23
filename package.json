@@ -9,7 +9,11 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf node_modules && rm -rf ./packages/*/node_modules",
-    "compile": "tsc -p tsconfig.build.json"
+    "compile": "tsc -p tsconfig.build.json",
+    "test": "yarn wsrun --package $PKG --serial -c test",
+    "lint": "yarn wsrun --package $PKG --parallel -c lint",
+    "prettier:ci": "yarn prettier && prettier --config .prettierrc --list-different '**/*.{js,jsx,json,md}'",
+    "prettier": "prettier --config .prettierrc --write '**/*.{js,jsx,json,md}'"
   },
   "dependencies": {
     "lerna": "^3.22.1"
@@ -22,5 +26,8 @@
       "**/protocol/",
       "**/protocol/**"
     ]
+  },
+  "devDependencies": {
+    "wsrun": "^5.2.1"
   }
 }
