@@ -1,0 +1,12 @@
+ropsten:
+  contracts:
+    BetterDeposits:
+      address: '0x123'
+      startBlock: 7957620
+  networkName: ropsten
+local:
+  contracts:
+    BetterDeposits:
+      address: '0x01'
+      startBlock: 1
+  networkName: local

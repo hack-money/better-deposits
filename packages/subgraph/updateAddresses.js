@@ -26,10 +26,7 @@ function getNetworkNameForSubgraph() {
 
 (async () => {
   const networkName = process.env.NETWORK_NAME || getNetworkNameForSubgraph();
-  const addressesDirectory = path.join(
-    __dirname,
-    '../contract-artifacts/addresses/'
-  );
+  const addressesDirectory = path.join(__dirname, '../contract-addresses/src');
   const addressesFilePath = path.join(
     addressesDirectory,
     `${networkName}.json`
@@ -51,7 +48,7 @@ function getNetworkNameForSubgraph() {
     );
   }
 
-  network.contracts.Options.address = addresses.Options;
+  network.contracts.BetterDeposits.address = addresses.BetterDeposits;
   await fs.writeFile(networksFilePath, yaml.safeDump(networks));
 
   // eslint-disable-next-line no-console
