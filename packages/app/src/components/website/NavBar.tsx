@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { AppBar, Button, Grid, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { homeRoute, howItWorksRoute, faqRoute } from "../../routes";
 import { useStyles } from "../useStyles";
+import LoginModal from "./LoginModal";
 
 const NavBar: React.FC = () => {
   const classes = useStyles();
+  const [open, setOpen] = useState<boolean>(false);
   return (
     <div>
+      <LoginModal open={open} setOpen={setOpen} />
       <AppBar position="static" className={classes.navBar}>
         <Toolbar>
           <div
@@ -22,6 +25,15 @@ const NavBar: React.FC = () => {
             </Typography>
           </div>
           <Grid justify="flex-end" container>
+            <Grid>
+              <Button
+                color="inherit"
+                onClick={() => setOpen(true)}
+                size="large"
+              >
+                Log in
+              </Button>
+            </Grid>
             <Grid>
               <Button
                 color="inherit"

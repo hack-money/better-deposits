@@ -33,10 +33,10 @@ import Dispute from "./dispute";
 import Create from "./create";
 import { useStyles } from "../../components/escrowApp/useStyles";
 import { escrowContractAddress, linkedERC20Address } from "../../config";
-import { getOnboard } from "../../web3/getOnboard";
 import { BetterDepositFactory, Erc20Factory } from "../../contracts";
 import { Erc20 } from "../../contracts/Erc20";
 import { BetterDeposit } from "../../contracts/BetterDeposit";
+import { useProvider } from "../../contexts/MagicContext";
 
 const sidebarLinks: { text: string; icon: ReactElement; route: string }[] = [
   { text: "Dashboard", icon: <DashboardIcon />, route: dashboardRoute },
@@ -74,20 +74,9 @@ const SideBar: React.FC<{ open: boolean }> = ({ open }) => {
 const EscrowApp: React.FC = () => {
   const classes = useStyles();
   const [open] = React.useState(true);
-  const [provider, setProvider] = useState<Web3Provider>();
+  const provider = useProvider();
   const [escrowContract, setEscrowContract] = useState<BetterDeposit>();
   const [erc20Contract, setERC20Contract] = useState<Erc20>();
-
-  useEffect(() => {
-    const getUserWallet = async () => {
-      const provider = await getOnboard();
-      console.log({ provider });
-
-      setProvider(provider);
-    };
-
-    getUserWallet();
-  }, []);
 
   useEffect(() => {
     try {

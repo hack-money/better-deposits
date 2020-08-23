@@ -3,10 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import MagicProvider from "./contexts/MagicContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MagicProvider>
+      <App />
+    </MagicProvider>
   </React.StrictMode>,
   document.getElementById("root"),
 );
