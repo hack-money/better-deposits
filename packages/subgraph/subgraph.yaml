@@ -5,11 +5,14 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: BetterDeposits
-    network: 'local'
+    #prettier-ignore
+    network: ropsten
     source:
-      address: '0xc0e899A08c839CcAbfeeA5A0B49dAcEA26B49e97'
+      #prettier-ignore
+      address: '0x13c0F8F2991E537cF34aa18e2bE50d83Ce64800f'
       abi: BetterDeposits
-      startBlock: 1
+      #prettier-ignore
+      startBlock: 7957620
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

@@ -5,11 +5,14 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: BetterDeposits
-    network: '{{networkName}}'
+    #prettier-ignore
+    network: {{networkName}}
     source:
+      #prettier-ignore
       address: '{{contracts.BetterDeposits.address}}'
       abi: BetterDeposits
-      startBlock: 1
+      #prettier-ignore
+      startBlock: {{contracts.BetterDeposits.startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
