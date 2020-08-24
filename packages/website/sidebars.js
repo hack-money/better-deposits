@@ -1,5 +1,5 @@
 module.exports = {
   someSidebar: {
-    BetterDeposits: ["faq"],
+    BetterDeposits: ["intro", "faq"],
   },
 };
