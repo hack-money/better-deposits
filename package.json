@@ -1,5 +1,5 @@
 {
-  "name": "better-deposits",
+  "name": "@better-deposits/monorepo",
   "version": "0.0.0",
   "description": "Monorepo for Better Deposits",
   "main": "index.js",
