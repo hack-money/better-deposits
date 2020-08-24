@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.6.10 <0.7.0;
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -6,6 +5,12 @@ import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 import { IBaseBetterDeposit } from "./interfaces/IBaseBetterDeposit.sol";
 import { State, Escrow } from "./Types.sol";
 
+/**
+ * @title BaseBetterDeposit
+ * @author Tom Waite, Tom French
+ 
+ * Copyright 2020 Tom Waite, Tom French
+ */
 contract BaseBetterDeposit is IBaseBetterDeposit {
     using SafeMath for uint256;
 

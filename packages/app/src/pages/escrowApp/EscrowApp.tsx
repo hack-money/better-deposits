@@ -80,10 +80,8 @@ const EscrowApp: React.FC = () => {
 
   useEffect(() => {
     const getUserWallet = async () => {
-      const provider = await getOnboard();
-      console.log({ provider });
-
-      setProvider(provider);
+      const userProvider = await getOnboard();
+      setProvider(userProvider);
     };
 
     getUserWallet();
@@ -92,7 +90,10 @@ const EscrowApp: React.FC = () => {
   useEffect(() => {
     try {
       const contract = provider
-        ? BetterDepositFactory.connect(escrowContractAddress, provider)
+        ? BetterDepositFactory.connect(
+            escrowContractAddress,
+            provider.getSigner(),
+          )
         : undefined;
       setEscrowContract(contract);
     } catch (err) {
@@ -103,7 +104,7 @@ const EscrowApp: React.FC = () => {
   useEffect(() => {
     try {
       const contract = provider
-        ? Erc20Factory.connect(linkedERC20Address, provider)
+        ? Erc20Factory.connect(linkedERC20Address, provider.getSigner())
         : undefined;
       setERC20Contract(contract);
     } catch (err) {

@@ -1,7 +1,10 @@
 type Escrow @entity {
   id: ID!
-  user: Bytes!
-  counterParty: Bytes!
-  started: Boolean!
-  finished: Boolean!
+  userA: Bytes!
+  userB: Bytes!
+  status: String!
+  userADeposit: BigInt
+  userBDeposit: BigInt
+  started: Boolean
+  finished: Boolean
 }

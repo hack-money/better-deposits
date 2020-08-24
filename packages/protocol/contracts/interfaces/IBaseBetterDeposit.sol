@@ -1,9 +1,13 @@
-// SPDX-License-Identifier: UNLICENSED
-
 pragma solidity >=0.6.10 <0.7.0;
 
 import { State } from "../Types.sol";
 
+/**
+ * @title IBaseBetterDeposit
+ * @author Tom Waite, Tom French
+ 
+ * Copyright 2020 Tom Waite, Tom French
+ */
 interface IBaseBetterDeposit {
     event Deposit(uint256 indexed escrowId, address indexed depositAddress, uint256 depositAmount);
     event Withdraw(uint256 indexed escrowId, address indexed withdrawAddress, uint256 withdrawAmount);

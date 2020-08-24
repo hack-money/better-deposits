@@ -24,7 +24,7 @@ export async function getOnboard(): Promise<Web3Provider> {
 
   const config: Initialization = {
     dappId: process.env.ONBOARD_API_KEY,
-    networkId: 31337, // networkId of buidlerEVM test network
+    networkId: 3, // networkId of buidlerEVM test network
     walletCheck: walletChecks,
     walletSelect: {
       heading: "Connect your wallet",

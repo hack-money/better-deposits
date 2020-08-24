@@ -6,13 +6,13 @@ dataSources:
   - kind: ethereum/contract
     name: BetterDeposits
     #prettier-ignore
-    network: ropsten
+    network: {{networkName}}
     source:
       #prettier-ignore
-      address: '0x13c0F8F2991E537cF34aa18e2bE50d83Ce64800f'
+      address: '{{contracts.BetterDeposits.address}}'
       abi: BetterDeposits
       #prettier-ignore
-      startBlock: 8550800
+      startBlock: {{contracts.BetterDeposits.startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
