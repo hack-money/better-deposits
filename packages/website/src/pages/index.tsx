@@ -85,6 +85,15 @@ function Home() {
             >
               Read More
             </Link>
+            <Link
+              className={clsx(
+                "button button--outline button--secondary button--lg",
+                styles.getStarted,
+              )}
+              to={useBaseUrl("questionnaire/")}
+            >
+              Feedback
+            </Link>
           </div>
         </div>
       </header>
