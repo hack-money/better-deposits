@@ -1,5 +1,5 @@
-export const dashboardRoute = "/app";
-export const createRoute = "/app/create";
-export const depositRoute = "/app/deposit";
-export const withdrawRoute = "/app/withdraw";
-export const disputeRoute = "/app/dispute";
+export const dashboardRoute = "/";
+export const createRoute = "/create";
+export const depositRoute = "/deposit";
+export const withdrawRoute = "/withdraw";
+export const disputeRoute = "/dispute";

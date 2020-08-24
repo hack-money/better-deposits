@@ -9,8 +9,8 @@ import {
   Grid,
 } from "@material-ui/core";
 import { BigNumberish } from "ethers";
-import { Erc20 } from "../../../contracts/Erc20";
-import { BetterDeposit } from "../../../contracts/BetterDeposit";
+import { Erc20 } from "../../contracts/Erc20";
+import { BetterDeposit } from "../../contracts/BetterDeposit";
 
 interface DepositTableProps {
   linkedERC20Contract: Erc20;

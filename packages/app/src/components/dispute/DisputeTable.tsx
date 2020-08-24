@@ -9,7 +9,7 @@ import {
   Container,
 } from "@material-ui/core";
 import { BigNumberish } from "ethers";
-import { BetterDeposit } from "../../../contracts/BetterDeposit";
+import { BetterDeposit } from "../../contracts/BetterDeposit";
 
 interface DisputeTableProps {
   escrowContract: BetterDeposit;

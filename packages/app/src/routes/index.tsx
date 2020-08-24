@@ -1,5 +1,1 @@
-export const homeRoute = "/";
-export const howItWorksRoute = "/howitworks/";
-export const faqRoute = "/faq/";
-export const questionnaireRoute = "/questionnaire/";
-export const appRoute = "/app/";
+export const faqRoute = "https://betterdeposits.com/docs/";

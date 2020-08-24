@@ -1,6 +1,6 @@
 import React from "react";
-import WithdrawTable from "../../components/escrowApp/withdrawal/WithdrawTable";
-import { BetterDeposit } from "../../contracts/BetterDeposit";
+import WithdrawTable from "../components/withdrawal/WithdrawTable";
+import { BetterDeposit } from "../contracts/BetterDeposit";
 
 interface Props {
   escrowContract: BetterDeposit;

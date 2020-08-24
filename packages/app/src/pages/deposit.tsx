@@ -1,7 +1,7 @@
 import React from "react";
-import DepositTable from "../../components/escrowApp/deposit/DepositTable";
-import { BetterDeposit } from "../../contracts/BetterDeposit";
-import { Erc20 } from "../../contracts/Erc20";
+import DepositTable from "../components/deposit/DepositTable";
+import { BetterDeposit } from "../contracts/BetterDeposit";
+import { Erc20 } from "../contracts/Erc20";
 
 interface DepositProps {
   escrowContract: BetterDeposit;

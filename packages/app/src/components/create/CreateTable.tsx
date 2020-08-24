@@ -8,7 +8,7 @@ import {
   InputLabel,
   makeStyles,
 } from "@material-ui/core";
-import { BetterDeposit } from "../../../contracts/BetterDeposit";
+import { BetterDeposit } from "../../contracts/BetterDeposit";
 
 const useStyles = makeStyles(theme => ({
   root: {

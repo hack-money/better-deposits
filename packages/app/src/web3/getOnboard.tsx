@@ -4,7 +4,6 @@ import {
   Initialization,
   WalletInitOptions,
   WalletCheckInit,
-  Wallet,
 } from "bnc-onboard/dist/src/interfaces";
 import { Web3Provider } from "@ethersproject/providers";
 
