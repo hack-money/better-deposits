@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { Web3Provider } from "@ethersproject/providers";
+import { Web3Provider, Provider } from "@ethersproject/providers";
 import { CssBaseline } from "@material-ui/core";
 import Dashboard from "./pages/dashboard";
 import Deposit from "./pages/deposit";
@@ -26,23 +26,25 @@ import {
 } from "./routes/escrowApp";
 import { useStyles } from "./components/useStyles";
 
-function App() {
-  const classes = useStyles();
-  const [open] = React.useState(true);
+const useUserProvider = () => {
   const [provider, setProvider] = useState<Web3Provider>();
-  const [escrowContract, setEscrowContract] = useState<BetterDeposit>();
-  const [erc20Contract, setERC20Contract] = useState<Erc20>();
 
   useEffect(() => {
     const getUserWallet = async () => {
-      const provider = await getOnboard();
-      console.log({ provider });
+      const newProvider = await getOnboard();
+      console.log(newProvider);
 
-      setProvider(provider);
+      setProvider(newProvider);
     };
 
     getUserWallet();
   }, []);
+
+  return provider;
+};
+
+const useEscrowContract = (provider: Provider | undefined) => {
+  const [escrowContract, setEscrowContract] = useState<BetterDeposit>();
 
   useEffect(() => {
     try {
@@ -55,6 +57,12 @@ function App() {
     }
   }, [provider]);
 
+  return escrowContract;
+};
+
+const useErc20Contract = (provider: Provider | undefined) => {
+  const [erc20Contract, setERC20Contract] = useState<Erc20>();
+
   useEffect(() => {
     try {
       const contract = provider
@@ -65,6 +73,16 @@ function App() {
       console.log(err.message);
     }
   }, [provider]);
+
+  return erc20Contract;
+};
+
+function App() {
+  const classes = useStyles();
+  const [open] = React.useState(true);
+  const provider = useUserProvider();
+  const escrowContract = useEscrowContract(provider);
+  const erc20Contract = useErc20Contract(provider);
 
   return (
     <Router>
