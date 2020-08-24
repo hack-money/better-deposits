@@ -41,8 +41,8 @@ export async function getOnboard(): Promise<Web3Provider> {
   };
 
   const onboard = Onboard(config);
-  await onboard.walletSelect();
-  await onboard.walletCheck();
+  const response = await onboard.walletSelect();
+  if (response) await onboard.walletCheck();
 
   return provider;
 }
