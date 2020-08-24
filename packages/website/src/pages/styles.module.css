@@ -18,6 +18,10 @@
   }
 }
 
+.getStarted {
+  margin: 0px 20px;
+}
+
 .buttons {
   display: flex;
   align-items: center;
