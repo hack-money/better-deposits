@@ -51,7 +51,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Tom French and Tom Waite.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Better Deposits.`,
     },
   },
   presets: [
