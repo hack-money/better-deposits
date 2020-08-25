@@ -106,6 +106,48 @@ function Home() {
             </div>
           </section>
         )}
+        <section className={styles.features}>
+          <div className="container">
+            <h1>Current problems with deposits</h1>
+            <ul>
+              <li>Few protections for tenants in much of the world.</li>
+              <li>
+                If deposit needs to be protected then landlord needs to pay
+                insurance for deposit scheme.
+              </li>
+              <li>Slow and bureaucratic.</li>
+            </ul>
+          </div>
+        </section>
+        <section className={styles.features}>
+          <div className="container">
+            <h1>Benefits of BetterDeposits</h1>
+            <ul>
+              <li>
+                Cheaper: No need for deposit scheme to get involved unless there
+                is a disagreement.
+              </li>
+              <li>
+                Earn interest: Get interest in real time on your deposit.
+                Generates passive income via DeFi protocols
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section className={styles.features}>
+          <div className="container">
+            <h1>How does it work?</h1>
+            <ul>
+              <li>Blockchain!</li>
+              <li>
+                General explanation about the user flow. Deposit funds into
+                smart contract, etc.
+              </li>
+              <li>Push them towards playing with the MVP. Link</li>
+              <li>Point people at the docs. Link</li>
+            </ul>
+          </div>
+        </section>
       </main>
     </Layout>
   );
