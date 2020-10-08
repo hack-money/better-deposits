@@ -5,6 +5,7 @@
   "repository": "https://github.com/thomas-waite/BetterDeposits.git",
   "author": "Tom Waite",
   "private": true,
+  "license": "GPL-3.0-only",
   "scripts": {
     "build": "yarn compile && yarn typechain",
     "compile": "buidler compile",

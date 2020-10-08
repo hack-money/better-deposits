@@ -4,6 +4,6 @@
   "description": "Contract addresses for BetterDeposits across various networks",
   "main": "index.js",
   "author": "Tom Waite",
-  "license": "Unlicensed",
+  "license": "GPL-3.0-only",
   "private": true
 }

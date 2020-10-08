@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "license": "GPL-3.0-only",
   "dependencies": {
     "@ethersproject/abi": "^5.0.2",
     "@ethersproject/abstract-signer": "^5.0.2",
